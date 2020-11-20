@@ -1,0 +1,164 @@
+@import '../../sass/variables'
+@import '../../sass/common'
+
+.sidebar-design
+    background-color: $black-bg
+    color: $white
+    font-family: $font-family
+    height: 100vh
+    margin-top: -33px
+    padding-top: 2.2em 
+
+.menu-design
+    padding-bottom: 1.2em
+    font-size: 1rem
+
+.user-name
+    padding-top: 1em
+    padding-bottom: 5em
+    font-size: 1rem
+
+.margin-left
+    margin-left: 1em
+    
+.logo-img-design
+    height: 100%
+    @extend .margin-left
+
+.logout
+    margin: -2em 2em 0 0
+    font-size: 1.2em
+    cursor: pointer
+
+.logout:hover
+    @extend .logout
+    text-decoration: underline
+
+.menu:hover
+    padding-left: 0.5em
+    transition-duration: 0.4s
+    border-left: 10px solid yellow
+
+.menu:active
+    border-left: 10px solid yellow
+
+.margin-top-1
+    margin-top: 1em
+
+.margin-custom-left
+    margin-left: 1.8em
+
+.logo
+    width: 100%
+    background-size: cover
+    background-position: center
+    height: 7.9rem
+
+.company-name
+    font-size: 3em
+    float: left
+    padding-left: 0.5em
+
+.spliter 
+    margin-left: 1em
+    height: 6px
+    background: #000
+    width: 98%
+
+.menu-icon
+    width: 1.1em
+    margin-right: 0.7em
+
+.orange-bg
+    background-color:$orange-bg
+    height: 4.8em
+
+.menu-link
+    color: $white
+    text-decoration: none
+    cursor: pointer
+    font-weight: 500
+
+ul 
+  list-style-type: none
+  margin: 0
+  padding: 0
+
+li a 
+    @extend .menu-link
+    display: block
+    width: 100%
+    padding: 0.75em 1em 
+    cursor: pointer
+    background: transparent   
+
+li a:hover 
+  background-color: $button-bg
+  color: $white
+  transition-duration: 0.5s
+
+.active
+  background-color: #0075D0
+  color: $white
+
+.dropbtn 
+  @extend .height
+  font-size: 16px
+  border: none
+  background-color: $white
+
+.dropdown 
+  position: relative
+  display: inline-block
+  float: right
+
+.dropdown-content 
+  display: none
+  position: absolute
+  min-width: 160px
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
+  z-index: 1
+  background-color: $white
+  border-radius: 7px
+
+.user-menu-content
+  color: black
+  padding: 12px 16px
+  text-decoration: none
+  display: block
+  border-radius: 7px
+
+.dropdown-content a 
+    @extend .user-menu-content
+
+
+.dropdown-content a:hover 
+  background-color: #ddd
+
+.dropdown:hover .dropdown-content 
+    display: block
+    transition-duration: 0.5s
+
+.dropdown:hover .dropbtn 
+    background-color: $white
+
+.username
+    @extend .shadow
+    background-color: $button-bg
+    color: $white
+
+.break
+    width: 80%
+    color: #222
+
+.underline
+    text-decoration: underline
+
+.user-img
+    @extend .height
+    width: 4.1em
+    margin: 0em 7em 0em 0em
+    padding: 0.5em
+
+.height
+    height:4em

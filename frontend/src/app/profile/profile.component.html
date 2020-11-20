@@ -1,0 +1,240 @@
+<div class="margin-top margin-left margin-right margin-bottom">
+	<div *ngIf="!isProfileLoadDone">
+		<p-progressSpinner class="loading"></p-progressSpinner>
+	</div>
+	<p-fieldset legend="Personal Information" [toggleable]="true" styleClass="fieldset-title">
+		<section id="personalinformationsection">
+			<div class="profile-title">
+				<div class="float-right">
+					<span class="cursor-pointer edit-button box-shadow-hover" (click)="disablePersonalInfoForm(false)">
+						<img class="icon-width" src="../../assets/icons/edit.png" alt="" srcset="" />
+						Edit Details
+					</span>
+				</div>
+			</div>
+			<div style="width: 100%;">
+				<div style="width: 50%;">
+					<div class="float-left">
+						<!-- left-form -->
+						<img
+							[src]="log"
+							height="200"
+							*ngIf="log"
+							alt="Kindly Upload your Logo"
+							class="logo-space box-shadow"
+						/>
+						<div
+							class="cursor-pointer edit-button center-div"
+							(click)="toggleEditLogo()"
+							*ngIf="!shallHide"
+						>
+							<img class="icon-width" src="../../assets/icons/edit.png" alt="" srcset="" />
+							Edit Logo
+						</div>
+						<div class="form-group center-div" *ngIf="showUploadButton">
+							<input
+								#file
+								type="file"
+								accept="image/jpeg"
+								id="fileUploadControl"
+								(change)="onFileChanged(file.files)"
+								style="margin-left: 5em;"
+							/>
+							<div id="outer">
+								<div id="inner-btn">
+									<button
+										class="button cursor-pointer"
+										id="btnUploadCancel"
+										(click)="toggleEditLogo()"
+									>
+										Cancel
+									</button>
+								</div>
+								<div id="inner-btn">
+									<button class="button cursor-pointer" id="btnUpload" (click)="uploadImage()">
+										Upload
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width: 50%;" class="float-right">
+					<form [formGroup]="personalinformationForm" class="form-design center">
+						<div>
+							<div class="form-group">
+								<label for="username" class="label-design">Name</label>
+								<input
+									type="text"
+									placeholder="Name"
+									formControlName="name"
+									class="form-control textbox"
+									maxlength="50"
+								/>
+							</div>
+							<div *ngIf="submitted && getFormControls.name.errors" class="error-message">
+								<div *ngIf="getFormControls.name.errors.required">
+									name is required
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="password" class="label-design">Email</label><br />
+								<input
+									type="email"
+									placeholder="Email"
+									formControlName="email"
+									class="form-control textbox"
+									disabled="true"
+									maxlength="50"
+								/>
+							</div>
+							<div class="form-group">
+								<label for="password" class="label-design">Mobile</label>
+								<input
+									type="text"
+									placeholder="Mobile Number"
+									formControlName="mobile"
+									maxlength="10"
+									class="form-control textbox"
+									allowonlynumbers
+								/>
+							</div>
+							<div *ngIf="submitted && getFormControls.mobile.errors" class="error-message">
+								<div *ngIf="getFormControls.mobile.errors.required">
+									Mobile number is required
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="CompanyName" class="label-design">Company Name</label>
+								<input
+									type="text"
+									placeholder="Company Name"
+									formControlName="company"
+									maxlength="20"
+									class="form-control textbox"
+								/>
+							</div>
+							<div *ngIf="submitted && getFormControls.company.errors" class="error-message">
+								<div *ngIf="getFormControls.company.errors.required">
+									Company Name is required
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="address" class="label-design">Address</label>
+								<textarea
+									name="address"
+									id="address"
+									cols="5"
+									rows="8"
+									placeholder="Address"
+									formControlName="address"
+									class="form-control textbox"
+								></textarea>
+							</div>
+							<div *ngIf="submitted && getFormControls.address.errors" class="error-message">
+								<div *ngIf="getFormControls.address.errors.required">
+									address is required
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="password" class="label-design">GST</label>
+								<input
+									type="text"
+									maxlength="15"
+									placeholder="GST Number"
+									formControlName="gst"
+									class="form-control textbox"
+								/>
+							</div>
+							<div class="form-group" *ngIf="showSaveProfileButton">
+								<button
+									type="submit"
+									class="button float-right cursor-pointer margin-left"
+									id="btnSaveProfrofile"
+									(click)="personalInfoFormSubmit()"
+								>
+									Save Profile
+								</button>
+								<button
+									class="button float-right cursor-pointer"
+									id="btnCancelProfileEdit"
+									(click)="disablePersonalInfoForm(true)"
+								>
+									Cancel
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</p-fieldset>
+	<div class="margin-top margin-bottom">
+		<p-fieldset legend="Change Password" [toggleable]="true" id="passwordFieldSet">
+			<section id="changepasswordsection">
+				<form [formGroup]="changePasswordForm" class="form-design left-form">
+					<div class="form-group">
+						<label for="password" class="label-design">Current Password</label>
+						<input
+							type="password"
+							placeholder="Password"
+							formControlName="currentpassword"
+							class="form-control textbox"
+							(change)="onCurrentPasswordChange($event)"
+						/>
+					</div>
+					<div
+						*ngIf="changePasswordSubmitted && getChangePasswordFormControls.currentpassword.errors"
+						class="error-message"
+					>
+						<div *ngIf="getChangePasswordFormControls.currentpassword.errors.required">
+							Current Password is required
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="label-design">New Password</label>
+						<input
+							type="password"
+							placeholder="Password"
+							formControlName="password"
+							class="form-control textbox"
+						/>
+					</div>
+					<div
+						*ngIf="changePasswordSubmitted && getChangePasswordFormControls.password.errors"
+						class="error-message"
+					>
+						<div *ngIf="getChangePasswordFormControls.password.errors.required">
+							Password is required
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="label-design">Confirm New Password</label>
+						<input
+							type="password"
+							placeholder="Confirm Password"
+							formControlName="cpassword"
+							class="form-control textbox"
+						/>
+					</div>
+					<div
+						*ngIf="changePasswordSubmitted && getChangePasswordFormControls.cpassword.errors"
+						class="error-message"
+					>
+						<div *ngIf="getChangePasswordFormControls.cpassword.errors.required">
+							Confirm Password is required
+						</div>
+					</div>
+					 <div class="form-group"> <!-- *ngIf="showUpdatePasswordButton"  -->
+						<button class="button float-right margin-left" (click)="changePasswordFormSubmit()">
+							Update
+						</button>
+						<button class="button float-right" (click)="resetPasswordControls()">
+							Cancel
+						</button>
+					</div>
+				</form>
+			</section>
+		</p-fieldset>
+	</div>
+</div>

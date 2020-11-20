@@ -1,0 +1,169 @@
+@import './variables'
+
+.color
+    color: $white
+
+.float-left
+    float: left
+
+.float-right
+    float: right
+
+.padding-left
+    padding-left: 1em
+
+.padding-right
+    padding-right: 1em
+
+.margin-left
+    margin-left: 1em
+
+.margin-right
+    margin-right: 1em
+
+.margin-bottom
+    margin-bottom: 2em
+    
+.font-family
+    font-family: $font-family
+
+.pad1em
+    padding: 1em
+
+.pad-bottom-1
+    padding-bottom: 1em
+
+.pad-top-1
+    padding-top: 1em
+
+.container-fluid
+    width: $container-fluid
+
+.background-black
+    background-color: $black-bg
+
+.grid-bg
+    background-color: $grid-color
+
+.login-form
+    @extend .background-black
+    color: $white
+    width: 22%
+    margin: $center
+    border-radius: 10px
+    margin-top: 10%
+    
+.textbox
+    @extend .font-family
+    height: 37px
+    border-bottom: 2px solid deeppink
+    border-top: 0
+    border-right: 0
+    border-left: 0
+    width: 100%
+    padding: 0.5em
+    font-weight: 500
+
+.button-color-orange
+    background-color: #EF3D0A
+
+.button
+    @extend .font-family
+    @extend .background-black
+    color: $white
+    width: auto
+    border-radius: $radius
+    margin-top: 2em
+    margin-bottom: 2em
+    padding-right: 2em
+    padding-left: 2em
+    height: 30px
+    font-weight: 500
+
+.error-message
+    text-align: center
+    color: #fff
+    padding: 0.2em
+    border-radius: 0.3em
+    margin: 1em 1em
+    background-color: #C20F1F
+    text-transform: capitalize
+
+.link
+    text-decoration: none
+
+.center
+    margin: 0 auto
+
+.center-width60
+    @extend .center
+    width: 60%
+
+.center-text
+    text-align: center
+
+.title-font-size
+    font-size: 1rem
+
+.label-font-size
+    font-size: 1rem
+
+.label-design
+    @extend .label-font-size
+    line-height: 3
+    font-weight: 500
+    
+.width-100
+    width: 100%
+
+.width-50
+    width: 50%
+
+.accordian-design
+    color: #fff
+    background: #363672 !important
+
+.success-message
+    width: 90%
+    margin: 1em
+    color: #0f0
+    font-weight: 600
+    font-size: 1rem
+
+.icon-width
+    width: 1em
+
+.cursor-pointer
+    cursor: pointer
+
+.edit-button
+    @extend .color
+    background-color: $button-bg
+    padding: 0.5em
+    border-radius: $radius
+    cursor: pointer
+
+.loading
+    width: 8%
+    position: absolute
+    z-index: 1
+    margin-left: 40%
+
+.shadow
+   box-shadow: 2px 2px 32px 0px rgba(0, 0, 0, 0.2)
+  
+.box-shadow
+    box-shadow: 2px 2px 18px 0px rgba(0, 0, 0, 0.9)
+    transition-duration: 0.5s
+
+.box-shadow-hover:hover
+    @extend .box-shadow
+
+.hover-shadow:hover
+    @extend .shadow
+
+.rounded
+    border-radius: 50%
+
+.margin1em
+    margin:1em

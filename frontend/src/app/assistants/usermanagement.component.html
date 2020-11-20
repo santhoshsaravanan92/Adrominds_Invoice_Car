@@ -1,0 +1,71 @@
+<div class="margin-left font-family">
+	<!-- add / edit assistant information -->
+	<p-sidebar [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }" [(visible)]="loadAddEditModal"
+		position="top" [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
+		<dialog-overview-example-dialog [modalDataToPass] = "modalDataToPass" (emitData)="handleSureDialogResult($event)">
+		</dialog-overview-example-dialog>
+	</p-sidebar>
+	<!-- add / edit assistant information end -->
+	<div class="width-100 margin-rights padding-bottom">
+		<div class="float-left width-50">
+			<span class="rights-title rights-color-1 hover-shadow">Read</span>
+			<span class="rights-title rights-color-2 hover-shadow">Write</span>
+			<span class="rights-title rights-color-3 hover-shadow">Update</span>
+			<span class="rights-title rights-color-4 hover-shadow">Delete</span>
+		</div>
+		<div class="float-right width-50">
+			<span class="float-right edit-button margin-right cursor-pointer" (click)="openDialog()">
+				Add Assistant</span>
+		</div>
+	</div>
+
+	<div *ngIf="isThereDataForGrid" style="margin-right:1em !important;" class="shadow">
+		<p-table [value]="gridDatas" dataKey="id"
+			styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true" [rows]="15"
+			[showCurrentPageReport]="true" [rowsPerPageOptions]="[15, 25, 50]" [loading]="isLoadingDone"
+			[paginator]="true" currentPageReportTemplate="" [filterDelay]="0"
+			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+			<ng-template pTemplate="caption">
+				Assistant Informations
+			</ng-template>
+			<ng-template pTemplate="header" class="table-width">
+				<tr>
+					<th pSortableColumn="UserName" class="info-tbl-design" style="width:25%">
+						Username
+						<p-sortIcon field="Username"></p-sortIcon>
+					</th>
+					<th class="info-tbl-design" style="text-align: center;">Dashboard</th>
+					<th class="info-tbl-design" style="text-align: center;">Plot</th>
+					<th class="info-tbl-design" style="text-align: center;">Executive</th>
+					<th class="info-tbl-design" style="text-align: center;">Sales</th>
+					<th class="info-tbl-design" style="text-align: center;">Report</th>
+					<th class="info-tbl-design" style="text-align: center;">Customer</th>
+					<th class="th-icon-width info-tbl-design"></th>
+					<th class="th-icon-width info-tbl-design"></th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-data>
+				<tr class="ui-selectable-row">
+					<td class="info-tbl-row-design">{{ data.UserName }}</td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Dashboard }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Plot }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Executive }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Sales }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Report }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Customer }}" /></td>
+					<td class="info-tbl-row-design">
+						<img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
+							srcset="" (click)="editAssistant(data.UserName)" />
+					</td>
+					<td class="info-tbl-row-design">
+						<img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer"
+							title="Delete Record" (click)="deleteAssistant(data.UserName)" />
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+	<div *ngIf="!isThereDataForGrid" class="paddingtop">
+		<p class="error-message pad1em shadow">no record found</p>
+	</div>
+</div>

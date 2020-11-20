@@ -1,0 +1,14 @@
+<p-sidebar  [style]="{height: '185px'}" 
+			[(visible)]="loadModal" 
+			position="bottom" 
+			[baseZIndex]="10000">
+    <h1 style="font-weight:normal">{{message}}</h1>
+    <div>
+      	<button pButton type="button" (click)="yesClicked()" class="button">
+      		Yes
+  	  	</button>
+      	<button pButton type="button" *ngIf="isNoButtonNeed" (click)="noClicked()" class="button">
+      		No
+     	</button>
+    </div>
+  </p-sidebar>

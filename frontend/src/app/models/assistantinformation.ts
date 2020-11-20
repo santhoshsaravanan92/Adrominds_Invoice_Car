@@ -1,0 +1,34 @@
+export class AssistantInformation {
+  ID: number;
+  MasterEmail: string;
+  UserName: string;
+  Password: string;
+  IsDashboard_read: boolean;
+  IsDashboard_write: boolean;
+  IsDashboard_update: boolean;
+  IsDashboard_delete: boolean;
+  IsPlots_read: boolean;
+  IsPlots_write: boolean;
+  IsPlots_update: boolean;
+  IsPlots_delete: boolean;
+  IsExecutives_read: boolean;
+  IsExecutives_write: boolean;
+  IsExecutives_update: boolean;
+  IsExecutives_delete: boolean;
+  IsSales_read: boolean;
+  IsSales_write: boolean;
+  IsSales_update: boolean;
+  IsSales_delete: boolean;
+  IsReports_read: boolean;
+  IsReports_write: boolean;
+  IsReports_update: boolean;
+  IsReports_delete: boolean;
+  IsCustomers_read: boolean;
+  IsCustomers_write: boolean;
+  IsCustomers_update: boolean;
+  IsCustomers_delete: boolean;
+  IsInvoice_read: boolean;
+  IsInvoice_write: boolean;
+  IsInvoice_update: boolean;
+  IsInvoice_delete: boolean;
+}

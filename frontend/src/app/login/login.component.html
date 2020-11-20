@@ -1,0 +1,64 @@
+<div *ngIf="!isLoadingDone">
+	<p-progressSpinner class="loading"></p-progressSpinner>
+</div>
+<div class="container-fluid hide-override">
+	<app-header-logo></app-header-logo>
+	<div class="login-form pad1em shadow font-family">
+		<div>
+			<div>Sign in to Adrobee</div>
+			<hr class="hr" />
+		</div>
+		<br />
+		<div>
+			<form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="form-design">
+				<div class="form-group">
+					<label for="username">Email</label><br />
+					<input type="text" placeholder="Username" formControlName="username" class="form-control textbox" />
+				</div>
+				<div *ngIf="submitted && getFormControls.username.errors" class="error-message">
+					<div *ngIf="getFormControls.username.errors.required">
+						Username is required
+					</div>
+					<div *ngIf="getFormControls.username.errors.email">
+						Email must be in format.
+					</div>
+				</div>
+				<div class="form-group pad-top-1">
+					<label for="password">Password</label><br />
+					<input
+						type="password"
+						placeholder="Password"
+						formControlName="password"
+						class="form-control textbox"
+					/>
+				</div>
+				<div *ngIf="submitted && getFormControls.password.errors" class="error-message">
+					<div *ngIf="getFormControls.password.errors.required">
+						password is required
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="button button-color-orange">Login</button>
+				</div>
+				<a routerLink="/forgetpassword" class="color link">Forget Password?</a>
+			</form>
+			<div style="margin-bottom: 1em;">
+				<hr class="hr-underline" />
+			</div>
+		</div>
+	</div>
+	<div class="pad1em absolute-center font-family">
+		<span class="policies link font-weight cursor-pointer" (click)="toggleModal('tc')">Terms and Condition</span>
+		<span class="policies link font-weight cursor-pointer" (click)="toggleModal('privacy')">Privacy</span>
+		<a class="policies link font-weight" target="_blank" href="https://www.adrobee.com/#contact">Contact Us</a>
+	</div>
+	<p-dialog position="center" [(visible)]="displayModal">
+		<p-header>
+			{{ modalHeader }}
+		</p-header>
+		{{ modalContent }}
+		<!-- <p-footer>
+			<button (click)="toggleModal()">Close</button>
+		</p-footer> -->
+	</p-dialog>
+</div>

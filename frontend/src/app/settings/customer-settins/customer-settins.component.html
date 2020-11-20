@@ -1,0 +1,44 @@
+<div class="width-100 paddingbottom">
+    <span class="float-right edit-button cursor-pointer">
+        Add Customer
+    </span>
+</div>
+<div class="shadow">
+    <p-table styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo">
+        <ng-template pTemplate="caption">
+            Customer Information
+        </ng-template>
+        <ng-template pTemplate="header" class="table-width">
+            <tr>
+                <th class="info-tbl-design" style="width:25%">Name</th>
+                <th class="info-tbl-design" style="text-align: center;">Phone</th>
+                <th class="info-tbl-design" style="text-align: center;">Address</th>
+                <th class="info-tbl-design" style="text-align: center;">Email</th>
+                <th class="info-tbl-design" style="text-align: center;">City</th>
+                <th class="info-tbl-design" style="text-align: center;">GST</th>
+                <th class="info-tbl-design" style="text-align: center;">Comments</th>
+                <th class="th-icon-width info-tbl-design"></th>
+                <th class="th-icon-width info-tbl-design"></th>
+            </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="body" let-data>
+				<tr class="ui-selectable-row">
+					<td class="info-tbl-row-design">{{ data.UserName }}</td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Dashboard }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Plot }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Executive }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Sales }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Report }}" /></td>
+					<td class="info-tbl-row-design"><img class="access-image" src="{{ data.Customer }}" /></td>
+					<td class="info-tbl-row-design">
+						<img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
+							srcset="" (click)="editAssistant(data.UserName)" />
+					</td>
+					<td class="info-tbl-row-design">
+						<img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer"
+							title="Delete Record" (click)="deleteAssistant(data.UserName)" />
+					</td>
+				</tr>
+			</ng-template> -->
+    </p-table>
+</div>

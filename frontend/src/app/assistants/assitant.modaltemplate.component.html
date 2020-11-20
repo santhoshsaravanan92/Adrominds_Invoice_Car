@@ -1,0 +1,356 @@
+<div class="grid-bg color pad1em">{{ _title }}</div>
+<section id="assistantsection" class="margin-top margin-bottom">
+	<form [formGroup]="assistantForm" name="assistantForm" class="form-design">
+		<div class="width-100">
+			<div class="form-group">
+				<input
+					type="email"
+					placeholder="Username"
+					formControlName="asstusername"
+					maxlength="50"
+					class="form-control textbox text-box-width margin-top"
+				/>
+			</div>
+			<div *ngIf="assistantFormSubmitted && getAssistantFormControls.asstusername.errors" class="error-message shadow">
+				<div *ngIf="getAssistantFormControls.asstusername.errors.required">
+					Username is required
+				</div>
+				<div *ngIf="getAssistantFormControls.asstusername.errors.email">
+					Email must be in format.
+				</div>
+			</div>
+			<div *ngIf="!_isEdit" class="form-group">
+				<input
+					type="password"
+					placeholder="Password"
+					formControlName="asstpassword"
+					class="form-control textbox text-box-width margin-top"
+				/>
+			</div>
+			<div
+				*ngIf="!_isEdit && assistantFormSubmitted && getAssistantFormControls.asstpassword.errors"
+				class="error-message"
+			>
+				<div *ngIf="getAssistantFormControls.asstpassword.errors.required">
+					Password is required
+				</div>
+			</div>
+
+			<div class="margin-bottom margin-top">
+				<div class="grid-bg color pad1em">
+					<label for="features">Features</label>
+				</div>
+				<table>
+					<tr>
+						<td></td>
+						<td class="pad-left-right-1">Read</td>
+						<td class="pad-left-right-1">Write</td>
+						<td class="pad-left-right-1">Update</td>
+						<td class="pad-left-right-1">Delete</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Dashboard</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="dashboard_read"
+								class="form-control"
+								value="dashboard_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="dashboard_write"
+								class="form-control"
+								value="dashboard_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="dashboard_update"
+								class="form-control"
+								value="dashboard_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="dashboard_delete"
+								class="form-control"
+								value="dashboard_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Plots</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="plots_read"
+								class="form-control"
+								value="plots_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="plots_write"
+								class="form-control"
+								value="plots_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="plots_update"
+								class="form-control"
+								value="plots_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="plots_delete"
+								class="form-control"
+								value="plots_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Executives</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="executives_read"
+								class="form-control"
+								value="executives_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="executives_write"
+								class="form-control"
+								value="executives_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="executives_update"
+								class="form-control"
+								value="executives_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="executives_delete"
+								class="form-control"
+								value="executives_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Reports</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="reports_read"
+								class="form-control"
+								value="reports_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="reports_write"
+								class="form-control"
+								value="reports_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="reports_update"
+								class="form-control"
+								value="reports_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="reports_delete"
+								class="form-control"
+								value="reports_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Sales</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="sales_read"
+								class="form-control"
+								value="sales_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="sales_write"
+								class="form-control"
+								value="sales_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="sales_update"
+								class="form-control"
+								value="sales_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="sales_delete"
+								class="form-control"
+								value="sales_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="" class="label-design">Customers</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="customers_read"
+								class="form-control"
+								value="customers_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="customers_write"
+								class="form-control"
+								value="customers_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="customers_update"
+								class="form-control"
+								value="customers_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="customers_delete"
+								class="form-control"
+								value="customers_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr>
+					<!-- <tr>
+						<td>
+							<label for="" class="label-design">Invoice</label>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="invoice_read"
+								class="form-control"
+								value="invoice_read"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="invoice_write"
+								class="form-control"
+								value="invoice_write"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1">
+							<input
+								type="checkbox"
+								formControlName="invoice_update"
+								class="form-control"
+								value="invoice_update"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+						<td class="pad-left-right-1"> 
+							<input
+								type="checkbox"
+								formControlName="invoice_delete"
+								class="form-control"
+								value="invoice_delete"
+								(change)="onCheckboxChange($event)"
+							/>
+						</td>
+					</tr> -->
+					<tr class="float-right">
+						<td rowspan="3">
+							<button *ngIf="!_isEdit" class="button" (click)="assistantFormSubmit()">
+								Save
+							</button>
+							<button *ngIf="_isEdit" class="button margin-left" (click)="updateAssistantRecordById()">
+								Update
+							</button>
+							<button class="button margin-left" (click)="closeModal()">Close</button>
+						</td>
+					</tr>
+				</table>
+				<div *ngIf="assistantFormSubmitted && ischkBoxError" class="error-message">
+					Ateast select one feature to submit.
+				</div>
+			</div>
+		</div>
+	</form>
+</section>

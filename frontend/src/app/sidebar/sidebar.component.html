@@ -1,0 +1,192 @@
+<div style="width: 100%;">
+  <div class="float-left" style="width: 14%; position: fixed;">
+    <img class="logo" src="./assets/images/logo.jpg" alt="logo" srcset="" />
+    <div class="sidebar-design">
+      <ul>
+        <li id="menubardashboard" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('dashboard')">
+            <img class="menu-icon" src="../../assets/icons/dashboard.png" />Dashboard
+          </a>
+        </li>
+        <li id="menubarproduct" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('products')">
+            <img class="menu-icon" src="./assets/icons/product.png" />Products
+          </a>
+        </li>
+        <li id="menubarsales" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('sales')">
+            <img class="menu-icon" src="./assets/icons/sales.png" />Sales</a>
+        </li>
+        <li id="menubarreport" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('reports')"><img class="menu-icon" src="./assets/icons/report.png" />Reports</a>
+        </li>
+        <li id="menubarquotation" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('quotation')"><img class="menu-icon"
+              src="./assets/icons/quotation.png" />Quotation</a>
+        </li>
+        <li id="menubarinvoice" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('invoice')">
+            <img class="menu-icon" src="./assets/icons/invoice.png" />Invoice</a>
+        </li>
+        <li id="menubarassistant" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('assistant')"><img class="menu-icon"
+              src="./assets/icons/user-management.png" />Assistants</a>
+        </li>
+        <li id="menubarreminder" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('reminder')"><img class="menu-icon"
+              src="./assets/icons/reminder.png" />Reminder</a>
+        </li>
+
+        <!-- <li id="menubarsettings" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('settings')"><img class="menu-icon"
+              src="./assets/icons/settins.png" />Settings</a>
+        </li>
+        <li id="menubarasstprofile" *ngIf="isAssistantLoggedIn">
+          <a (click)="componentSelector('asstprofile')"><img class="menu-icon"
+              src="./assets/icons/profile.png" />Profile</a>
+        </li>
+        <li id="menubarprofile" *ngIf="!isAssistantLoggedIn">
+          <a (click)="componentSelector('profile')"><img class="menu-icon"
+              src="./assets/icons/profile.png" />Profile</a>
+        </li>
+         -->
+
+      </ul>
+
+      <!-- <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('products')">
+          <img
+            class="menu-icon"
+            src="./assets/icons/product.png"
+            alt=""
+            srcset=""/>Products
+          </a>
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('sales')">
+          <img
+            class="menu-icon"
+            src="./assets/icons/sales.png"
+            alt=""
+            srcset=""
+          />Sales</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('reports')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/report.png"
+            alt=""
+            srcset=""
+          />Reports</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('quotation')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/quotation.png"
+            alt=""
+            srcset=""
+          />Quotation</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('invoice')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/invoice.png"
+            alt=""
+            srcset=""
+          />Invoice</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('profile')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/profile.png"
+            alt=""
+            srcset=""
+          />Profile</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('assistant')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/user-management.png"
+            alt=""
+            srcset=""
+          />Assistants</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('reminder')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/reminder.png"
+            alt=""
+            srcset=""
+          />Reminder</a
+        >
+      </div>
+      <div class="menu-design">
+        <a class="menu-link menu" (click)="componentSelector('settings')"
+          ><img
+            class="menu-icon"
+            src="./assets/icons/settins.png"
+            alt=""
+            srcset=""
+          />Settings</a
+        >
+      </div> -->
+    </div>
+  </div>
+  <div class="float-right" style="width: 86%; display: grid;">
+    <div class="shadow height">
+      <div class="float-left company-name">
+        {{ companyName }}
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          <img class="float-right rounded user-img" src="../../assets/images/user_dummy.jpg" alt="profile picture">
+        </button>
+        <div class="dropdown-content">
+          <div class="user-menu-content username" *ngIf="!isAssistantLoggedIn">{{ username }}</div>
+          <hr class="break" *ngIf="!isAssistantLoggedIn"/>
+          <div class="user-menu-content cursor-pointer" *ngIf="!isAssistantLoggedIn"
+            (click)="componentSelector('profile')">Profile</div>
+          <div class="user-menu-content cursor-pointer" *ngIf="isAssistantLoggedIn"
+            (click)="componentSelector('asstprofile')">
+            Profile</div>
+          <div class="user-menu-content cursor-pointer" (click)="componentSelector('settings')">Settings</div>
+          <div class="user-menu-content cursor-pointer underline" (click)="logout()">Logout</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <!-- 
+      Content of the other components based on the user selection.  
+      Needs to find the best way to do so.
+    -->
+
+      <div *ngIf="componentToLoad === 'profile'">
+        <app-profile class="margin-left"></app-profile>
+      </div>
+      <div *ngIf="componentToLoad === 'dashboard'">
+        <app-dashboard class="margin-left"></app-dashboard>
+      </div>
+      <div *ngIf="componentToLoad === 'assistant'">
+        <app-usermanagement></app-usermanagement>
+      </div>
+      <div *ngIf="componentToLoad === 'asstprofile'">
+        <app-assistant-profile></app-assistant-profile>
+      </div>
+      <div *ngIf="componentToLoad === 'settings'">
+        <app-settings-base></app-settings-base>
+      </div>
+    </div>
+  </div>
+</div>
