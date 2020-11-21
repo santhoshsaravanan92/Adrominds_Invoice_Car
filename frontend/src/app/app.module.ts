@@ -17,8 +17,6 @@ import { FieldsetModule } from "primeng/fieldset";
 import { Guardian } from "./helpers/guardian";
 import { LoggedInGuardian } from "./helpers/loggedin-guardian";
 import { ProfileService } from "./services/profile.service";
-import { UsermanagementComponent } from "./assistants/usermanagement.component";
-import { DialogOverviewExampleDialog } from "./assistants/assistant.modal.component";
 import { ToastModule } from "primeng/toast";
 import { MessageService } from "primeng/api";
 import { TableModule } from "primeng/table";
@@ -28,9 +26,10 @@ import { BaseComponent } from "./components/base/base.component";
 import { DialogModule } from "primeng/dialog";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
-import { AssistantProfileComponent } from './assistants/assistant-profile/assistant-profile.component';
 import { OnlynumberDirective } from './directives/onlynumber.directives';
 import { SettingsModule } from './settings/settings.module';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +40,11 @@ import { SettingsModule } from './settings/settings.module';
     HeaderLogoComponent,
     ProfileComponent,
     SidebarComponent,
-    UsermanagementComponent,
-    DialogOverviewExampleDialog,
     SureDialogComponent,
     BaseComponent,
-    AssistantProfileComponent,
-    OnlynumberDirective
+    OnlynumberDirective,
+    InvoiceComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,

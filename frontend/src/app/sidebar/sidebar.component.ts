@@ -31,106 +31,33 @@ export class SidebarComponent implements OnInit {
     if (selectedComponent === "profile") {
       this.componentToLoad = "profile";
     }
-    else if (selectedComponent === "asstprofile") {
-      this.componentToLoad = "asstprofile";
-    } else if (selectedComponent === "dashboard") {
+    else if (selectedComponent === "dashboard") {
       this.componentToLoad = "dashboard";
       document.getElementById("menubardashboard").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-    } else if (selectedComponent === "assistant") {
-      this.componentToLoad = "assistant";
-      document.getElementById("menubarassistant").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-    } else if (selectedComponent === "products") {
-      this.componentToLoad = "product";
-      document.getElementById("menubarproduct").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-    } else if (selectedComponent === "sales") {
-      this.componentToLoad = "sales";
-      document.getElementById("menubarsales").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-    } else if (selectedComponent === "reports") {
-      document.getElementById("menubarreport").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-      this.componentToLoad = "report";
-    } else if (selectedComponent === "quotation") {
-      document.getElementById("menubarquotation").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-      this.componentToLoad = "quotation";
-    } else if (selectedComponent === "invoice") {
-      document.getElementById("menubarinvoice").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarreminder").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-      this.componentToLoad = "invoice";
-    } else if (selectedComponent === "reminder") {
-      document.getElementById("menubarreminder").classList.add("active");
-      // document.getElementById("menubarprofile").classList.remove("active");
-      document.getElementById("menubardashboard").classList.remove("active");
-      document.getElementById("menubarassistant").classList.remove("active");
-      document.getElementById("menubarproduct").classList.remove("active");
-      document.getElementById("menubarsales").classList.remove("active");
-      document.getElementById("menubarreport").classList.remove("active");
-      document.getElementById("menubarquotation").classList.remove("active");
-      document.getElementById("menubarinvoice").classList.remove("active");
-      // document.getElementById("menubarsettings").classList.remove("active");
-      this.componentToLoad = "reminder";
-    } else if (selectedComponent === "settings") {
+      document.getElementById("menubartemplate").classList.remove("active");
+      document.getElementById("menubarInvoice").classList.remove("active");
+      document.getElementById("menubarCustomer").classList.remove("active");
+    }  else if (selectedComponent === "settings") {
       this.componentToLoad = "settings";
+    }else if (selectedComponent === "invoice") {
+      this.componentToLoad = "invoice";
+      document.getElementById("menubardashboard").classList.remove("active");
+      document.getElementById("menubartemplate").classList.remove("active");
+      document.getElementById("menubarInvoice").classList.add("active");
+      document.getElementById("menubarCustomer").classList.remove("active");
+    } 
+    else if (selectedComponent === "customer") {
+      this.componentToLoad = "customer";
+      document.getElementById("menubardashboard").classList.remove("active");
+      document.getElementById("menubartemplate").classList.remove("active");
+      document.getElementById("menubarInvoice").classList.remove("active");
+      document.getElementById("menubarCustomer").classList.add("active");
+    } else {
+      this.componentToLoad = "template";
+      document.getElementById("menubardashboard").classList.remove("active");
+      document.getElementById("menubartemplate").classList.add("active");
+      document.getElementById("menubarInvoice").classList.remove("active");
+      document.getElementById("menubarCustomer").classList.remove("active");
     }
   }
 

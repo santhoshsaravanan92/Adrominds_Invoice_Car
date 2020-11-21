@@ -9,21 +9,21 @@
             Dashboard
           </a>
         </li>
-        <li id="menubarproduct">
+        <li id="menubartemplate">
           <a (click)="componentSelector('template')">
             <img class="menu-icon" src="./assets/icons/product.png" />
             Template
           </a>
         </li>
-        <li id="menubarsales">
+        <li id="menubarInvoice">
           <a (click)="componentSelector('invoice')">
             <img class="menu-icon" src="./assets/icons/sales.png" />
             Invoice
           </a>
         </li>
-        <li id="menubarsales">
+        <li id="menubarCustomer">
           <a (click)="componentSelector('customer')">
-            <img class="menu-icon" src="./assets/icons/sales.png" />
+            <img class="menu-icon" src="./assets/icons/profile.png" />
             Customer
           </a>
         </li>
@@ -61,10 +61,11 @@
         <app-dashboard class="margin-left"></app-dashboard>
       </div>
       <div *ngIf="componentToLoad === 'customer'">
-        <app-usermanagement></app-usermanagement>
+        <app-customer></app-customer>
       </div>
       <div *ngIf="componentToLoad === 'invoice'">
-        <app-settings-base></app-settings-base>
+        <!-- <app-settings-base></app-settings-base> -->
+        <app-invoice></app-invoice>
       </div>
     </div>
   </div>

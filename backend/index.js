@@ -9,7 +9,6 @@ const db = require('./helpers/dbhelper');
 // my routes
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
-const asstRoutes = require('./routes/assistant');
 
 const app = express();
 
@@ -28,7 +27,6 @@ app.use(cors());
 //routers
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
-app.use('/api/assistant',asstRoutes);
 
 const port = process.env.PORT;
 
