@@ -46,6 +46,12 @@ export class ProfileComponent implements OnInit {
       company: ["", Validators.required],
       gst: [""],
       logo: [""],
+      landline: [""],
+      website: [""],
+      accountnumber: [""],
+      branchname: [""],
+      bankname: [""],
+      ifsc: [""],
     });
 
     this.changePasswordForm = this.formBuilder.group({
@@ -82,6 +88,12 @@ export class ProfileComponent implements OnInit {
         controls["gst"].setValue(profileData.data.GST);
         controls["address"].setValue(profileData.data.Address);
         controls["company"].setValue(profileData.data.Company);
+        controls["landline"].setValue(profileData.data.Landline);
+        controls["website"].setValue(profileData.data.Website);
+        controls["accountnumber"].setValue(profileData.data.AccountNumber);
+        controls["branchname"].setValue(profileData.data.Branchname);
+        controls["bankname"].setValue(profileData.data.Bankname);
+        controls["ifsc"].setValue(profileData.data.Ifsc);
       }),
       (err) => {
         if (err.staus === 401) {
@@ -115,12 +127,20 @@ export class ProfileComponent implements OnInit {
     let profile = new PersonalInformation();
     const controls = this.getFormControls;
 
+    debugger;
+
     profile.Name = controls["name"].value;
     profile.Email = controls["email"].value;
     profile.Mobile = controls["mobile"].value;
     profile.Address = controls["address"].value;
     profile.GST = controls["gst"].value;
     profile.Company = controls["company"].value;
+    profile.Landline = controls["landline"].value;
+    profile.Website = controls["website"].value;
+    profile.AccountNumber = controls["accountnumber"].value;
+    profile.Branchname = controls["branchname"].value;
+    profile.Bankname = controls["bankname"].value;
+    profile.Ifsc = controls["ifsc"].value;
 
     this.profileService
       .updateProfileInformation(profile)
@@ -232,6 +252,11 @@ export class ProfileComponent implements OnInit {
       controls["address"].disable();
       controls["logo"].disable();
       controls["company"].disable();
+      controls["landline"].disable();
+      controls["accountnumber"].disable();
+      controls["branchname"].disable();
+      controls["bankname"].disable();
+      controls["ifsc"].disable();
       // btnControl.setAttribute('disabled', 'true');
       this.showSaveProfileButton = false;
     } else {
@@ -241,6 +266,11 @@ export class ProfileComponent implements OnInit {
       controls["address"].enable();
       controls["logo"].enable();
       controls["company"].enable();
+      controls["landline"].enable();
+      controls["accountnumber"].enable();
+      controls["branchname"].enable();
+      controls["bankname"].enable();
+      controls["ifsc"].enable();
       // btnControl.removeAttribute('disabled');
       this.showSaveProfileButton = true;
     }

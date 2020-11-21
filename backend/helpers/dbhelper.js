@@ -12,7 +12,6 @@ const sequelize = new Sequelize(process.env.DATABASE
                                 }
                         });
 
-// to access this object across
 exports.sequelize = sequelize;
 
 exports.connection = () => {

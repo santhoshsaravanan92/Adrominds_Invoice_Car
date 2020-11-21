@@ -41,6 +41,12 @@ export class ProfileService {
       Address: profileData.Address,
       GST: profileData.GST,
       Company: profileData.Company,
+      Landline: profileData.Landline,
+      Website: profileData.Website,
+      AccountNumber: profileData.AccountNumber,
+      Bankname: profileData.Bankname,
+      Branchname: profileData.Branchname,
+      Ifsc: profileData.Ifsc,
     };
     return this.http
       .post<PersonalInformation>(UrlMappers.updateProfile, content, {

@@ -42,6 +42,30 @@ const PersonalInformation = sequelize.define('PersonalInformation', {
 		type: Sequelize.STRING(100),
 		allowNull: true,
 	},
+	Landline: {
+		type: Sequelize.STRING(15),
+		allowNull: true,
+	},
+	Website: {
+		type: Sequelize.STRING(50),
+		allowNull: true,
+	},
+	AccountNumber: {
+		type: Sequelize.STRING(15),
+		allowNull: true,
+	},
+	Branchname: {
+		type: Sequelize.STRING(20),
+		allowNull: true,
+	},
+	Bankname: {
+		type: Sequelize.STRING(20),
+		allowNull: true,
+	},
+	Ifsc: {
+		type: Sequelize.STRING(15),
+		allowNull: true,
+	},
 });
 
 exports.addProfile = (email, companyname, name) => {
@@ -60,6 +84,8 @@ exports.addProfile = (email, companyname, name) => {
 };
 
 exports.updateProfile = (profileData) => {
+	console.log("models profile page");
+	console.log(profileData);
 	// TODO: check for Patch / patchupdate - ui
 	return PersonalInformation.update({
 			Name: profileData.Name,
@@ -67,6 +93,12 @@ exports.updateProfile = (profileData) => {
 			Mobile: profileData.Mobile,
 			Address: profileData.Address,
 			GST: profileData.GST,
+			Landline: profileData.Landline,
+			Website: profileData.Website,
+			AccountNumber: profileData.AccountNumber,
+			Branchname: profileData.Branchname,
+			Bankname: profileData.Bankname,
+			Ifsc: profileData.Ifsc,
 		}, {
 			where: {
 				Email: profileData.Email,
