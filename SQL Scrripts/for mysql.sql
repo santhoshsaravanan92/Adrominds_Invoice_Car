@@ -26,3 +26,17 @@ CREATE TABLE PersonalInformation(
 	Bankname varchar(20) Null,
 	Ifsc varchar(15) Null
 );
+
+CREATE TABLE Customer(
+	ID int AUTO_INCREMENT primary key,
+	Name varchar(20) not null,
+	Address varchar(50) NULL,
+	Mobile varchar(10) NULL,
+	GST varchar(15) NULL,
+	Email varchar(50) NULL,
+	Comments varchar(50) NULL,
+	owner_email varchar(50) references personalinformation(Email),
+	created_date timestamp default current_timestamp,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+	ON UPDATE CURRENT_TIMESTAMP   
+);

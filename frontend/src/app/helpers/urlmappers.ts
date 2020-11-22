@@ -9,10 +9,14 @@ export module UrlMappers {
 	export const updateProfile = baseUrl + '/api/Profile/updateprofileinfo';
 	export const updateProfilePassword = baseUrl + '/api/auth/updatepassword';
 	export const uploadImage = baseUrl + '/api/Profile/uploadlogo';
-	export const addAssistantProfile = baseUrl + '/api/assistant/add';
-	export const getAssistantProfile = baseUrl + '/api/assistant/getallassistants/';
-	export const getAssistantProfileById = baseUrl + '/api/assistant/getassistantdetailsbyid/';
-	export const updateAssistantProfile = baseUrl + '/api/assistant/updateassistantdetailsbyid/';
-	export const deleteSlaveDetails = baseUrl + '/api/assistant/delete/';
+	// export const addAssistantProfile = baseUrl + '/api/assistant/add';
+	// export const getAssistantProfile = baseUrl + '/api/assistant/getallassistants/';
+	// export const getAssistantProfileById = baseUrl + '/api/assistant/getassistantdetailsbyid/';
+	// export const updateAssistantProfile = baseUrl + '/api/assistant/updateassistantdetailsbyid/';
+	// export const deleteSlaveDetails = baseUrl + '/api/assistant/delete/';
 	export const downloadImage = baseUrl + '/api/Profile/DownloadImage';
+	export const addCustomer = baseUrl + '/api/customer/addcustomer';
+	export const getAllCustomer = baseUrl + '/api/customer/getallcustomer/';
+	export const getCustomerById = baseUrl + '/api/customer//getCustomerById/';
+	export const updateCustomer = baseUrl + '/api/customer/updatecustomer';
 }

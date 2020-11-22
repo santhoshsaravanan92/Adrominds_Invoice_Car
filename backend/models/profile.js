@@ -9,10 +9,6 @@ const {
 	handleError
 } = require('../helpers/helper-methods');
 
-const {
-	getAssistantsCompany
-} = require('./assistant');
-
 const PersonalInformation = sequelize.define('PersonalInformation', {
 	Name: {
 		type: Sequelize.STRING(50),
@@ -142,16 +138,4 @@ exports.getHeaderDetails = (email) => {
 			handleError(err);
 			return err;
 		});
-};
-
-exports.getAssistantsCompany = (email) => {
-	const query = "SELECT Company FROM `personalinformation` inner join assistantinformation on assistantinformation.MasterEmail = personalinformation.Email where assistantinformation.UserName  = '" + email + "'";
-	return sequelize.query(query, {
-		type: QueryTypes.SELECT
-	}).then(companyName => {
-		return companyName;
-	}).catch((err) => {
-		handleError(err);
-		return err;
-	});
 };

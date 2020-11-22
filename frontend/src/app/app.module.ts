@@ -30,6 +30,7 @@ import { OnlynumberDirective } from './directives/onlynumber.directives';
 import { SettingsModule } from './settings/settings.module';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { CustomerComponent } from './customer/customer.component';
+import { CustomerModalComponent } from './customer/customer-modal/customer-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CustomerComponent } from './customer/customer.component';
     BaseComponent,
     OnlynumberDirective,
     InvoiceComponent,
-    CustomerComponent
+    CustomerComponent,
+    CustomerModalComponent
   ],
   imports: [
     BrowserModule,
