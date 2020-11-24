@@ -127,8 +127,6 @@ export class ProfileComponent implements OnInit {
     let profile = new PersonalInformation();
     const controls = this.getFormControls;
 
-    debugger;
-
     profile.Name = controls["name"].value;
     profile.Email = controls["email"].value;
     profile.Mobile = controls["mobile"].value;

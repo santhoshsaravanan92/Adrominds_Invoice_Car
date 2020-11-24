@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MessageService } from "primeng/api";
+import { MessageService, ConfirmationService } from "primeng/api";
 import { Constants } from "../helpers/constant";
 import { getLoggedInUserEmail } from "../helpers/utilities";
 import { CustomerInformation } from "./models/customer-model";
@@ -18,7 +18,8 @@ export class CustomerComponent implements OnInit {
 
   constructor(
     public messageService: MessageService,
-    private customerService: CustomerServiceService
+    private customerService: CustomerServiceService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +50,19 @@ export class CustomerComponent implements OnInit {
         Constants.success,
         "Customer Information"
       );
+    } else if ($event === "customer update") {
+      this.getAllCustomers();
+      this.updateToastMessage(
+        "Customer details updated",
+        Constants.success,
+        "Customer Information"
+      );
+    } else if ($event === "check form data") {
+      this.updateToastMessage(
+        "Form data is not valid. kindly check the filled details.",
+        Constants.error,
+        "Customer Information"
+      );
     } else if ($event === "error") {
       this.updateToastMessage(
         "Something went wrong. Please try again later.",
@@ -57,9 +71,9 @@ export class CustomerComponent implements OnInit {
       );
     }
   }
+
   getAllCustomers() {
     this.isLoadingDone = true;
-    debugger;
     this.customerService
       .getAllCustomer(getLoggedInUserEmail())
       .subscribe((data) => {
@@ -85,7 +99,31 @@ export class CustomerComponent implements OnInit {
       };
   }
 
-  deleteCustomer(id: string) {}
+  deleteCustomer(id: string, name: string) {
+    debugger;
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to delete the customer ${name}`,
+      header: "Delete Customer",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        if (id !== "") {
+          this.customerService
+            .deleteCustomer(id)
+            .subscribe((res) => {
+              if (res.message === "customer deleted") {
+                this.getAllCustomers();
+                this.updateToastMessage(
+                  "Customer Information Deleted Successfully",
+                  Constants.success,
+                  "Customer Information"
+                );
+              }
+            });
+        }
+      },
+      reject: () => {},
+    });
+  }
 
   editCustomer(id: string) {
     this.loadAddEditModal = true;

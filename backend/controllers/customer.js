@@ -6,7 +6,8 @@ const {
     addCustomer,
     getAllCustomers,
     getCustomerById,
-    updateCustomer
+    updateCustomer,
+    deleteCustomer
 } = require('../models/customer');
 
 exports.addcustomer = (req, res) => {
@@ -92,13 +93,32 @@ exports.updateCustomer = (req, res) => {
     }
 
     updateCustomer(req.body).then((data) => {
-        if (data === 'success')
+        if (data)
             return res.status(200).json({
-                message: 'customer added'
+                message: 'customer update'
             });
         else
             return res.status(400).json({
-                message: 'customer not added'
+                message: 'customer not updated'
+            });
+    });
+}
+
+exports.deleteCustomer = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    deleteCustomer(req.params.id).then((data) => {
+        if (data)
+            return res.status(200).json({
+                message: 'customer deleted'
+            });
+        else
+            return res.status(400).json({
+                message: 'customer not deleted'
             });
     });
 }

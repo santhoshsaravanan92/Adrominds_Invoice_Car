@@ -22,13 +22,13 @@ export class CustomerModalComponent implements OnInit {
   set modalDataToPass(value: any) {
     if (value) {
       this._modalDataToPass = value;
-      this._title = this._modalDataToPass.isEdit
-        ? "Edit Customer Information"
-        : "Add Customer Information";
       this._id = this._modalDataToPass.id;
       this._isEdit = this._modalDataToPass.isEdit;
       this.customerForm.reset();
-      this.getCustomerRecordById(this._id);
+      this._title = this._modalDataToPass.isEdit
+        ? "Edit Customer Information"
+        : "Add Customer Information";
+      if (this._id != "") this.getCustomerRecordById(this._id);
     }
   }
 
@@ -47,7 +47,7 @@ export class CustomerModalComponent implements OnInit {
   customerFormCreation() {
     this.customerForm = this.formBuilder.group({
       name: ["", [Validators.required]],
-      email: [""],
+      email: ["", [Validators.email]],
       mobile: [""],
       address: [""],
       gst: [""],
@@ -112,7 +112,10 @@ export class CustomerModalComponent implements OnInit {
 
   updateCustomerRecordById() {
     this.submitted = true;
-    if (this.customerForm.invalid) return;
+    if (this.customerForm.invalid) {
+      this.emitData.emit("check form data");
+      return;
+    }
 
     const customer = new CustomerInformation();
     const customerFromControls = this.getCustomerFormControls;
@@ -130,6 +133,8 @@ export class CustomerModalComponent implements OnInit {
       if (data.message === "customer update") {
         this.closeModal();
         this.emitData.emit("customer update");
+      } else {
+        this.emitData.emit("error");
       }
     }),
       (err) => {

@@ -85,20 +85,40 @@ exports.getCustomerById = (id) => {
 };
 
 exports.updateCustomer = (customerInformation) => {
-    console.log(customerInformation.id)
-    return Customer.findOne({
+    return Customer.update({
+            Address: customerInformation.address,
+            Name: customerInformation.name,
+            Comments: customerInformation.comments,
+            Email: customerInformation.email,
+            GST: customerInformation.gst,
+            Mobile: customerInformation.mobile
+        }, {
             where: {
                 id: customerInformation.id
             },
         })
         .then((obj) => {
-            console.log('in obj model')
-            if (obj) {
-                console.log('record found')
-                return obj.update(customerInformation);
-            } else {
-                return 'record not found';
-            }
+            return obj;
+            // if (obj) {
+            //     return obj.update(customerInformation);
+            // } else {
+            //     return 'record not found';
+            // }
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
+};
+
+exports.deleteCustomer = (id) => {
+    return Customer.destroy({
+            where: {
+                id: id
+            },
+        })
+        .then((result) => {
+            return 'success';
         })
         .catch((err) => {
             handleError(err);

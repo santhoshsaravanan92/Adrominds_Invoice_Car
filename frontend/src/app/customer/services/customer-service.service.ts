@@ -76,11 +76,26 @@ export class CustomerServiceService {
       gst: customerInfo.GST,
       mobile: customerInfo.Mobile,
       ownerEmail: customerInfo.OwnerEmail,
-      id:customerInfo.Id
+      id: customerInfo.Id,
     };
 
     return this.http
       .post<CustomerInformation>(UrlMappers.updateCustomer, content, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  deleteCustomer(id: string) {
+    return this.http
+      .delete<any>(UrlMappers.deleteCustomer + id, {
         headers: getHeaders(),
       })
       .pipe(

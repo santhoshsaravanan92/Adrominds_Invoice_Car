@@ -19,4 +19,5 @@ export module UrlMappers {
 	export const getAllCustomer = baseUrl + '/api/customer/getallcustomer/';
 	export const getCustomerById = baseUrl + '/api/customer//getCustomerById/';
 	export const updateCustomer = baseUrl + '/api/customer/updatecustomer';
+	export const deleteCustomer = baseUrl + '/api/customer/deleteCustomer/';
 }
