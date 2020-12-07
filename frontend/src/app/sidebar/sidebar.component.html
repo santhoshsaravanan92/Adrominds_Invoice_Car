@@ -41,7 +41,7 @@
         </button>
         <div class="dropdown-content">
           <div class="user-menu-content username" *ngIf="!isAssistantLoggedIn">{{ username }}</div>
-          <hr class="break" *ngIf="!isAssistantLoggedIn"/>
+          <hr class="break" *ngIf="!isAssistantLoggedIn" />
           <div class="user-menu-content cursor-pointer" (click)="componentSelector('profile')">Profile</div>
           <!-- <div class="user-menu-content cursor-pointer" (click)="componentSelector('settings')">Settings</div> -->
           <div class="user-menu-content cursor-pointer underline" (click)="logout()">Logout</div>
@@ -66,6 +66,9 @@
       <div *ngIf="componentToLoad === 'invoice'">
         <!-- <app-settings-base></app-settings-base> -->
         <app-invoice></app-invoice>
+      </div>
+      <div *ngIf="componentToLoad === 'template'">
+        <app-templates></app-templates>
       </div>
     </div>
   </div>

@@ -31,6 +31,7 @@ import { SettingsModule } from './settings/settings.module';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CustomerModalComponent } from './customer/customer-modal/customer-modal.component';
+import { TemplatesComponent } from './templates/templates.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CustomerModalComponent } from './customer/customer-modal/customer-modal
     OnlynumberDirective,
     InvoiceComponent,
     CustomerComponent,
-    CustomerModalComponent
+    CustomerModalComponent,
+    TemplatesComponent
   ],
   imports: [
     BrowserModule,

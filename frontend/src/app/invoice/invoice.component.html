@@ -1,3 +1,10 @@
+<p-sidebar [style]="{ height: '98%', width: '80%', 'margin-left': '10%' }" [(visible)]="loadCustomerPage" position="top"
+    [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="true">
+    <!-- <app-customer-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass">
+    </app-customer-modal> -->
+    <app-customer></app-customer>
+</p-sidebar>
+
 <div class="width-100 margin-top font-family">
     <form [formGroup]="invoiceForm" class="form-modal-design">
         <div class="width-50 float-left padding1em">
@@ -5,7 +12,7 @@
                 <label for="customer name" class="label-design">Customer Name</label><br />
                 <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
                     class="form-control textbox text-box-width" style="width:36em" />
-                <label for="explore" class="explore">Explore</label>
+                <label for="explore" class="explore" (click)="openCustomerpage()">Explore</label>
             </div>
             <div *ngIf="invoiceFormSubmitted && getInvoiceFormControls.customername.errors"
                 class="error-message shadow">
@@ -42,12 +49,12 @@
             </div>
             <div class="form-group">
                 <label for="payment" class="label-design">Mode/Terms of Payment</label>
-                <input type="text" placeholder="Delivery Notes" formControlName="mode" maxlength="50"
+                <input type="text" placeholder="Mode of Payments" formControlName="mode" maxlength="50"
                     class="form-control textbox text-box-width" />
             </div>
             <div class="form-group">
                 <label for="buyers order number" class="label-design">Dated</label>
-                <input type="text" placeholder="Buyers Order Number" formControlName="dated"
+                <input type="text" placeholder="Date" formControlName="dated"
                     class="form-control textbox text-box-width" />
             </div>
             <div class="form-group">
@@ -86,12 +93,12 @@
             <div></div>
             <div></div>
             <div class="form-group">
-                <button type="submit" class="button float-right cursor-pointer margin-left" id="btnAddITem">
+                <button type="submit" class="button float-right cursor-pointer margin-left" id="btnAddITem" (click) = "addItemBtnclick()">
                     Add Item
                 </button>
             </div>
         </div>
-        
+
         <div style="margin:1em !important;" class="shadow">
             <!-- <p-table [value]="gridDatas" dataKey="id"
         styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true" [rows]="15"

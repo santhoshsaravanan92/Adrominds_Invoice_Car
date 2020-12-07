@@ -9,6 +9,7 @@ export class InvoiceComponent implements OnInit {
   invoiceForm: FormGroup;
   invoiceFormSubmitted: boolean = false;
   isLoadingDone: boolean = false;
+  loadCustomerPage: boolean = false;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -41,5 +42,15 @@ export class InvoiceComponent implements OnInit {
 
   get getInvoiceFormControls() {
     return this.invoiceForm.controls;
+  }
+
+  addItemBtnclick() {
+    let controlsFormControls = this.getInvoiceFormControls;
+     const price = controlsFormControls['price'].value;
+     const desc = controlsFormControls[''].value
+  }
+
+  openCustomerpage() {
+    this.loadCustomerPage = true;
   }
 }

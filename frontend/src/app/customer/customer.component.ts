@@ -100,7 +100,6 @@ export class CustomerComponent implements OnInit {
   }
 
   deleteCustomer(id: string, name: string) {
-    debugger;
     this.confirmationService.confirm({
       message: `Are you sure that you want to delete the customer ${name}`,
       header: "Delete Customer",
