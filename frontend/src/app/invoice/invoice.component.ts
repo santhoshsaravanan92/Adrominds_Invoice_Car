@@ -13,12 +13,14 @@ import { ProductInformation } from "./models/invoice-models";
 export class InvoiceComponent extends BaseComponent implements OnInit {
   CustomerForm: FormGroup;
   productForm: FormGroup;
+  gstForm: FormGroup;
   invoiceFormSubmitted: boolean = false;
   addItemFormsSubmitted: boolean = false;
   isLoadingDone: boolean = false;
   loadCustomerPage: boolean = false;
   gridDatas: ProductInformation[] = [];
-  total:number = 0;
+  amount: number = 0;
+  price: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +32,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.CustomerFormCreation();
     this.productFormCreation();
+    this.gstFormCreation();
   }
 
   CustomerFormCreation() {
@@ -53,10 +56,16 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       rate: ["", [Validators.required]],
       quantity: ["", [Validators.required]],
       price: ["", [Validators.required]],
-      sgst: [""],
-      cgst: [""],
+    });
+  }
+
+  gstFormCreation() {
+    this.gstForm = this.formBuilder.group({
+      sgst: ["8"],
+      cgst: ["8"],
       discount: [""],
-      amount: [""],
+      amount: ["0"],
+      discountoption: [""],
     });
   }
 
@@ -66,6 +75,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   get getProductFormControls() {
     return this.productForm.controls;
+  }
+
+  get getGSTFormControls() {
+    return this.gstForm.controls;
   }
 
   addItemBtnclick() {
@@ -90,9 +103,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     productModelObj.price = price;
     productModelObj.quantity = quantity;
     productModelObj.rate = rate;
-
-    this.total = price * quantity;
-
+    this.amount += price;
+    this.gstCalculation();
     this.gridDatas.push(productModelObj);
     this.productForm.reset();
     this.addItemFormsSubmitted = false;
@@ -103,4 +115,26 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   CustomerFormSubmit() {}
+
+  calculateProductPrice() {
+    let productFormControls = this.getProductFormControls;
+    const rate = productFormControls["rate"].value;
+    const quantity = productFormControls["quantity"].value;
+    let r = rate != "" && rate > 0 ? rate : 1;
+    let q = quantity != "" && quantity > 0 ? quantity : 1;
+    this.price = r * q;
+  }
+
+  gstCalculation() {
+    let gstFormControls = this.getGSTFormControls;
+    const stategst = gstFormControls["sgst"].value;
+    const centralgst = gstFormControls["cgst"].value;
+    let sgst = this.amount * (stategst / 100);
+    let cgst = this.amount * (centralgst / 100);
+    this.amount = parseFloat((this.amount + sgst + cgst).toFixed(2));
+  }
+
+  printOnly(){
+    window.print();
+  }
 }

@@ -40,3 +40,31 @@ CREATE TABLE Customer(
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 	ON UPDATE CURRENT_TIMESTAMP   
 );
+
+CREATE TABLE Invoice(
+	ID int AUTO_INCREMENT primary key,
+	Name varchar(20) not null,
+	Address varchar(50) NULL,
+	Mobile varchar(10) NULL,
+	GST varchar(15) NULL,
+	Email varchar(50) NULL,
+	Comments varchar(50) NULL,
+	owner_email varchar(50) references personalinformation(Email),
+	created_date timestamp default current_timestamp,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+	ON UPDATE CURRENT_TIMESTAMP   
+);
+
+CREATE TABLE Invoice_Product(
+	ID int AUTO_INCREMENT primary key,
+	Description varchar(50) not null,
+	Rate varchar(10) NULL,
+	Quantity varchar(3) NULL,
+	Price varchar(10) NULL,
+	Email varchar(50) NULL,
+	Comments varchar(50) NULL,
+	Invoice_Number bigint(20) references Invoice(ID),
+	created_date timestamp default current_timestamp,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+	ON UPDATE CURRENT_TIMESTAMP   
+);
