@@ -26,13 +26,13 @@ import { BaseComponent } from "./components/base/base.component";
 import { DialogModule } from "primeng/dialog";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
-import { OnlynumberDirective } from './directives/onlynumber.directives';
-import { SettingsModule } from './settings/settings.module';
-import { InvoiceComponent } from './invoice/invoice.component';
-import { CustomerComponent } from './customer/customer.component';
-import { CustomerModalComponent } from './customer/customer-modal/customer-modal.component';
-import { TemplatesComponent } from './templates/templates.component';
-
+import { OnlynumberDirective } from "./directives/onlynumber.directives";
+import { SettingsModule } from "./settings/settings.module";
+import { InvoiceComponent } from "./invoice/invoice.component";
+import { CustomerComponent } from "./customer/customer.component";
+import { CustomerModalComponent } from "./customer/customer-modal/customer-modal.component";
+import { TemplatesComponent } from "./templates/templates.component";
+import { AccordionModule } from "primeng/accordion";
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +48,7 @@ import { TemplatesComponent } from './templates/templates.component';
     InvoiceComponent,
     CustomerComponent,
     CustomerModalComponent,
-    TemplatesComponent
+    TemplatesComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +64,8 @@ import { TemplatesComponent } from './templates/templates.component';
     ConfirmDialogModule,
     SidebarModule,
     DialogModule,
-    SettingsModule
+    SettingsModule,
+    AccordionModule,
   ],
   bootstrap: [AppComponent],
   providers: [
