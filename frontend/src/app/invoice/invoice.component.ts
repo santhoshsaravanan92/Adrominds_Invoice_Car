@@ -110,10 +110,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       return;
     }
     let productModelObj = new ProductInformation();
-    productModelObj.description = description;
-    productModelObj.price = price;
-    productModelObj.quantity = quantity;
-    productModelObj.rate = rate;
+    productModelObj.Description = description;
+    productModelObj.Price = price;
+    productModelObj.Quantity = quantity;
+    productModelObj.Rate = rate;
     this.amount += price;
     this.gstCalculation();
     this.gridDatas.push(productModelObj);
@@ -165,13 +165,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gridDatas.map((a) => {
       content +=
         '<tr class="item"><td>' +
-        a.description +
+        a.Description +
         "</td><td>" +
-        a.rate +
+        a.Rate +
         "</td><td>" +
-        a.quantity +
+        a.Quantity +
         "</td><td>" +
-        a.price +
+        a.Price +
         "</td></tr>";
     });
     return content;
@@ -241,7 +241,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       this.addItemFormsSubmitted = false;
       return;
     }
-    const invoiceInformation = this.prepareEntireInvoiceFormData();
+    this.prepareEntireInvoiceFormData();
   }
 
   prepareEntireInvoiceFormData() {
@@ -270,19 +270,33 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.model = customerFormControls["model"].value;
     invoiceObj.otherNotes = customerFormControls["othernotes"].value;
 
-    //const productFormControls = this.getProductFormControls;
-
     this.invoiceService.addInvoice(invoiceObj).subscribe((data) => {
       if (data.message === "invoice added") {
-        this.gridDatas
+        let data = [];
+        this.gridDatas.map((d) => {
+          data.push({ ...d, Invoice_Number: invoiceObj.InvoiceId });
+        });
 
-
-        this.updateToastMessage(
-          "Invoice created.",
-          Constants.success,
-          "Invoice"
-        );
-        this.resetValues();
+        // another service call
+        this.invoiceService.addInvoiceProducts(data).subscribe((data) => {
+          if (data.message === "invoice product added") {
+            this.updateToastMessage(
+              "Invoice created.",
+              Constants.success,
+              "Invoice"
+            );
+            this.resetValues();
+          } else {
+            this.updateToastMessage(
+              "Invoice not created. Try again later.",
+              Constants.error,
+              "Invoice"
+            );
+          }
+        }),
+          (err) => {
+            console.log(err);
+          };
       } else {
         this.updateToastMessage(
           "Invoice not created. Try again later.",
@@ -320,5 +334,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gridDatas = [];
     this.amount = 0;
     this.price = 0;
+    this.gstForm.reset();
+    this.CustomerForm.reset();
+    this.productForm.reset();
   }
 }

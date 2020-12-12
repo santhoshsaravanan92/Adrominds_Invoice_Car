@@ -67,10 +67,10 @@ CREATE TABLE Invoice(
 CREATE TABLE Invoice_Product(
 	ID int AUTO_INCREMENT primary key,
 	Description varchar(50) not null,
-	Rate varchar(10) NULL,
-	Quantity varchar(3) NULL,
-	Price varchar(10) NULL,
-	Invoice_Number bigint(20) references InvoiceId(ID),
+	Rate varchar(10) not null,
+	Quantity varchar(3) not NULL,
+	Price varchar(10) not NULL,
+	Invoice_Number bigint(20) not null references InvoiceId(ID),
 	created_date timestamp default current_timestamp,
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 	ON UPDATE CURRENT_TIMESTAMP   

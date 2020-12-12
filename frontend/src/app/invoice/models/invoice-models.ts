@@ -1,12 +1,12 @@
 export class ProductInformation {
-  description: string;
-  rate: string;
-  quantity: string;
-  price: string;
+  Description: string;
+  Rate: string;
+  Quantity: string;
+  Price: string;
+  Invoice_Number: string
 }
 
-
-export class InvoiceInformation{
+export class InvoiceInformation {
   InvoiceId: string;
   Name: string;
   DeliveryNotes: string;
