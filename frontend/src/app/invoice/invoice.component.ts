@@ -22,6 +22,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   amount: number = 0;
   price: number = 0;
 
+  testHTMLContent: string =
+    '<html><head><style>md-dialog-actions{display: none;}.invoice-box {max-width: 800px;margin: auto;padding: 30px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, .15);font-size: 16px;line-height: 24px;color: #555;}.invoice-box table {width: 100%;line-height: inherit;text-align: left;}.invoice-box table td {padding: 5px;vertical-align: top;}.invoice-box table tr td:nth-child(2) {text-align: right}.invoice-box table tr.top table td {padding-bottom: 20px}.invoice-box table tr.top table td.title {font-size: 45px;line-height: 45px;color: #333}.invoice-box table tr.information table td {padding-bottom: 40px;}.invoice-box table tr.heading td {background: #eee;border-bottom: 1px solid #ddd;font-weight: 700;}.invoice-box table tr.details td {padding-bottom: 20px}.invoice-box table tr.item td {border-bottom: 1px solid #eee;}.invoice-box table tr.item.last td {border-bottom: none;}.invoice-box table tr.total td:nth-child(2) {border-top: 2px solid #eee;font-weight: 700;}</style></head><body><div class="invoice-box"><table cellpadding="0" cellspacing="0"><tr class="top"><td colspan="2"><table><tr><td>Invoice #: 123<br>Created: {today}<br></td></tr></table></td></tr><tr class="information"><td colspan="2"><table><tr><td>Service center Address 1<br>no 1<br>Test Address<br>center email</td><td>{name}<br>{model}<br>{km}<br>{mode}</td></tr></table></td></tr><tr class="heading"><td>Delivery Notes</td></tr><tr class="details"><td>{notes}</td></tr><tr class="heading"><td>Items</td><td>Each Price</td><td>Quantity</td><td>Amount</td></tr>{bodycontent}<tr class="total"><td></td><td></td><td></td><td>State GST: {sgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Central GST: {cgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Total: {amount}</td></tr></table></div></body></html>';
+
   constructor(
     private formBuilder: FormBuilder,
     public messageService: MessageService
@@ -40,11 +43,11 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       customername: ["", [Validators.required]],
       deliverynotes: [""],
       ordernumber: [""],
-      vehiclenumber: [""],
+      vehiclenumber: ["", [Validators.required]],
       othernotes: [""],
-      templatename: [""],
+      templatename: ["Default Template"],
       mode: [""],
-      dated: [""],
+      dated: [new Date().toLocaleDateString("en-US")],
       model: [""],
       kmdriver: [""],
     });
@@ -63,9 +66,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gstForm = this.formBuilder.group({
       sgst: ["8"],
       cgst: ["8"],
-      discount: [""],
+      discount: ["0"],
       amount: ["0"],
-      discountoption: [""],
+      discountoption: ["%"],
     });
   }
 
@@ -129,12 +132,101 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let gstFormControls = this.getGSTFormControls;
     const stategst = gstFormControls["sgst"].value;
     const centralgst = gstFormControls["cgst"].value;
+    const discount = gstFormControls["discount"].value;
+    const discountOption = gstFormControls["discountoption"].value;
+
     let sgst = this.amount * (stategst / 100);
     let cgst = this.amount * (centralgst / 100);
     this.amount = parseFloat((this.amount + sgst + cgst).toFixed(2));
+
+    if (discount > 0 && discount != "") {
+      if (discountOption != "p") {
+        this.amount -= discount;
+      } else {
+        let amountToReduce = this.amount * (discount / 100);
+        this.amount = parseFloat((this.amount - amountToReduce).toFixed(2));
+      }
+    }
   }
 
-  printOnly(){
-    window.print();
+  saveAndPrint() {
+    this.saveOnly();
+    this.printOnly();
+  }
+
+  prepareBodyContentForPrint() {
+    let content = "";
+    this.gridDatas.map((a) => {
+      content +=
+        '<tr class="item"><td>' +
+        a.description +
+        "</td><td>" +
+        a.rate +
+        "</td><td>" +
+        a.quantity +
+        "</td><td>" +
+        a.price +
+        "</td></tr>";
+    });
+    return content;
+  }
+
+  printOnly() {
+    var WinPrint = window.open(
+      "",
+      "",
+      "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+    );
+    let bodyContent = this.prepareBodyContentForPrint();
+    let htmlContent = this.testHTMLContent.replace(
+      "{today}",
+      new Date().toLocaleDateString("en-US")
+    );
+    let actualcontent = htmlContent.replace("{amount}", this.amount.toString());
+    let a = actualcontent.replace("{bodycontent}", bodyContent);
+
+    let controls = this.getCustomerFormControls;
+    let namereplaced = a.replace("{name}", controls["customername"].value);
+    let modelreplaced = namereplaced.replace(
+      "{model}",
+      controls["model"].value
+    );
+    let kmreplaced = modelreplaced.replace("{km}", controls["kmdriver"].value);
+    let modereplaced = kmreplaced.replace("{mode}", controls["mode"].value);
+    let notes = modereplaced.replace(
+      "{notes}",
+      controls["deliverynotes"].value
+    );
+
+    let gstFormControls = this.getGSTFormControls;
+    let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
+    let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
+
+    WinPrint.document.write(printContent);
+    WinPrint.document.close();
+    WinPrint.setTimeout(function () {
+      WinPrint.focus();
+      WinPrint.print();
+      WinPrint.close();
+    }, 1000);
+  }
+
+  saveOnly() {
+    if (
+      this.productForm.invalid ||
+      this.gstForm.invalid ||
+      this.CustomerForm.invalid
+    ) {
+      this.updateToastMessage(
+        "All fields are mandatory in Product information",
+        Constants.error,
+        "AdroMinds Invoice"
+      );
+      this.addItemFormsSubmitted = false;
+      return;
+    }
+
+
+
   }
 }

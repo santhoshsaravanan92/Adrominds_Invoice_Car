@@ -10,13 +10,14 @@ const db = require('./helpers/dbhelper');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const customerRoutes = require('./routes/customer');
+const invoiceRoutes = require('./routes/invoice');
 
 const app = express();
 
 db.connection();
 
 app.use(bodyParser.json());
-app.use('/images',express.static('images'))
+app.use('/images', express.static('images'))
 app.use(
 	bodyParser.urlencoded({
 		extended: true,
@@ -29,6 +30,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/customer', customerRoutes);
+app.use('/api/invoice', invoiceRoutes);
 
 const port = process.env.PORT;
 

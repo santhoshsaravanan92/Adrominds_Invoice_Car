@@ -43,13 +43,22 @@ CREATE TABLE Customer(
 
 CREATE TABLE Invoice(
 	ID int AUTO_INCREMENT primary key,
-	Name varchar(20) not null,
-	Address varchar(50) NULL,
-	Mobile varchar(10) NULL,
-	GST varchar(15) NULL,
-	Email varchar(50) NULL,
-	Comments varchar(50) NULL,
-	owner_email varchar(50) references personalinformation(Email),
+	InvoiceId bigint(20) not null,
+	Name varchar(15) not null,
+	DeliveryNotes varchar(50) NULL,
+	BuyerOrderNumber varchar(15) NULL,
+	VehicleNumber varchar(15) NOT NULL,
+	otherNotes varchar(50) NULL,
+	mode varchar(10) not null, 
+	Dated varchar(15) not null, 
+	model varchar(40) not null,
+	km int not null, 
+	sgst int not null, 
+	csgt int not null, 
+	discount int null,
+	discount_option varchar(4) null,
+	amount decimal not null, 
+	Email varchar(50) references personalinformation(Email),
 	created_date timestamp default current_timestamp,
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 	ON UPDATE CURRENT_TIMESTAMP   
@@ -61,9 +70,7 @@ CREATE TABLE Invoice_Product(
 	Rate varchar(10) NULL,
 	Quantity varchar(3) NULL,
 	Price varchar(10) NULL,
-	Email varchar(50) NULL,
-	Comments varchar(50) NULL,
-	Invoice_Number bigint(20) references Invoice(ID),
+	Invoice_Number bigint(20) references InvoiceId(ID),
 	created_date timestamp default current_timestamp,
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 	ON UPDATE CURRENT_TIMESTAMP   
