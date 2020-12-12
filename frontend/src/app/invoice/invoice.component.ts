@@ -132,6 +132,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let r = rate != "" && rate > 0 ? rate : 1;
     let q = quantity != "" && quantity > 0 ? quantity : 1;
     this.price = r * q;
+    localStorage.setItem("price", "" + this.price);
   }
 
   gstCalculation() {
@@ -140,10 +141,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     const centralgst = gstFormControls["cgst"].value;
     const discount = gstFormControls["discount"].value;
     const discountOption = gstFormControls["discountoption"].value;
-
-    let sgst = this.amount * (stategst / 100);
-    let cgst = this.amount * (centralgst / 100);
-    this.amount = parseFloat((this.amount + sgst + cgst).toFixed(2));
+    const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
+    let sgst = totalpricewithoutgst * (stategst / 100);
+    let cgst = totalpricewithoutgst * (centralgst / 100);
+    this.amount = parseFloat((totalpricewithoutgst + sgst + cgst).toFixed(2));
 
     if (discount > 0 && discount != "") {
       if (discountOption != "p") {
@@ -178,62 +179,67 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   printOnly() {
-    this.validateForms();
-    var WinPrint = window.open(
-      "",
-      "",
-      "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-    );
-    let bodyContent = this.prepareBodyContentForPrint();
-    let htmlContent = this.testHTMLContent.replace(
-      "{today}",
-      new Date().toLocaleDateString("en-US")
-    );
-    let actualcontent = htmlContent.replace("{amount}", this.amount.toString());
-    let a = actualcontent.replace("{bodycontent}", bodyContent);
+    if (this.validateForms()) {
+      var WinPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      );
+      let bodyContent = this.prepareBodyContentForPrint();
+      let htmlContent = this.testHTMLContent.replace(
+        "{today}",
+        new Date().toLocaleDateString("en-US")
+      );
+      let actualcontent = htmlContent.replace(
+        "{amount}",
+        this.amount.toString()
+      );
+      let a = actualcontent.replace("{bodycontent}", bodyContent);
 
-    let controls = this.getCustomerFormControls;
-    const customerName = controls["customername"].value;
-    let namereplaced = a.replace("{name}", customerName);
-    let modelreplaced = namereplaced.replace(
-      "{model}",
-      controls["model"].value
-    );
-    let kmreplaced = modelreplaced.replace("{km}", controls["km"].value);
-    let modereplaced = kmreplaced.replace("{mode}", controls["mode"].value);
-    let notes = modereplaced.replace(
-      "{notes}",
-      controls["deliverynotes"].value
-    );
+      let controls = this.getCustomerFormControls;
+      const customerName = controls["customername"].value;
+      let namereplaced = a.replace("{name}", customerName);
+      let modelreplaced = namereplaced.replace(
+        "{model}",
+        controls["model"].value
+      );
+      let kmreplaced = modelreplaced.replace("{km}", controls["km"].value);
+      let modereplaced = kmreplaced.replace("{mode}", controls["mode"].value);
+      let notes = modereplaced.replace(
+        "{notes}",
+        controls["deliverynotes"].value
+      );
 
-    const gstFormControls = this.getGSTFormControls;
-    let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
-    let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
+      const gstFormControls = this.getGSTFormControls;
+      let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
+      let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
 
-    WinPrint.document.write(printContent);
-    WinPrint.document.close();
-    WinPrint.setTimeout(function () {
-      WinPrint.focus();
-      WinPrint.document.title = `${customerName}_${new Date().toLocaleDateString(
-        "en-US"
-      )}`;
-      WinPrint.print();
-      WinPrint.close();
-    }, 1000);
+      WinPrint.document.write(printContent);
+      WinPrint.document.close();
+      WinPrint.setTimeout(function () {
+        WinPrint.focus();
+        WinPrint.document.title = `${customerName}_${new Date().toLocaleDateString(
+          "en-US"
+        )}`;
+        WinPrint.print();
+        WinPrint.close();
+      }, 1000);
+    }
   }
 
   saveOnly() {
-    this.validateForms();
-    if (this.gridDatas.length == 0) {
-      this.updateToastMessage(
-        "Atleast one product must add to grid",
-        Constants.error,
-        "AdroMinds Invoice"
-      );
-      this.addItemFormsSubmitted = false;
-      return;
+    if (this.validateForms()) {
+      if (this.gridDatas.length == 0) {
+        this.updateToastMessage(
+          "Atleast one product must add to grid",
+          Constants.error,
+          "AdroMinds Invoice"
+        );
+        this.addItemFormsSubmitted = false;
+        return;
+      }
+      this.prepareEntireInvoiceFormData();
     }
-    this.prepareEntireInvoiceFormData();
   }
 
   validateForms() {
@@ -244,8 +250,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         "AdroMinds Invoice"
       );
       this.addItemFormsSubmitted = false;
-      return;
+      return false;
     }
+    return true;
   }
 
   prepareEntireInvoiceFormData() {
