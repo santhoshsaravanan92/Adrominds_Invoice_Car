@@ -178,6 +178,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   printOnly() {
+    this.validateForms();
     var WinPrint = window.open(
       "",
       "",
@@ -209,29 +210,20 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
     let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
 
-    WinPrint.document.title = `${customerName}_${new Date().toLocaleDateString(
-      "en-US"
-    )}`;
     WinPrint.document.write(printContent);
     WinPrint.document.close();
     WinPrint.setTimeout(function () {
       WinPrint.focus();
+      WinPrint.document.title = `${customerName}_${new Date().toLocaleDateString(
+        "en-US"
+      )}`;
       WinPrint.print();
       WinPrint.close();
     }, 1000);
   }
 
   saveOnly() {
-    if (this.gstForm.invalid || this.CustomerForm.invalid) {
-      this.updateToastMessage(
-        "All fields are mandatory in Product information",
-        Constants.error,
-        "AdroMinds Invoice"
-      );
-      this.addItemFormsSubmitted = false;
-      return;
-    }
-
+    this.validateForms();
     if (this.gridDatas.length == 0) {
       this.updateToastMessage(
         "Atleast one product must add to grid",
@@ -244,6 +236,18 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.prepareEntireInvoiceFormData();
   }
 
+  validateForms() {
+    if (this.gstForm.invalid || this.CustomerForm.invalid) {
+      this.updateToastMessage(
+        "All fields are mandatory in Product information",
+        Constants.error,
+        "AdroMinds Invoice"
+      );
+      this.addItemFormsSubmitted = false;
+      return;
+    }
+  }
+
   prepareEntireInvoiceFormData() {
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();
@@ -251,7 +255,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.cgst = gstFormControls["cgst"].value;
     invoiceObj.amount = this.amount;
     invoiceObj.discount = gstFormControls["discount"].value;
-    invoiceObj.discount_option = gstFormControls["discountoption"].value;
+    invoiceObj.discount_option = this.getChangeDiscount.value;
 
     const customerFormControls = this.getCustomerFormControls;
     let date = new Date().toLocaleDateString("en-US").replace("/", "");
