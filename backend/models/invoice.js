@@ -52,7 +52,7 @@ const Invoice = sequelize.define('invoice', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    cgst: {
+    csgt: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
@@ -74,24 +74,79 @@ const Invoice = sequelize.define('invoice', {
     },
 });
 
+const InvoiceProduct = sequelize.define('invoice_product', {
+    Invoice_Number: {
+        type: Sequelize.BIGINT(20),
+        allowNull: false,
+    },
+    Description: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+    },
+    Rate: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+    },
+    Quantity: {
+        type: Sequelize.STRING(3),
+        allowNull: false,
+    },
+    Price: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+    },
+});
+
 exports.addInvoice = (invoiceObj) => {
     return Invoice.create({
-            InvoiceId: invoiceObj.invoiceId,
-            Name: invoiceObj.name,
-            DeliveryNotes: invoiceObj.deliveryNotes,
-            BuyerOrderNumber: invoiceObj.orderNumber,
-            VehicleNumber: invoiceObj.vehicleNumber,
-            otherNotes: invoiceObj.othernotes,
+            InvoiceId: invoiceObj.InvoiceId,
+            Name: invoiceObj.Name,
+            DeliveryNotes: invoiceObj.DeliveryNotes,
+            BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
+            VehicleNumber: invoiceObj.VehicleNumber,
+            otherNotes: invoiceObj.otherNotes,
             mode: invoiceObj.mode,
-            Dated: invoiceObj.dated,
+            Dated: invoiceObj.Dated,
             model: invoiceObj.model,
             km: invoiceObj.km,
             sgst: invoiceObj.sgst,
-            cgst: invoiceObj.cgst,
+            csgt: invoiceObj.cgst,
             discount: invoiceObj.discount,
-            discount_option: invoiceObj.discountOption,
+            discount_option: invoiceObj.discount_option,
             amount: invoiceObj.amount,
-            Email: invoiceObj.email,
+            Email: invoiceObj.Email,
+        })
+        .then((a) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
+};
+
+
+exports.addinvoiceproduct = (invoiceProductObj) => {
+    console.log('in model')
+    console.log(invoiceProductObj)
+    // return InvoiceProduct.create({
+    //         Invoice_Number: invoiceObj.InvoiceId,
+    //         Description: invoiceObj.description,
+    //         Rate: invoiceObj.rate,
+    //         Quantity: invoiceObj.quantity,
+    //         Price: invoiceObj.price,
+    //     })
+    //     .then((a) => {
+    //         return 'success';
+    //     })
+    //     .catch((err) => {
+    //         handleError(err);
+    //         return err;
+    //     });
+
+
+    return InvoiceProduct.bulkCreate(invoiceProductObj, {
+            returning: true
         })
         .then((a) => {
             return 'success';

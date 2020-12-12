@@ -4,13 +4,13 @@ const {
 } = require('express-validator');
 
 const {
-    addInvoice
+    addInvoice,
+    addinvoiceproduct
 } = require('../controllers/invoice');
 
 const invoiceRouter = express.Router();
 
-invoiceRouter.post('/addinvoice',
-    [check('Email', 'emails must be in good format').isEmail()], addInvoice);
-
+invoiceRouter.post('/addinvoice', addInvoice);
+invoiceRouter.post('/addinvoiceproduct', addinvoiceproduct);
 
 module.exports = invoiceRouter;
