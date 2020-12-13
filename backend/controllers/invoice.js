@@ -4,7 +4,8 @@ const {
 } = require('../helpers/helper-methods');
 const {
     addInvoice,
-    addinvoiceproduct
+    addinvoiceproduct,
+    getCustomerNames
 } = require('../models/invoice');
 
 exports.addInvoice = (req, res) => {
@@ -55,6 +56,29 @@ exports.addinvoiceproduct = (req, res) => {
         else
             return res.status(400).json({
                 message: 'not added'
+            });
+    });
+}
+
+exports.getCustomerNames = (req, res) => {
+    if (!validateRequest(req)) {
+        return res.status(422).json({
+            error: errors.array()[0].msg,
+        });
+    }
+
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    getCustomerNames(req.params.name).then((data) => {
+        if (data != null)
+            return res.status(200).json(data);
+        else
+            return res.status(400).json({
+                message: 'customer not found'
             });
     });
 }

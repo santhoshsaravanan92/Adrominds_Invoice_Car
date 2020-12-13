@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const {
+    Op
+} = require("sequelize");
+const {
     sequelize
 } = require('../helpers/dbhelper');
 const {
@@ -155,4 +158,20 @@ exports.addinvoiceproduct = (invoiceProductObj) => {
             handleError(err);
             return err;
         });
+};
+
+exports.getCustomerNames = (name) => {
+    return Invoice.findAll({
+        attributes: ['Name'],
+        where: {
+            Name: {
+                [Op.like]: `%${name}%`
+            },
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
 };

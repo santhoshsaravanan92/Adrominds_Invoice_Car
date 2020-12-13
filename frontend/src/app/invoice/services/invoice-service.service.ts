@@ -1,6 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { InvoiceInformation, ProductInformation } from "../models/invoice-models";
+import {
+  InvoiceInformation,
+  ProductInformation,
+} from "../models/invoice-models";
 import { Observable } from "rxjs";
 import { UrlMappers } from "src/app/helpers/urlmappers";
 import { getHeaders } from "src/app/helpers/utilities";
@@ -48,6 +51,23 @@ export class InvoiceServiceService {
   addInvoiceProducts(invoiceObj: ProductInformation[]): Observable<any> {
     return this.http
       .post<InvoiceInformation>(UrlMappers.addInvoiceProduct, invoiceObj, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  getCustomerNames(enteredname: string): Observable<any> {
+    debugger;
+
+    return this.http
+      .get<any>(UrlMappers.getCustomerNames + enteredname, {
         headers: getHeaders(),
       })
       .pipe(

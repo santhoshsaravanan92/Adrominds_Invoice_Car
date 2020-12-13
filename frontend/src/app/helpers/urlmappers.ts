@@ -13,10 +13,11 @@ export module UrlMappers {
 
   export const addCustomer = baseUrl + "/api/customer/addcustomer";
   export const getAllCustomer = baseUrl + "/api/customer/getallcustomer/";
-  export const getCustomerById = baseUrl + "/api/customer//getCustomerById/";
+  export const getCustomerById = baseUrl + "/api/customer/getCustomerById/";
   export const updateCustomer = baseUrl + "/api/customer/updatecustomer";
   export const deleteCustomer = baseUrl + "/api/customer/deleteCustomer/";
 
   export const addInvoice = baseUrl + "/api/invoice/addinvoice";
   export const addInvoiceProduct = baseUrl + "/api/invoice/addinvoiceproduct";
+  export const getCustomerNames = baseUrl + "/api/invoice/getCustomerNames/";
 }

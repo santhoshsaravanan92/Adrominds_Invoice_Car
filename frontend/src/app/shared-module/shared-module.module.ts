@@ -11,10 +11,11 @@ import { FieldsetModule } from "primeng/fieldset";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { AccordionModule } from "primeng/accordion";
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, TableModule, DialogModule, AccordionModule],
+  imports: [CommonModule, TableModule, DialogModule, AccordionModule, AutoCompleteModule],
   exports: [TableModule, DialogModule, CommonModule, AccordionModule],
 })
 export class SharedModule {}

@@ -33,6 +33,8 @@ import { CustomerComponent } from "./customer/customer.component";
 import { CustomerModalComponent } from "./customer/customer-modal/customer-modal.component";
 import { TemplatesComponent } from "./templates/templates.component";
 import { AccordionModule } from "primeng/accordion";
+import { AutoCompleteModule } from "primeng/autocomplete";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +68,7 @@ import { AccordionModule } from "primeng/accordion";
     DialogModule,
     SettingsModule,
     AccordionModule,
+    AutoCompleteModule,
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -10,9 +10,12 @@
         <div class="width-50 float-left padding1em">
             <div class="form-group">
                 <label for="customer name" class="label-design">Customer Name</label><br />
-                <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
-                    class="form-control textbox text-box-width" style="width:36em" />
-                <label for="explore" class="explore" (click)="openCustomerpage()">Explore</label>
+                <!-- <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
+                    class="form-control textbox text-box-width" style="width:36em" /> -->
+                <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
+                    [suggestions]="customerNames" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink','border-top': 
+                    '0', 'border-right': '0','border-left': '0','height': '37px'}">
+                </p-autoComplete>
             </div>
             <div *ngIf="invoiceFormSubmitted && getCustomerFormControls.customername.errors"
                 class="error-message shadow">
@@ -75,7 +78,7 @@
         </div>
     </form>
     <form [formGroup]="productForm" class="form-modal-design">
-        <div class="form-group">
+        <div class="form-group" style="padding:2em">
             <label for="description" class="label-design">Description of Goods</label>
             <textarea formControlName="description" id="" cols="5" rows="5" class="form-control textbox text-box-width"
                 maxlength="50"></textarea>
