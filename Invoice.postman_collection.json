@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "a2d179ba-5be0-412d-813e-50b99feee7ec",
+		"name": "Invoice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Invoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1517eeb789fad171cfdd32d7d80c29a90fddd2177f13271556abbdfd46128d40a526d4aff60203d80bca7acd31d33b88d2c7888e1aa711c5210ade070f7fcce1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sgst\": \"8\",\r\n      \"cgst\": \"8\",\r\n      \"amount\": 12345,\r\n      \"discount\": \"invoiceObj.discount\",\r\n      \"discount_option\": \"invoiceObj.discount_option\",\r\n      \"InvoiceId\": 123456,\r\n      \"Dated\": \"invoiceObj.Dated\",\r\n      \"BuyerOrderNumber\": \"invoiceObj.BuyerOrderNumber\",\r\n      \"DeliveryNotes\": \"invoiceObj.DeliveryNotes\",\r\n      \"Email\": \"invoiceObj.Email\",\r\n      \"Name\": \"invoiceObj.Name\",\r\n      \"VehicleNumber\": \"invoiceObj.VehicleNumber\",\r\n      \"km\": 1234,\r\n      \"mode\": \"invoiceObj.mode\",\r\n      \"model\": \"invoiceObj.model\",\r\n      \"otherNotes\": \"invoiceObj.otherNotes\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/invoice/addinvoice",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"invoice",
+						"addinvoice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Invoice product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1517eeb789fad171cfdd32d7d80c29a90fddd2177f13271556abbdfd46128d40a526d4aff60203d80bca7acd31d33b88d2c7888e1aa711c5210ade070f7fcce1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n             \"Invoice_Number\": 12122020195546,\r\n             \"Description\": \"invoiceObj.description\",\r\n             \"Rate\": \"invoiceObj.rate\",\r\n             \"Quantity\": \"invoiceObj.quantity\",\r\n             \"Price\": \"invoiceObj.price\"\r\n    },\r\n    {\r\n             \"Invoice_Number\": 12122020195546,\r\n             \"Description\": \"invoiceObj.description\",\r\n             \"Rate\": \"invoiceObj.rate\",\r\n             \"Quantity\": \"invoiceObj.quantity\",\r\n             \"Price\": \"invoiceObj.price\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/invoice//addinvoiceproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"invoice",
+						"",
+						"addinvoiceproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get name for auto complete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1517eeb789fad171cfdd32d7d80c29a90fddd2177f13271556abbdfd46128d40a526d4aff60203d80bca7acd31d33b88d2c7888e1aa711c5210ade070f7fcce1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n             \"Invoice_Number\": 12122020195546,\r\n             \"Description\": \"invoiceObj.description\",\r\n             \"Rate\": \"invoiceObj.rate\",\r\n             \"Quantity\": \"invoiceObj.quantity\",\r\n             \"Price\": \"invoiceObj.price\"\r\n    },\r\n    {\r\n             \"Invoice_Number\": 12122020195546,\r\n             \"Description\": \"invoiceObj.description\",\r\n             \"Rate\": \"invoiceObj.rate\",\r\n             \"Quantity\": \"invoiceObj.quantity\",\r\n             \"Price\": \"invoiceObj.price\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/invoice//addinvoiceproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"invoice",
+						"",
+						"addinvoiceproduct"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
