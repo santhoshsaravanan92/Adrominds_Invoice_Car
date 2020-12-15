@@ -34,6 +34,8 @@ import { CustomerModalComponent } from "./customer/customer-modal/customer-modal
 import { TemplatesComponent } from "./templates/templates.component";
 import { AccordionModule } from "primeng/accordion";
 import { AutoCompleteModule } from "primeng/autocomplete";
+import { ExpenseComponent } from "./expense/expense.component";
+import { TabViewModule } from "primeng/tabview";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { AutoCompleteModule } from "primeng/autocomplete";
     CustomerComponent,
     CustomerModalComponent,
     TemplatesComponent,
+    ExpenseComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { AutoCompleteModule } from "primeng/autocomplete";
     SettingsModule,
     AccordionModule,
     AutoCompleteModule,
+    TabViewModule,
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -58,6 +58,7 @@ CREATE TABLE Invoice(
 	discount int null,
 	discount_option varchar(4) null,
 	amount decimal not null, 
+	amountwithdiscount decimal not null,
 	Email varchar(50) references personalinformation(Email),
 	created_date timestamp default current_timestamp,
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 

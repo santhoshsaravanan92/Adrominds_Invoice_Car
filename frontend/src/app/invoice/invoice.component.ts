@@ -26,9 +26,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   gridDatas: ProductInformation[] = [];
   amount: number = 0;
   price: number = 0;
+  amountwithdiscount: number = 0;
   paymentMode: any = ["Amount", "Credit Card", "EMI", "Check"];
   discounts: any = ["%", "nos"];
-  customerNames: string[];
+  customerNames: string[] = [];
 
   testHTMLContent: string =
     '<html><head><style>md-dialog-actions{display: none;}.invoice-box {max-width: 800px;margin: auto;padding: 30px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, .15);font-size: 16px;line-height: 24px;color: #555;}.invoice-box table {width: 100%;line-height: inherit;text-align: left;}.invoice-box table td {padding: 5px;vertical-align: top;}.invoice-box table tr td:nth-child(2) {text-align: right}.invoice-box table tr.top table td {padding-bottom: 20px}.invoice-box table tr.top table td.title {font-size: 45px;line-height: 45px;color: #333}.invoice-box table tr.information table td {padding-bottom: 40px;}.invoice-box table tr.heading td {background: #eee;border-bottom: 1px solid #ddd;font-weight: 700;}.invoice-box table tr.details td {padding-bottom: 20px}.invoice-box table tr.item td {border-bottom: 1px solid #eee;}.invoice-box table tr.item.last td {border-bottom: none;}.invoice-box table tr.total td:nth-child(2) {border-top: 2px solid #eee;font-weight: 700;}</style></head><body><div class="invoice-box"><table cellpadding="0" cellspacing="0"><tr class="top"><td colspan="2"><table><tr><td>Invoice #: 123<br>Created: {today}<br></td></tr></table></td></tr><tr class="information"><td colspan="2"><table><tr><td>Service center Address 1<br>no 1<br>Test Address<br>center email</td><td>{name}<br>{model}<br>{km}<br>{mode}</td></tr></table></td></tr><tr class="heading"><td>Delivery Notes</td></tr><tr class="details"><td>{notes}</td></tr><tr class="heading"><td>Items</td><td>Each Price</td><td>Quantity</td><td>Amount</td></tr>{bodycontent}<tr class="total"><td></td><td></td><td></td><td>State GST: {sgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Central GST: {cgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Total: {amount}</td></tr></table></div></body></html>';
@@ -75,6 +76,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gstForm = this.formBuilder.group({
       sgst: ["8"],
       cgst: ["8"],
+      amountwithgst: ["0"],
       discount: ["0"],
       amount: ["0"],
       discountoption: [""],
@@ -141,18 +143,26 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     const stategst = gstFormControls["sgst"].value;
     const centralgst = gstFormControls["cgst"].value;
     const discount = gstFormControls["discount"].value;
-    const discountOption = gstFormControls["discountoption"].value;
+    const discountOptionvalue = this.getChangeDiscount.value;
+    const discountOption = discountOptionvalue.split(" ")[1];
     const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
     let sgst = totalpricewithoutgst * (stategst / 100);
     let cgst = totalpricewithoutgst * (centralgst / 100);
-    this.amount = parseFloat((totalpricewithoutgst + sgst + cgst).toFixed(2));
 
-    if (discount > 0 && discount != "") {
-      if (discountOption != "p") {
-        this.amount -= discount;
+    this.amount = this.amountwithdiscount = parseFloat(
+      (totalpricewithoutgst + sgst + cgst).toFixed(2)
+    );
+
+    if (discount > 0 && discountOption != "") {
+      if (discountOption != "%") {
+        this.amountwithdiscount = parseFloat(
+          (this.amountwithdiscount - discount).toFixed(2)
+        );
       } else {
         let amountToReduce = this.amount * (discount / 100);
-        this.amount = parseFloat((this.amount - amountToReduce).toFixed(2));
+        this.amountwithdiscount = parseFloat(
+          (this.amount - amountToReduce).toFixed(2)
+        );
       }
     }
   }
@@ -262,6 +272,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.sgst = gstFormControls["sgst"].value;
     invoiceObj.cgst = gstFormControls["cgst"].value;
     invoiceObj.amount = this.amount;
+    invoiceObj.amountwithdiscount = this.amountwithdiscount;
     invoiceObj.discount = gstFormControls["discount"].value;
     invoiceObj.discount_option = this.getChangeDiscount.value;
 
@@ -352,9 +363,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   search(event) {
-    debugger;
     this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
-      this.customerNames = data;
+      data.map((a) => {
+        this.customerNames.push(a.Name);
+      });
     });
   }
 }

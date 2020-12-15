@@ -1,163 +1,168 @@
-<p-sidebar [style]="{ height: '98%', width: '80%', 'margin-left': '10%' }" [(visible)]="loadCustomerPage" position="top"
-    [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="true">
-    <!-- <app-customer-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass">
-    </app-customer-modal> -->
-    <app-customer></app-customer>
-</p-sidebar>
-
 <div class="margin-top font-family">
-    <form [formGroup]="CustomerForm" class="form-modal-design">
-        <div class="width-50 float-left padding1em">
-            <div class="form-group">
-                <label for="customer name" class="label-design">Customer Name</label><br />
-                <!-- <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
+    <p-tabView>
+        <p-tabPanel header="Invoices">
+            Content 2
+        </p-tabPanel>
+        <p-tabPanel header="Create Invoice">
+            <form [formGroup]="CustomerForm" class="form-modal-design">
+                <div class="width-50 float-left padding1em">
+                    <div class="form-group">
+                        <label for="customer name" class="label-design">Customer Name</label><br />
+                        <!-- <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
                     class="form-control textbox text-box-width" style="width:36em" /> -->
-                <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
-                    [suggestions]="customerNames" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink','border-top': 
-                    '0', 'border-right': '0','border-left': '0','height': '37px'}">
-                </p-autoComplete>
-            </div>
-            <div *ngIf="invoiceFormSubmitted && getCustomerFormControls.customername.errors"
-                class="error-message shadow">
-                <div *ngIf="getCustomerFormControls.customername.errors.required">
-                    Customer is required
+                        <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
+                            [suggestions]="customerNames" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style': 
+                    'none', 'border-right-style': 'none','border-left-style': 'none','height': '37px'}">
+                        </p-autoComplete>
+                    </div>
+                    <div *ngIf="invoiceFormSubmitted && getCustomerFormControls.customername.errors"
+                        class="error-message shadow">
+                        <div *ngIf="getCustomerFormControls.customername.errors.required">
+                            Customer is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery notes" class="label-design">Delivery Notes</label>
+                        <input type="text" placeholder="Delivery Notes" formControlName="deliverynotes" maxlength="50"
+                            class="form-control textbox text-box-width" />
+                    </div>
+                    <div class="form-group">
+                        <label for="buyers order number" class="label-design">Buyers Order Number</label>
+                        <input type="text" placeholder="Buyers Order Number" formControlName="ordernumber"
+                            class="form-control textbox text-box-width" maxlength="15" />
+                    </div>
+                    <div class="form-group">
+                        <label for="vehiclenumber" class="label-design">Vehicle Number</label>
+                        <input type="text" placeholder="Vehicle Number" formControlName="vehiclenumber" maxlength="15"
+                            class="form-control textbox text-box-width" />
+                    </div>
+                    <div class="form-group">
+                        <label for="othernotes" class="label-design">Other Notes</label>
+                        <input type="text" placeholder="Other Notes" formControlName="othernotes" maxlength="50"
+                            class="form-control textbox text-box-width" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="delivery notes" class="label-design">Delivery Notes</label>
-                <input type="text" placeholder="Delivery Notes" formControlName="deliverynotes" maxlength="50"
-                    class="form-control textbox text-box-width" />
-            </div>
-            <div class="form-group">
-                <label for="buyers order number" class="label-design">Buyers Order Number</label>
-                <input type="text" placeholder="Buyers Order Number" formControlName="ordernumber"
-                    class="form-control textbox text-box-width" maxlength="15" />
-            </div>
-            <div class="form-group">
-                <label for="vehiclenumber" class="label-design">Vehicle Number</label>
-                <input type="text" placeholder="Vehicle Number" formControlName="vehiclenumber" maxlength="15"
-                    class="form-control textbox text-box-width" />
-            </div>
-            <div class="form-group">
-                <label for="othernotes" class="label-design">Other Notes</label>
-                <input type="text" placeholder="Other Notes" formControlName="othernotes" maxlength="50"
-                    class="form-control textbox text-box-width" />
-            </div>
-        </div>
-        <div class="width-50 float-right padding1em">
-            <div class="form-group">
-                <label for="Template" class="label-design">Template</label>
-                <input type="text" placeholder="TemplateName" formControlName="templatename" disabled
-                    class="form-control textbox text-box-width" />
-            </div>
-            <div class="form-group">
-                <label for="payment" class="label-design">Mode/Terms of Payment</label> <br>
-                <!-- <input type="text" placeholder="Mode of Payments" formControlName="mode" maxlength="50"
+                <div class="width-50 float-right padding1em">
+                    <div class="form-group">
+                        <label for="Template" class="label-design">Template</label>
+                        <input type="text" placeholder="TemplateName" formControlName="templatename" disabled
+                            class="form-control textbox text-box-width" />
+                    </div>
+                    <div class="form-group">
+                        <label for="payment" class="label-design">Mode/Terms of Payment</label> <br>
+                        <!-- <input type="text" placeholder="Mode of Payments" formControlName="mode" maxlength="50"
                     class="form-control textbox text-box-width" /> -->
-                <select class="ddl-design" formControlName="mode" style="width: 100%"
-                    (change)="changePaymentMode($event)">
-                    <option value="">Select Payment Mode</option>
-                    <option *ngFor="let paymode of paymentMode" [ngValue]="paymode">{{paymode}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="buyers order number" class="label-design">Dated</label>
-                <input type="text" placeholder="Date" formControlName="dated"
-                    class="form-control textbox text-box-width" />
-            </div>
-            <div class="form-group">
-                <label for="model" class="label-design">Model</label>
-                <input type="text" placeholder="Model" formControlName="model" maxlength="20"
-                    class="form-control textbox text-box-width" />
-            </div>
-            <div class="form-group">
-                <label for="KM Driven" class="label-design">KM Driven</label>
-                <input type="text" placeholder="KM Driven" formControlName="km" maxlength="10"
-                    class="form-control textbox text-box-width" allowonlynumbers />
-            </div>
-        </div>
-    </form>
-    <form [formGroup]="productForm" class="form-modal-design">
-        <div class="form-group" style="padding:2em">
-            <label for="description" class="label-design">Description of Goods</label>
-            <textarea formControlName="description" id="" cols="5" rows="5" class="form-control textbox text-box-width"
-                maxlength="50"></textarea>
-        </div><br>
-        <div *ngIf="addItemFormsSubmitted && getProductFormControls.description.errors" class="error-message shadow">
-            <div *ngIf="getProductFormControls.description.errors.required">
-                Description is required
-            </div>
-        </div>
-        <div class="form-group grid-container">
-            <div>
-                <label for="rate" class="label-design">Rate</label> <br />
-                <input type="text" placeholder="Rate" formControlName="rate" maxlength="10"
-                    class="form-control textbox text-box-width" style="width:95%" (change)="calculateProductPrice()"
-                    allowonlynumbers />
-            </div>
-            <div *ngIf="addItemFormsSubmitted && getProductFormControls.rate.errors" class="error-message shadow">
-                <div *ngIf="getProductFormControls.rate.errors.required">
-                    Rate is required
+                        <select class="ddl-design" formControlName="mode" style="width: 100%"
+                            (change)="changePaymentMode($event)">
+                            <option value="">Select Payment Mode</option>
+                            <option *ngFor="let paymode of paymentMode" [ngValue]="paymode">{{paymode}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyers order number" class="label-design">Dated</label>
+                        <input type="text" placeholder="Date" formControlName="dated"
+                            class="form-control textbox text-box-width" />
+                    </div>
+                    <div class="form-group">
+                        <label for="model" class="label-design">Model</label>
+                        <input type="text" placeholder="Model" formControlName="model" maxlength="20"
+                            class="form-control textbox text-box-width" />
+                    </div>
+                    <div class="form-group">
+                        <label for="KM Driven" class="label-design">KM Driven</label>
+                        <input type="text" placeholder="KM Driven" formControlName="km" maxlength="10"
+                            class="form-control textbox text-box-width" allowonlynumbers />
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label for="quantity" class="label-design">Quantity</label> <br />
-                <input type="text" placeholder="Quantity" formControlName="quantity" maxlength="3"
-                    (change)="calculateProductPrice()" allowonlynumbers class="form-control textbox text-box-width"
-                    style="width:95%" />
-            </div>
-            <div *ngIf="addItemFormsSubmitted && getProductFormControls.quantity.errors" class="error-message shadow">
-                <div *ngIf="getProductFormControls.quantity.errors.required">
-                    Quantity is required
+                <br>
+            </form>
+            <form [formGroup]="productForm" class="form-modal-design float-right">
+                <div class="form-group" style="padding:0em 1em">
+                    <label for="description" class="label-design">Description of Goods</label>
+                    <textarea formControlName="description" id="" cols="5" rows="5"
+                        class="form-control textbox text-box-width" placeholder="Description of Goods"
+                        maxlength="50"></textarea>
+                </div><br>
+                <div *ngIf="addItemFormsSubmitted && getProductFormControls.description.errors"
+                    class="error-message shadow">
+                    <div *ngIf="getProductFormControls.description.errors.required">
+                        Description is required
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label for="price" class="label-design">Price</label> <br />
-                <input type="text" placeholder="Price" formControlName="price" maxlength="10" [(ngModel)]="price"
-                    class="form-control textbox text-box-width" style="width:95%" disabled allowonlynumbers />
-            </div>
-            <div *ngIf="addItemFormsSubmitted && getProductFormControls.price.errors" class="error-message shadow">
-                <div *ngIf="getProductFormControls.price.errors.required">
-                    Price is required
+                <div class="form-group grid-container">
+                    <div>
+                        <label for="rate" class="label-design">Rate</label> <br />
+                        <input type="text" placeholder="Rate" formControlName="rate" maxlength="10"
+                            class="form-control textbox text-box-width" style="width:95%"
+                            (change)="calculateProductPrice()" allowonlynumbers />
+                    </div>
+                    <div *ngIf="addItemFormsSubmitted && getProductFormControls.rate.errors"
+                        class="error-message shadow">
+                        <div *ngIf="getProductFormControls.rate.errors.required">
+                            Rate is required
+                        </div>
+                    </div>
+                    <div>
+                        <label for="quantity" class="label-design">Quantity</label> <br />
+                        <input type="text" placeholder="Quantity" formControlName="quantity" maxlength="3"
+                            (change)="calculateProductPrice()" allowonlynumbers
+                            class="form-control textbox text-box-width" style="width:95%" />
+                    </div>
+                    <div *ngIf="addItemFormsSubmitted && getProductFormControls.quantity.errors"
+                        class="error-message shadow">
+                        <div *ngIf="getProductFormControls.quantity.errors.required">
+                            Quantity is required
+                        </div>
+                    </div>
+                    <div>
+                        <label for="price" class="label-design">Price</label> <br />
+                        <input type="text" placeholder="Price" formControlName="price" maxlength="10"
+                            [(ngModel)]="price" class="form-control textbox text-box-width" style="width:95%" disabled
+                            allowonlynumbers />
+                    </div>
+                    <div *ngIf="addItemFormsSubmitted && getProductFormControls.price.errors"
+                        class="error-message shadow">
+                        <div *ngIf="getProductFormControls.price.errors.required">
+                            Price is required
+                        </div>
+                    </div>
+                    <div></div>
+                    <div></div>
+                    <div class="form-group">
+                        <button class="button float-right cursor-pointer margin-left" id="btnAddITem"
+                            (click)="addItemBtnclick()">
+                            Add Item
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div></div>
-            <div></div>
-            <div class="form-group">
-                <button class="button float-right cursor-pointer margin-left" id="btnAddITem"
-                    (click)="addItemBtnclick()">
-                    Add Item
-                </button>
-            </div>
-        </div>
 
-        <div style="margin:1em !important;" class="shadow">
-            <p-table [value]="gridDatas" dataKey="id"
-                styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true"
-                [rows]="15" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15, 25, 50]" [loading]="isLoadingDone"
-                [paginator]="true" currentPageReportTemplate="" [filterDelay]="0"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-                <ng-template pTemplate="caption">
-                    Invoice Product Information
-                </ng-template>
-                <ng-template pTemplate="header" class="table-width">
-                    <tr>
-                        <!-- <th class="info-tbl-design" style="width:4%">S.NO</th> -->
-                        <th class="info-tbl-design">Description of Goods</th>
-                        <th class="info-tbl-design">Rate</th>
-                        <th class="info-tbl-design">Quantity</th>
-                        <th class="info-tbl-design">Amount</th>
-                        <!-- <th class="th-icon-width info-tbl-design" style="width:5%"></th>
+                <div style="margin:1em !important;" class="shadow">
+                    <p-table [value]="gridDatas" dataKey="id"
+                        styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true"
+                        [rows]="15" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15, 25, 50]"
+                        [loading]="isLoadingDone" [paginator]="true" currentPageReportTemplate="" [filterDelay]="0"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        <ng-template pTemplate="caption">
+                            Invoice Product Information
+                        </ng-template>
+                        <ng-template pTemplate="header" class="table-width">
+                            <tr>
+                                <!-- <th class="info-tbl-design" style="width:4%">S.NO</th> -->
+                                <th class="info-tbl-design">Description of Goods</th>
+                                <th class="info-tbl-design">Rate</th>
+                                <th class="info-tbl-design">Quantity</th>
+                                <th class="info-tbl-design">Amount</th>
+                                <!-- <th class="th-icon-width info-tbl-design" style="width:5%"></th>
                                 <th class="th-icon-width info-tbl-design" style="width:5%"></th> -->
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-data>
-                    <tr class="ui-selectable-row">
-                        <td class="info-tbl-row-design">{{ data.Description }}</td>
-                        <td class="info-tbl-row-design">{{ data.Rate }}</td>
-                        <td class="info-tbl-row-design">{{ data.Quantity }}</td>
-                        <td class="info-tbl-row-design">{{ data.Price }}</td>
-                        <!-- <td class="info-tbl-row-design">
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data>
+                            <tr class="ui-selectable-row">
+                                <td class="info-tbl-row-design">{{ data.Description }}</td>
+                                <td class="info-tbl-row-design">{{ data.Rate }}</td>
+                                <td class="info-tbl-row-design">{{ data.Quantity }}</td>
+                                <td class="info-tbl-row-design">{{ data.Price }}</td>
+                                <!-- <td class="info-tbl-row-design">
                                     <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer"
                                         title="Edit Record" srcset="" (click)="editCustomer(data.id)" />
                                 </td>
@@ -165,53 +170,66 @@
                                     <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer"
                                         title="Delete Record" (click)="deleteCustomer(data.id, data.Name)" />
                                 </td> -->
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </form>
-    <form [formGroup]="gstForm" class="form-modal-design">
-        <div class="margin-top">
-            <div class="width-50 float-left"></div>
-            <div class="width-50 float-right">
-                <div class="form-group">
-                    <label for="state gst" class="label-design">SGST</label>
-                    <input type="text" placeholder="SGST" formControlName="sgst" maxlength="3" allowonlynumbers
-                        (change)="gstCalculation()" class="form-control textbox text-box-width" style="width:95%" />
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
-                <div class="form-group">
-                    <label for="central gst" class="label-design">CGST</label>
-                    <input type="text" placeholder="CGST" formControlName="cgst" maxlength="3" allowonlynumbers
-                        (change)="gstCalculation()" class="form-control textbox text-box-width" style="width:95%" />
+            </form>
+            <form [formGroup]="gstForm" class="form-modal-design">
+                <div class="margin-top">
+                    <div class="width-50 float-left"></div>
+                    <div class="width-32 float-right">
+                        <div class="form-group">
+                            <label for="state gst" class="label-design">SGST</label>
+                            <input type="text" placeholder="SGST" formControlName="sgst" maxlength="3" allowonlynumbers
+                                (change)="gstCalculation()" class="form-control textbox text-box-width"
+                                style="width:95%" />
+                        </div>
+                        <div class="form-group">
+                            <label for="central gst" class="label-design">CGST</label>
+                            <input type="text" placeholder="CGST" formControlName="cgst" maxlength="3" allowonlynumbers
+                                (change)="gstCalculation()" class="form-control textbox text-box-width"
+                                style="width:95%" />
+                        </div>
+                        <div class="form-group">
+                            <label for="central gst" class="label-design">Amount (with GST)</label>
+                            <input type="text" placeholder="Amount (with GST)" formControlName="amountwithgst"
+                                maxlength="3" [(ngModel)]="amount" allowonlynumbers disabled
+                                class="form-control textbox text-box-width" style="width:95%" />
+                        </div>
+                        <div class="form-group">
+                            <label for="discount" class="label-design">Discount</label> <br />
+                            <input type="text" formControlName="discount" maxlength="3" placeholder="Discount"
+                                allowonlynumbers (change)="gstCalculation()" class="form-control textbox text-box-width"
+                                style="width:86%" />
+                            <select class="ddl-design" formControlName="discountoption"
+                                (change)="changeDiscount($event)">
+                                <option *ngFor="let d of discounts" [ngValue]="d">{{d}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount" class="label-design">Amount (with Discount)</label><br>
+                            <input type="text" maxlength="5" disabled [(ngModel)]="amountwithdiscount"
+                                class="form-control textbox text-box-width" formControlName="amount" style="width:95%"
+                                allowonlynumbers />
+                        </div>
+                        <div class="form-group">
+                            <button class="button float-right cursor-pointer margin-left" id="btnSaveOnly"
+                                (click)="saveOnly()">
+                                Save Only
+                            </button>
+                            <button class="button float-right cursor-pointer margin-left" id="btnPrintOnly"
+                                (click)="printOnly()">
+                                Print Only
+                            </button>
+                            <button class="button float-right cursor-pointer" id="btnSavePrint"
+                                (click)="saveAndPrint()">
+                                Save & Print
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="discount" class="label-design">Discount</label> <br />
-                    <input type="text" formControlName="discount" maxlength="3" placeholder="Discount" allowonlynumbers
-                        (change)="gstCalculation()" class="form-control textbox text-box-width" style="width:86%" />
-                    <select class="ddl-design" formControlName="discountoption" (change)="changeDiscount($event)">
-                        <option value="">Select Discount</option>
-                        <option *ngFor="let d of discounts" [ngValue]="d">{{d}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="amount" class="label-design">Amount</label><br>
-                    <input type="text" maxlength="5" disabled [(ngModel)]="amount"
-                        class="form-control textbox text-box-width" formControlName="amount" style="width:95%"
-                        allowonlynumbers />
-                </div>
-                <div class="form-group margin-right float-right">
-                    <button class="button float-right cursor-pointer margin-left" id="btnSaveOnly" (click)="saveOnly()">
-                        Save Only
-                    </button>
-                    <button class="button float-right cursor-pointer margin-left" id="btnPrintOnly"
-                        (click)="printOnly()">
-                        Print Only
-                    </button>
-                    <button class="button float-right cursor-pointer" id="btnSavePrint" (click)="saveAndPrint()">
-                        Save & Print
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
+            </form>
+        </p-tabPanel>
+    </p-tabView>
 </div>

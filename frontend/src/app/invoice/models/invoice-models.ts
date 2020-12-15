@@ -27,4 +27,5 @@ export class InvoiceInformation {
   cgst: string;
   discount: string;
   amount: number;
+  amountwithdiscount: number;
 }

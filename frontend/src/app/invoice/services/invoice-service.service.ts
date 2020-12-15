@@ -20,6 +20,7 @@ export class InvoiceServiceService {
       sgst: invoiceObj.sgst,
       cgst: invoiceObj.cgst,
       amount: invoiceObj.amount,
+      amountwithdiscount: invoiceObj.amountwithdiscount,
       discount: invoiceObj.discount,
       discount_option: invoiceObj.discount_option,
       InvoiceId: invoiceObj.InvoiceId,
@@ -64,8 +65,6 @@ export class InvoiceServiceService {
   }
 
   getCustomerNames(enteredname: string): Observable<any> {
-    debugger;
-
     return this.http
       .get<any>(UrlMappers.getCustomerNames + enteredname, {
         headers: getHeaders(),

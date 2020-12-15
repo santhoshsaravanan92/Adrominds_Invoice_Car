@@ -71,6 +71,10 @@ const Invoice = sequelize.define('invoice', {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
     },
+    amountwithdiscount: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: true,
+    },
     Email: {
         type: Sequelize.STRING(50),
         allowNull: true,
@@ -117,6 +121,7 @@ exports.addInvoice = (invoiceObj) => {
             discount: invoiceObj.discount,
             discount_option: invoiceObj.discount_option,
             amount: invoiceObj.amount,
+            amountwithdiscount: invoiceObj.amountwithdiscount,
             Email: invoiceObj.Email,
         })
         .then((a) => {
@@ -127,7 +132,6 @@ exports.addInvoice = (invoiceObj) => {
             return err;
         });
 };
-
 
 exports.addinvoiceproduct = (invoiceProductObj) => {
     console.log('in model')

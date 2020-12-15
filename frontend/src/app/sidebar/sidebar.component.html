@@ -1,6 +1,7 @@
 <div style="width: 100%;">
   <div class="float-left" style="width: 14%; position: fixed;">
-    <img class="logo" src="./assets/images/logo.jpg" alt="logo" srcset="" />
+    <!-- <img class="logo" src="./assets/images/logo.jpg" alt="logo" srcset="" /> -->
+    <div class="logo" style="background-color: #222;"></div>
     <div class="sidebar-design">
       <ul>
         <li id="menubardashboard">
@@ -17,7 +18,7 @@
         </li>
         <li id="menubarInvoice">
           <a (click)="componentSelector('invoice')">
-            <img class="menu-icon" src="./assets/icons/sales.png" />
+            <img class="menu-icon" src="./assets/icons/invoice.png" />
             Invoice
           </a>
         </li>
@@ -25,6 +26,12 @@
           <a (click)="componentSelector('customer')">
             <img class="menu-icon" src="./assets/icons/profile.png" />
             Customer
+          </a>
+        </li>
+        <li id="menubarExpense">
+          <a (click)="componentSelector('expense')">
+            <img class="menu-icon" src="./assets/icons/sales.png" />
+            Expense
           </a>
         </li>
       </ul>
@@ -69,6 +76,9 @@
       </div>
       <div *ngIf="componentToLoad === 'template'">
         <app-templates></app-templates>
+      </div>
+      <div *ngIf="componentToLoad === 'expense'">
+        <app-expense></app-expense>
       </div>
     </div>
   </div>
