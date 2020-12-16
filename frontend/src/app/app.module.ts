@@ -36,6 +36,7 @@ import { AccordionModule } from "primeng/accordion";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ExpenseComponent } from "./expense/expense.component";
 import { TabViewModule } from "primeng/tabview";
+import { ExpenseModelComponent } from './expense/expense-model/expense-model.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { TabViewModule } from "primeng/tabview";
     CustomerModalComponent,
     TemplatesComponent,
     ExpenseComponent,
+    ExpenseModelComponent,
   ],
   imports: [
     BrowserModule,
