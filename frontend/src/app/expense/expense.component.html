@@ -29,18 +29,17 @@
         </ng-template>
         <ng-template pTemplate="body" let-data>
             <tr class="ui-selectable-row">
-                <td class="info-tbl-row-design">{{ data.Date }}</td>
-                <td class="info-tbl-row-design">{{ data.Category }}</td>
-                <td class="info-tbl-row-design">{{ data.Price }}</td>
-                <td class="info-tbl-row-design">{{ data.Notes }}</td>
+                <td class="info-tbl-row-design" style="width:10%">{{ data.date }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ data.category }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ data.price }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ data.notes }}</td>
                 <td class="info-tbl-row-design">
                     <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
-                        srcset="" (click)="editExpense(data.Id)" />
+                        srcset="" (click)="editExpense(data.id)" />
                 </td>
                 <td class="info-tbl-row-design">
                     <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer" title="Delete Record"
-                        (click)="deleteExpense(data.Id)" />
-                    />
+                        (click)="deleteExpense(data.id)" />
                 </td>
             </tr>
         </ng-template>

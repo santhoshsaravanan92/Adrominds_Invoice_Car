@@ -79,8 +79,8 @@ export class ExpenseModelComponent implements OnInit {
 
     const expense = new ExpenseInformation();
     const expenseFormControls = this.getExpenseFormControls;
-
-    expense.Category = expenseFormControls["category"].value;
+    let category = expenseFormControls["category"].value;
+    expense.Category = category.split(' ')[1];
     expense.Date = expenseFormControls["date"].value;
     expense.Notes = expenseFormControls["notes"].value;
     expense.Price = expenseFormControls["price"].value;

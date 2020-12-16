@@ -29,7 +29,25 @@ export class ExpenseService {
 
   getAllExpenses(email: string): Observable<ExpenseInformation[]> {
     return this.http
-      .get<any>(UrlMappers.addExpense,  {
+      .get<any>(UrlMappers.getAllExpense + email, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  deleteExpense(id):Observable<any>{
+    const content = {
+      id: id
+    }
+    return this.http
+      .post<object>(UrlMappers.deleteExpense, content, {
         headers: getHeaders(),
       })
       .pipe(

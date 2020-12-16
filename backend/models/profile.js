@@ -80,8 +80,6 @@ exports.addProfile = (email, companyname, name) => {
 };
 
 exports.updateProfile = (profileData) => {
-	console.log("models profile page");
-	console.log(profileData);
 	// TODO: check for Patch / patchupdate - ui
 	return PersonalInformation.update({
 			Name: profileData.Name,

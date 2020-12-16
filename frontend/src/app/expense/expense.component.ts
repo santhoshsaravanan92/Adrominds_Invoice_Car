@@ -18,7 +18,8 @@ export class ExpenseComponent implements OnInit {
 
   constructor(
     public messageService: MessageService,
-    private expenseService: ExpenseService
+    private expenseService: ExpenseService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class ExpenseComponent implements OnInit {
   handleEmittedData($event) {
     if ($event == "closemodal") this.loadAddEditModal = false;
     else if ($event == "added") {
+      this.getAllExpenses();
       this.updateToastMessage(
         "Expense Added successfully",
         Constants.success,
@@ -90,5 +92,30 @@ export class ExpenseComponent implements OnInit {
       (err) => {
         console.log(err);
       };
+  }
+
+  deleteExpense(id) {
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to delete the expense`,
+      header: "Delete Expense",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        if (id !== "") {
+          this.expenseService
+            .deleteExpense(id)
+            .subscribe((res) => {
+              if (res.message === "expense deleted") {
+                this.getAllExpenses();
+                this.updateToastMessage(
+                  "Expense Information Deleted Successfully",
+                  Constants.success,
+                  "Expense Information"
+                );
+              }
+            });
+        }
+      },
+      reject: () => {},
+    });
   }
 }
