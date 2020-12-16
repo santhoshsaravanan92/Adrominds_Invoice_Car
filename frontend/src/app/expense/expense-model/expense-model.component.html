@@ -1,0 +1,57 @@
+<section id="customersection font-family">
+    <div class="grid-bg color pad1em">{{ _title }}</div>
+    <form [formGroup]="expenseForm" class="form-modal-design">
+        <div>
+            <div class="form-group">
+                <label for="username" class="label-design">Date</label>
+                <input type="date" id="start" formControlName="date" class="form-control textbox">
+            </div>
+            <div *ngIf="submitted && getExpenseFormControls.date.errors" class="error-message">
+                <div *ngIf="getExpenseFormControls.date.errors.required">
+                    Date is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="label-design">Category</label><br />
+                <select class="ddl-design" formControlName="category" (change)="changeCategory($event)" style="width: 100%;">
+                    <option value="">Select Category</option>
+                    <option *ngFor="let d of categories" [ngValue]="d">{{d}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mobile" class="label-design">Price</label>
+                <input type="text" placeholder="Price" formControlName="price" maxlength="10"
+                    class="form-control textbox" allowonlynumbers />
+            </div>
+            <div *ngIf="submitted && getExpenseFormControls.price.errors" class="error-message">
+                <div *ngIf="getExpenseFormControls.price.errors.required">
+                    Price is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="label-design">Notes</label>
+                <textarea name="notes" id="notes" cols="5" rows="8" placeholder="Address" formControlName="notes"
+                    class="form-control textbox" maxlength="50"></textarea>
+            </div>
+            <div *ngIf="submitted && getExpenseFormControls.notes.errors" class="error-message">
+                <div *ngIf="getExpenseFormControls.notes.errors.required">
+                    Notes is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" *ngIf="!_isEdit" class="button float-right cursor-pointer margin-left"
+                    id="btnSaveCustomer" (click)="saveExpense()">
+                    Save
+                </button>
+                <button *ngIf="_isEdit" class="button float-right cursor-pointer margin-left"
+                    (click)="updateExpenseRecordById()">
+                    Update
+                </button>
+                <button class="button float-right cursor-pointer" id="btnCancelProfileEdit" (click)="closeModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
