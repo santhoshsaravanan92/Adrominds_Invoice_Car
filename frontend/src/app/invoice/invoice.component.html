@@ -1,7 +1,7 @@
 <div class="margin-top font-family">
     <p-tabView>
         <p-tabPanel header="Invoices">
-            Content 2
+            <app-invoice-filters></app-invoice-filters>
         </p-tabPanel>
         <p-tabPanel header="Create Invoice">
             <form [formGroup]="CustomerForm" class="form-modal-design">
@@ -147,13 +147,10 @@
                         </ng-template>
                         <ng-template pTemplate="header" class="table-width">
                             <tr>
-                                <!-- <th class="info-tbl-design" style="width:4%">S.NO</th> -->
                                 <th class="info-tbl-design">Description of Goods</th>
                                 <th class="info-tbl-design">Rate</th>
                                 <th class="info-tbl-design">Quantity</th>
                                 <th class="info-tbl-design">Amount</th>
-                                <!-- <th class="th-icon-width info-tbl-design" style="width:5%"></th>
-                                <th class="th-icon-width info-tbl-design" style="width:5%"></th> -->
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-data>
@@ -162,14 +159,6 @@
                                 <td class="info-tbl-row-design">{{ data.Rate }}</td>
                                 <td class="info-tbl-row-design">{{ data.Quantity }}</td>
                                 <td class="info-tbl-row-design">{{ data.Price }}</td>
-                                <!-- <td class="info-tbl-row-design">
-                                    <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer"
-                                        title="Edit Record" srcset="" (click)="editCustomer(data.id)" />
-                                </td>
-                                <td class="info-tbl-row-design">
-                                    <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer"
-                                        title="Delete Record" (click)="deleteCustomer(data.id, data.Name)" />
-                                </td> -->
                             </tr>
                         </ng-template>
                     </p-table>

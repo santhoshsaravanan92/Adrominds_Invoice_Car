@@ -7,7 +7,7 @@ const {
     getallexpense,
     deleteExpense,
     getexpensebyid,
-    updateExpense
+    updateExpense, getInvoiceReportsData
 } = require('../models/expense');
 
 exports.addExpense = (req, res) => {
@@ -134,6 +134,29 @@ exports.updateExpense = (req, res) => {
         else
             return res.status(400).json({
                 message: 'expense not created'
+            });
+    });
+}
+
+exports.getInvoiceReportsData = (req, res) => {
+    if (!validateRequest(req)) {
+        return res.status(422).json({
+            error: errors.array()[0].msg,
+        });
+    }
+    
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+    
+    getInvoiceReportsData(req.body).then((data) => {
+        if (data)
+            return res.status(200).json(data);
+        else
+            return res.status(400).json({
+                message: 'no record found'
             });
     });
 }

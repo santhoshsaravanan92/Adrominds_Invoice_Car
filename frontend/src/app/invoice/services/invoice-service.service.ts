@@ -8,6 +8,8 @@ import { Observable } from "rxjs";
 import { UrlMappers } from "src/app/helpers/urlmappers";
 import { getHeaders } from "src/app/helpers/utilities";
 import { catchError, map } from "rxjs/operators";
+import { InvoiceFiltersComponent } from '../invoice-filters/invoice-filters.component';
+import { InvoicFilter } from '../models/invoic-filter.model';
 
 @Injectable({
   providedIn: "root",
@@ -67,6 +69,21 @@ export class InvoiceServiceService {
   getCustomerNames(enteredname: string): Observable<any> {
     return this.http
       .get<any>(UrlMappers.getCustomerNames + enteredname, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  getDateForReports(invoioceFilterData: InvoicFilter): Observable<InvoiceInformation[]> {
+    return this.http
+      .post<any>(UrlMappers.getinvoiceReportsData, invoioceFilterData, {
         headers: getHeaders(),
       })
       .pipe(

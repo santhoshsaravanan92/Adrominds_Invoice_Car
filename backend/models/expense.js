@@ -1,4 +1,7 @@
-const Sequelize = require('sequelize');
+const {
+    Sequelize,
+    QueryTypes
+} = require('sequelize');
 const {
     Op
 } = require("sequelize");
@@ -66,17 +69,17 @@ exports.getallexpense = (email) => {
 
 exports.deleteExpense = (id) => {
     return Expense.destroy({
-        where: {
-            id: id
-        },
-    })
-    .then((result) => {
-        return 'success';
-    })
-    .catch((err) => {
-        handleError(err);
-        return err;
-    });
+            where: {
+                id: id
+            },
+        })
+        .then((result) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
 };
 
 exports.getexpensebyid = (id) => {
@@ -99,7 +102,7 @@ exports.updateExpense = (expenseObj) => {
             category: expenseObj.Category,
             price: expenseObj.Price,
             notes: expenseObj.Notes,
-        },{
+        }, {
             where: {
                 id: expenseObj.Id,
                 owner_email: expenseObj.Email
@@ -112,4 +115,30 @@ exports.updateExpense = (expenseObj) => {
             handleError(err);
             return err;
         });
+};
+
+
+exports.getInvoiceReportsData = (filterData) => {
+    console.log('from model')
+    console.log(filterData)
+
+    const dates = filterData.FromDate.split('-')
+    const date = `${dates[2]}/${dates[1]}/${dates[0]}`
+
+    let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice where Dated between '${date}'`;
+
+    if (filterData.ToDate != "") query += ` and '${filterData.ToDate}'`;
+    else query += ` and '${new Date().toLocaleDateString("en-GB")}'`;
+
+    if (filterData.Name != "") query += ` and name = '${filterData.Name}'`
+    if (filterData.VehicleNumber != "") query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;
+    if (filterData.Model != "") query += ` and model = '${filterData.Model}'`
+
+    console.log(query);
+
+    return sequelize.query(query, {
+        type: QueryTypes.SELECT
+    }).then(result => {
+        return result;
+    });
 };

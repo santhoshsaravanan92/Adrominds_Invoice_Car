@@ -37,6 +37,7 @@ import { AutoCompleteModule } from "primeng/autocomplete";
 import { ExpenseComponent } from "./expense/expense.component";
 import { TabViewModule } from "primeng/tabview";
 import { ExpenseModelComponent } from './expense/expense-model/expense-model.component';
+import { InvoiceFiltersComponent } from './invoice/invoice-filters/invoice-filters.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ExpenseModelComponent } from './expense/expense-model/expense-model.com
     TemplatesComponent,
     ExpenseComponent,
     ExpenseModelComponent,
+    InvoiceFiltersComponent,
   ],
   imports: [
     BrowserModule,

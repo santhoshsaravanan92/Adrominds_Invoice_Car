@@ -57,7 +57,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       othernotes: [""],
       templatename: ["Default Template"],
       mode: ["", [Validators.required]],
-      dated: [new Date().toLocaleDateString("en-US")],
+      dated: [new Date().toLocaleDateString("en-GB")],
       model: [""],
       km: [""],
     });

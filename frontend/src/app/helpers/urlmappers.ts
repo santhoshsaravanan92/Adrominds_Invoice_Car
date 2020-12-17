@@ -26,4 +26,6 @@ export module UrlMappers {
   export const updateExpense = baseUrl + "/api/expense/updateexpense";
   export const deleteExpense = baseUrl + "/api/expense/deleteexpense";
   export const getExpenseByid = baseUrl + "/api/expense/getexpensebyid/";
+  export const getinvoiceReportsData = baseUrl + "/api/expense/getinvoicereportsdata";
+  
 }
