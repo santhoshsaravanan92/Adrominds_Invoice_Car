@@ -51,7 +51,24 @@ export class ExpenseComponent implements OnInit {
         Constants.success,
         "Expense Information"
       );
-    } else {
+    } 
+    else if ($event == "updated") {
+      this.getAllExpenses();
+      this.updateToastMessage(
+        "Expense Updated successfully",
+        Constants.success,
+        "Expense Information"
+      );
+    }
+    else if ($event == "check form data") {
+      this.getAllExpenses();
+      this.updateToastMessage(
+        "All form fields are mandatory.",
+        Constants.error,
+        "Expense Information"
+      );
+    }
+    else {
       this.updateToastMessage(
         "Something went wrong. Please try again later.",
         Constants.error,

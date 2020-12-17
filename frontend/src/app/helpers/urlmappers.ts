@@ -23,5 +23,7 @@ export module UrlMappers {
 
   export const addExpense = baseUrl + "/api/expense/addexpense";
   export const getAllExpense = baseUrl + "/api/expense/getallexpense/";
+  export const updateExpense = baseUrl + "/api/expense/updateexpense";
   export const deleteExpense = baseUrl + "/api/expense/deleteexpense";
+  export const getExpenseByid = baseUrl + "/api/expense/getexpensebyid/";
 }

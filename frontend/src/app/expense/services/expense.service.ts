@@ -42,12 +42,42 @@ export class ExpenseService {
       );
   }
 
-  deleteExpense(id):Observable<any>{
+  deleteExpense(id): Observable<any> {
     const content = {
-      id: id
-    }
+      id: id,
+    };
     return this.http
       .post<object>(UrlMappers.deleteExpense, content, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  getExpensesById(id: string): Observable<ExpenseInformation> {
+    return this.http
+      .get<any>(UrlMappers.getExpenseByid + id, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  updateExpenseById(expenseObj: ExpenseInformation): Observable<any> {
+    return this.http
+      .post<ExpenseInformation>(UrlMappers.updateExpense, expenseObj, {
         headers: getHeaders(),
       })
       .pipe(

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { getLoggedInUserEmail } from 'src/app/helpers/utilities';
-import { ExpenseInformation } from '../models/expense.model';
-import { ExpenseService } from '../services/expense.service';
+import { getLoggedInUserEmail } from "src/app/helpers/utilities";
+import { ExpenseInformation } from "../models/expense.model";
+import { ExpenseService } from "../services/expense.service";
 
 @Component({
   selector: "app-expense-model",
@@ -35,8 +35,10 @@ export class ExpenseModelComponent implements OnInit {
   @Output("emitData")
   emitData = new EventEmitter<string>();
 
-  constructor(private formBuilder: FormBuilder,
-    private expenseService: ExpenseService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private expenseService: ExpenseService
+  ) {}
 
   ngOnInit(): void {
     this.expenseFormCreation();
@@ -48,6 +50,7 @@ export class ExpenseModelComponent implements OnInit {
       category: ["", [Validators.required]],
       price: ["", [Validators.required]],
       notes: ["", [Validators.required]],
+      id: [""],// for edit purpose
     });
   }
 
@@ -65,7 +68,25 @@ export class ExpenseModelComponent implements OnInit {
     return this.expenseForm.get("category");
   }
 
-  getExpenseRecordById(id) {}
+  getExpenseRecordById(id: string) {
+    if (id) {
+      this.expenseService.getExpensesById(id).subscribe(expenseRecord => {
+        console.log('in subscribe')
+        console.log(expenseRecord)
+        const expenseFromControls = this.getExpenseFormControls;
+        expenseFromControls["category"].setValue(expenseRecord.Category);
+        expenseFromControls["date"].setValue(expenseRecord.Date);
+        expenseFromControls["notes"].setValue(expenseRecord.Notes);
+        expenseFromControls["price"].setValue(expenseRecord.Price);
+        expenseFromControls["id"].setValue(id);
+      }),
+        (err) => {
+          console.log(err);
+        };
+    } else {
+      this.closeModal();
+    }
+  }
 
   closeModal() {
     this.emitData.emit("closemodal");
@@ -80,7 +101,7 @@ export class ExpenseModelComponent implements OnInit {
     const expense = new ExpenseInformation();
     const expenseFormControls = this.getExpenseFormControls;
     let category = expenseFormControls["category"].value;
-    expense.Category = category.split(' ')[1];
+    expense.Category = category.split(" ")[1];
     expense.Date = expenseFormControls["date"].value;
     expense.Notes = expenseFormControls["notes"].value;
     expense.Price = expenseFormControls["price"].value;
@@ -97,5 +118,33 @@ export class ExpenseModelComponent implements OnInit {
       };
   }
 
-  updateExpenseRecordById() {}
+  updateExpenseRecordById() {
+    this.submitted = true;
+    if (this.expenseForm.invalid) {
+      this.emitData.emit("check form data");
+      return;
+    }
+
+    const expense = new ExpenseInformation();
+    const expenseFromControls = this.getExpenseFormControls;
+
+    expense.Category = this.getchangeCategory.value;
+    expense.Date = expenseFromControls["comments"].value;
+    expense.Notes = expenseFromControls["email"].value;
+    expense.Price = expenseFromControls["gst"].value;
+    expense.Email = getLoggedInUserEmail();
+    expense.Id = expenseFromControls["id"].value;
+
+    this.expenseService.updateExpenseById(expense).subscribe((data) => {
+      if (data.message === "expense updated") {
+        this.closeModal();
+        this.emitData.emit("updated");
+      } else {
+        this.emitData.emit("error");
+      }
+    }),
+      (err) => {
+        this.emitData.emit("error");
+      };
+  }
 }

@@ -65,8 +65,6 @@ exports.getallexpense = (email) => {
 };
 
 exports.deleteExpense = (id) => {
-    console.log('in expense model')
-    console.log(id)
     return Expense.destroy({
         where: {
             id: id
@@ -79,4 +77,39 @@ exports.deleteExpense = (id) => {
         handleError(err);
         return err;
     });
+};
+
+exports.getexpensebyid = (id) => {
+    return Expense.findOne({
+        where: {
+            id: id,
+            isactive: 1,
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};
+
+exports.updateExpense = (expenseObj) => {
+    return Expense.update({
+            date: expenseObj.Date,
+            category: expenseObj.Category,
+            price: expenseObj.Price,
+            notes: expenseObj.Notes,
+        },{
+            where: {
+                id: expenseObj.Id,
+                owner_email: expenseObj.Email
+            },
+        })
+        .then((a) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
 };
