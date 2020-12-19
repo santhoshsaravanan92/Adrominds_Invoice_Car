@@ -22,6 +22,7 @@ export module UrlMappers {
   export const getCustomerNames = baseUrl + "/api/invoice/getCustomerNames/";
   export const getAllInvoices = baseUrl + "/api/invoice/getallinvoices/";
   export const deleteInvoice = baseUrl + "/api/invoice/deleteinvoice/";
+  export const getInvoiceById = baseUrl + "/api/invoice/getinvoicebyid/";
 
   export const addExpense = baseUrl + "/api/expense/addexpense";
   export const getAllExpense = baseUrl + "/api/expense/getallexpense/";

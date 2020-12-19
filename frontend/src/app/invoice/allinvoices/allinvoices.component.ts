@@ -14,7 +14,9 @@ import { MessageService, ConfirmationService } from "primeng/api";
 export class AllinvoicesComponent extends BaseComponent implements OnInit {
   gridDatas: InvoiceInformation[] = [];
   isLoadingDone: boolean = false;
-
+  modalDataToPass: any;
+  loadAddEditModal = false;
+  
   constructor(private invoiceService: InvoiceServiceService,
      private confirmationService: ConfirmationService,
      public messageService: MessageService,) {
@@ -49,7 +51,12 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
       };
   }
 
-  editInvoice(invoiceId){}
+  editInvoice(invoiceId){
+    this.loadAddEditModal = true;
+    this.modalDataToPass = {
+      id: invoiceId
+    };
+  }
 
   deleteInvoice(invoiceId, name){
     this.confirmationService.confirm({
@@ -74,5 +81,9 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
       },
       reject: () => {},
     });
+  }
+
+  handleEmittedData($event){
+
   }
 }

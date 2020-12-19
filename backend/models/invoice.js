@@ -189,3 +189,16 @@ exports.deleteInvoice = (id) => {
             return err;
         });
 };
+
+exports.getInvoiceById = (id) => {
+    return Invoice.findOne({
+        where: {
+            InvoiceId: id,
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};

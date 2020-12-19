@@ -23,11 +23,6 @@ export class CustomerModalComponent implements OnInit {
     if (value) {
       this._modalDataToPass = value;
       this._id = this._modalDataToPass.id;
-      this._isEdit = this._modalDataToPass.isEdit;
-      this.customerForm.reset();
-      this._title = this._modalDataToPass.isEdit
-        ? "Edit Customer Information"
-        : "Add Customer Information";
       if (this._id != "") this.getCustomerRecordById(this._id);
     }
   }

@@ -7,7 +7,9 @@ const {
     addInvoice,
     addinvoiceproduct,
     getCustomerNames,
-    getallinvoices,deleteInvoice
+    getallinvoices,
+    deleteInvoice,
+    getInvoiceById
 } = require('../controllers/invoice');
 
 const invoiceRouter = express.Router();
@@ -24,5 +26,9 @@ invoiceRouter.get(
         check('name', 'name must be string and should not be empty.').isString()
     ], getCustomerNames
 );
+invoiceRouter.delete('/getinvoicebyid/:id', [
+    check('id', 'should be a valid number').isInt()
+], getInvoiceById);
+
 
 module.exports = invoiceRouter;

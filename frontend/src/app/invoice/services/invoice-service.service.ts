@@ -125,4 +125,20 @@ export class InvoiceServiceService {
         })
       );
   }
+
+  getInvoiceById(id: string): Observable<InvoiceInformation> {
+    return this.http
+      .get<any>(UrlMappers.getInvoiceById + id, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
 }
