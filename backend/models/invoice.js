@@ -204,7 +204,7 @@ exports.getInvoiceById = (id) => {
 };
 
 exports.getInvoiceProductById = (id) => {
-    return InvoiceProduct.findOne({
+    return InvoiceProduct.findAll({
         where: {
             Invoice_Number: id,
         },
