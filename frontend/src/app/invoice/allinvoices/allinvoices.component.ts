@@ -85,7 +85,16 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   }
 
   handleEmittedData($event) {
-    if ($event == "closemodal")
-     this.loadAddEditModal = false;
+    if ($event == "closemodal") this.loadAddEditModal = false;
+    else if ($event == "updated") {
+      this.loadAddEditModal = false;
+      this.updateToastMessage("Invoice updated.", Constants.success, "Invoice");
+    } else {
+      this.updateToastMessage(
+        "Something went wrong. Try again later.",
+        Constants.error,
+        "Invoice"
+      );
+    }
   }
 }

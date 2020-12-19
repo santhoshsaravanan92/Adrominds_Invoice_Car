@@ -4,7 +4,10 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BaseComponent } from "src/app/components/base/base.component";
 import { Constants } from "src/app/helpers/constant";
-import { InvoiceInformation, ProductInformation } from "../models/invoice-models";
+import {
+  InvoiceInformation,
+  ProductInformation,
+} from "../models/invoice-models";
 import { getLoggedInUserEmail } from "src/app/helpers/utilities";
 
 @Component({
@@ -197,9 +200,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
         gstFormControls["discountoption"].setValue(
           invoiceRecord.discount_option
         );
-        gstFormControls["amount"].setValue(
-          invoiceRecord.amountwithdiscount
-        );
+        gstFormControls["amount"].setValue(invoiceRecord.amountwithdiscount);
 
         const customerFormControls = this.getCustomerFormControls;
         customerFormControls["customername"].setValue(invoiceRecord.Name);
@@ -259,7 +260,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
   get getPaymentMode() {
     return this.CustomerForm.get("mode");
   }
-  
+
   update() {
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();
@@ -268,11 +269,11 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     invoiceObj.amount = this.amount;
     invoiceObj.amountwithdiscount = this.amountwithdiscount;
     invoiceObj.discount = gstFormControls["discount"].value;
-    invoiceObj.discount_option = this.getChangeDiscount.value.split(' ')[1];
+    invoiceObj.discount_option = this.getChangeDiscount.value.split(" ")[1];
 
     const customerFormControls = this.getCustomerFormControls;
-    
-    invoiceObj.InvoiceId =localStorage.getItem("idToUpdate");
+
+    invoiceObj.InvoiceId = localStorage.getItem("idToUpdate");
     invoiceObj.Dated = customerFormControls["dated"].value;
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
@@ -280,7 +281,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     invoiceObj.Name = customerFormControls["customername"].value;
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
     invoiceObj.km = customerFormControls["km"].value;
-    invoiceObj.mode = this.getPaymentMode.value.split(' ')[1];
+    invoiceObj.mode = this.getPaymentMode.value.split(" ")[1];
     invoiceObj.model = customerFormControls["model"].value;
     invoiceObj.otherNotes = customerFormControls["othernotes"].value;
 
@@ -293,30 +294,20 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
 
         // another service call
         this.invoiceService.updateInvoiceProducts(data).subscribe((data) => {
-          if (data.message === "invoice product added") {
-            this.updateToastMessage(
-              "Invoice created.",
-              Constants.success,
-              "Invoice"
-            );
+          if (data.message === "invoice product updated") {
             this.resetValues();
+            this.emitData.emit("updated");
           } else {
-            this.updateToastMessage(
-              "Invoice not created. Try again later.",
-              Constants.error,
-              "Invoice"
-            );
+            this.resetValues();
+            this.emitData.emit("error");
           }
         }),
           (err) => {
             console.log(err);
           };
       } else {
-        this.updateToastMessage(
-          "Invoice not created. Try again later.",
-          Constants.error,
-          "Invoice"
-        );
+        this.resetValues();
+        this.emitData.emit("updated");
       }
     }),
       (err) => {
