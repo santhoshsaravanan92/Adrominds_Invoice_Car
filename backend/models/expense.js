@@ -119,9 +119,6 @@ exports.updateExpense = (expenseObj) => {
 
 
 exports.getInvoiceReportsData = (filterData) => {
-    console.log('from model')
-    console.log(filterData)
-
     const dates = filterData.FromDate.split('-')
     const date = `${dates[2]}/${dates[1]}/${dates[0]}`
 
@@ -133,8 +130,6 @@ exports.getInvoiceReportsData = (filterData) => {
     if (filterData.Name != "") query += ` and name = '${filterData.Name}'`
     if (filterData.VehicleNumber != "") query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;
     if (filterData.Model != "") query += ` and model = '${filterData.Model}'`
-
-    console.log(query);
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

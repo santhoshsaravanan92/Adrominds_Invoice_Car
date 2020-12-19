@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BaseComponent } from "src/app/components/base/base.component";
@@ -7,6 +7,7 @@ import { InvoiceServiceService } from "../services/invoice-service.service";
 import { InvoicFilter } from "../models/invoic-filter.model";
 import { InvoiceInformation } from "../models/invoice-models";
 import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
 
 @Component({
   selector: "app-invoice-filters",
@@ -18,6 +19,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   isProfileLoadDone: boolean = true;
   customerNames: string[] = [];
   invoices: InvoiceInformation[] = [];
+  @ViewChild("htmlData") htmlData: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,6 +80,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   }
 
   exportPDF() {
+    this.isProfileLoadDone = false;
     if (!this.validateFormFields()) {
       this.updateToastMessage(
         "From date is mandatory to generate report.",
@@ -87,10 +90,53 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       return;
     }
     this.prepareDateToExport();
+    setTimeout(() => {
+      if (this.invoices.length > 0) {
+        // let DATA = document.getElementById("excel-table");
+
+        // doc.html(DATA.innerHTML, {
+        //   callback: (doc) => {
+        //     doc.save(
+        //       `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+        //     );
+        //   },
+        //   x: 10,
+        //   y: 10,
+        // });
+
+        // let a = ["a", "b"];
+        let data = this.htmlData.nativeElement;
+        let doc = new jsPDF("p", "pt", "a4");
+        let handleElement = {
+          "#editor": function (element, renderer) {
+            return true;
+          },
+        };
+        debugger;
+        doc.html(document.getElementById("excel-table").innerHTML, {
+          callback: (doc) => {
+            doc.save(
+              `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+            );
+          },
+          x: 10,
+          y: 10,
+        });
+        //doc.save(
+        //   `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+        // );
+      } else {
+        this.updateToastMessage(
+          "No Records to Form PDF.",
+          Constants.error,
+          "AdroMinds Invoice"
+        );
+      }
+    }, 2000);
+    this.isProfileLoadDone = true;
   }
 
   prepareDateToExport() {
-    debugger;
     const controls = this.getReportFormControls;
     let fileterObj = new InvoicFilter();
     fileterObj.Name = controls["customername"].value;
@@ -101,7 +147,6 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
 
     this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
       if (result.length > 0) {
-        console.log(result)
         this.invoices = result;
       }
     });
