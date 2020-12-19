@@ -1,0 +1,261 @@
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { InvoiceServiceService } from "../services/invoice-service.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageService } from "primeng/api";
+import { BaseComponent } from "src/app/components/base/base.component";
+import { Constants } from "src/app/helpers/constant";
+import { ProductInformation } from "../models/invoice-models";
+
+@Component({
+  selector: "app-invoice-modal",
+  templateUrl: "./invoice-modal.component.html",
+  styleUrls: ["./invoice-modal.component.sass"],
+})
+export class InvoiceModalComponent extends BaseComponent implements OnInit {
+  private _id: string = "";
+  private _modalDataToPass: any;
+  CustomerForm: FormGroup;
+  productForm: FormGroup;
+  gstForm: FormGroup;
+  amount: number = 0;
+  price: number = 0;
+  amountwithdiscount: number = 0;
+  paymentMode: any = ["Amount", "Credit Card", "EMI", "Check"];
+  discounts: any = ["%", "nos"];
+  customerNames: string[] = [];
+  gridDatas: ProductInformation[] = [];
+  invoiceFormSubmitted: boolean = false;
+  addItemFormsSubmitted: boolean = false;
+  isLoadingDone: boolean = false;
+
+  @Input("modalDataToPass")
+  set modalDataToPass(value: any) {
+    if (value) {
+      this._modalDataToPass = value;
+      this._id = this._modalDataToPass.id;
+      //this.resetValues();
+      if (this._id != "") this.getInvoiceRecordById(this._id);
+    }
+  }
+
+  @Output("emitData")
+  emitData = new EventEmitter<string>();
+  constructor(
+    public formBuilder: FormBuilder,
+    public messageService: MessageService,
+    private invoiceService: InvoiceServiceService
+  ) {
+    super(messageService);
+  }
+
+  ngOnInit(): void {
+    this.CustomerFormCreation();
+    this.productFormCreation();
+    this.gstFormCreation();
+  }
+
+  CustomerFormCreation() {
+    this.CustomerForm = this.formBuilder.group({
+      customername: ["", [Validators.required]],
+      deliverynotes: [""],
+      ordernumber: [""],
+      vehiclenumber: ["", [Validators.required]],
+      othernotes: [""],
+      templatename: ["Default Template"],
+      mode: ["", [Validators.required]],
+      dated: [new Date().toLocaleDateString("en-GB")],
+      model: [""],
+      km: [""],
+    });
+  }
+
+  productFormCreation() {
+    this.productForm = this.formBuilder.group({
+      description: ["", [Validators.required]],
+      rate: ["", [Validators.required]],
+      quantity: ["", [Validators.required]],
+      price: ["", [Validators.required]],
+    });
+  }
+
+  gstFormCreation() {
+    this.gstForm = this.formBuilder.group({
+      sgst: ["8"],
+      cgst: ["8"],
+      amountwithgst: ["0"],
+      discount: ["0"],
+      amount: ["0"],
+      discountoption: [""],
+    });
+  }
+
+  get getCustomerFormControls() {
+    return this.CustomerForm.controls;
+  }
+
+  get getProductFormControls() {
+    return this.productForm.controls;
+  }
+
+  get getGSTFormControls() {
+    return this.gstForm.controls;
+  }
+
+  addItemBtnclick() {
+    this.addItemFormsSubmitted = true;
+    let productFormControls = this.getProductFormControls;
+    const price = productFormControls["price"].value;
+    const description = productFormControls["description"].value;
+    const rate = productFormControls["rate"].value;
+    const quantity = productFormControls["quantity"].value;
+
+    if (this.productForm.invalid) {
+      this.updateToastMessage(
+        "All fields are mandatory in Product information",
+        Constants.error,
+        "Product Information"
+      );
+      this.addItemFormsSubmitted = false;
+      return;
+    }
+    let productModelObj = new ProductInformation();
+    productModelObj.Description = description;
+    productModelObj.Price = price;
+    productModelObj.Quantity = quantity;
+    productModelObj.Rate = rate;
+    this.amount += price;
+    this.gstCalculation();
+    this.gridDatas.push(productModelObj);
+    this.productForm.reset();
+    this.addItemFormsSubmitted = false;
+  }
+
+  calculateProductPrice() {
+    let productFormControls = this.getProductFormControls;
+    const rate = productFormControls["rate"].value;
+    const quantity = productFormControls["quantity"].value;
+    let r = rate != "" && rate > 0 ? rate : 1;
+    let q = quantity != "" && quantity > 0 ? quantity : 1;
+    this.price = r * q;
+    localStorage.setItem("price", "" + this.price);
+  }
+
+  gstCalculation() {
+    let gstFormControls = this.getGSTFormControls;
+    const stategst = gstFormControls["sgst"].value;
+    const centralgst = gstFormControls["cgst"].value;
+    const discount = gstFormControls["discount"].value;
+    const discountOptionvalue = this.getChangeDiscount.value;
+    const discountOption = discountOptionvalue.split(" ")[1];
+    const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
+    let sgst = totalpricewithoutgst * (stategst / 100);
+    let cgst = totalpricewithoutgst * (centralgst / 100);
+
+    this.amount = this.amountwithdiscount = parseFloat(
+      (totalpricewithoutgst + sgst + cgst).toFixed(2)
+    );
+
+    if (discount > 0 && discountOption != "") {
+      if (discountOption != "%") {
+        this.amountwithdiscount = parseFloat(
+          (this.amountwithdiscount - discount).toFixed(2)
+        );
+      } else {
+        let amountToReduce = this.amount * (discount / 100);
+        this.amountwithdiscount = parseFloat(
+          (this.amount - amountToReduce).toFixed(2)
+        );
+      }
+    }
+  }
+
+  get getChangeDiscount() {
+    return this.gstForm.get("discountoption");
+  }
+
+  changeDiscount(e) {
+    this.gstForm.get("discountoption").setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+
+  changePaymentMode(e) {
+    this.CustomerForm.get("mode").setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+
+  getInvoiceRecordById(id: string) {
+    if (id != "") {
+      debugger;
+      this.invoiceService.getInvoiceById(id).subscribe((invoiceRecord) => {
+        const gstFormControls = this.getGSTFormControls;
+        gstFormControls["sgst"].setValue(invoiceRecord.sgst);
+        gstFormControls["cgst"].setValue(invoiceRecord.csgt);
+        gstFormControls["amountwithgst"].setValue(invoiceRecord.amount);
+        gstFormControls["discount"].setValue(invoiceRecord.discount);
+        gstFormControls["discountoption"].setValue(
+          invoiceRecord.discount_option
+        );
+        gstFormControls["amount"].setValue(
+          invoiceRecord.amountwithdiscount
+        );
+
+        const customerFormControls = this.getCustomerFormControls;
+        customerFormControls["customername"].setValue(invoiceRecord.Name);
+        customerFormControls["deliverynotes"].setValue(
+          invoiceRecord.DeliveryNotes
+        );
+        customerFormControls["ordernumber"].setValue(
+          invoiceRecord.BuyerOrderNumber
+        );
+        customerFormControls["vehiclenumber"].setValue(
+          invoiceRecord.VehicleNumber
+        );
+        customerFormControls["othernotes"].setValue(invoiceRecord.otherNotes);
+        customerFormControls["templatename"].setValue("Default Template");
+        customerFormControls["mode"].setValue(invoiceRecord.mode);
+        customerFormControls["dated"].setValue(invoiceRecord.Dated);
+        customerFormControls["model"].setValue(invoiceRecord.model);
+        customerFormControls["km"].setValue(invoiceRecord.km);
+      }),
+        (err) => {};
+      // send request to get the invoice product details
+      this.invoiceService
+        .getInvoiceProductById(id)
+        .subscribe((invoiceProductRecord) => {
+          this.gridDatas = invoiceProductRecord;
+          // const productFormControls = this.getProductFormControls;
+          // productFormControls["description"].setValue(invoiceRecord.description);
+        });
+    } else {
+      this.resetValues();
+      //this.submitted = false;
+      this.emitData.emit("closemodal");
+    }
+  }
+
+  search(event) {
+    this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
+      data.map((a) => {
+        this.customerNames.push(a.Name);
+      });
+    });
+  }
+
+  resetValues() {
+    this.gridDatas = [];
+    this.amount = 0;
+    this.price = 0;
+    this.gstForm.reset();
+    this.CustomerForm.reset();
+    this.productForm.reset();
+  }
+
+  closeModal() {
+    this.resetValues();
+    this.emitData.emit("closemodal");
+  }
+
+  update() {}
+}
