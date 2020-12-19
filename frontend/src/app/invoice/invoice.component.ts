@@ -274,7 +274,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.amount = this.amount;
     invoiceObj.amountwithdiscount = this.amountwithdiscount;
     invoiceObj.discount = gstFormControls["discount"].value;
-    invoiceObj.discount_option = this.getChangeDiscount.value;
+    invoiceObj.discount_option = this.getChangeDiscount.value.split(' ')[1];
 
     const customerFormControls = this.getCustomerFormControls;
     let date = new Date().toLocaleDateString("en-US").replace("/", "");
@@ -289,7 +289,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.Name = customerFormControls["customername"].value;
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
     invoiceObj.km = customerFormControls["km"].value;
-    invoiceObj.mode = this.getPaymentMode.value;
+    invoiceObj.mode = this.getPaymentMode.value.split(' ')[1];
     invoiceObj.model = customerFormControls["model"].value;
     invoiceObj.otherNotes = customerFormControls["othernotes"].value;
 

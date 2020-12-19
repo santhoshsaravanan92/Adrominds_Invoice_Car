@@ -20,6 +20,8 @@ export module UrlMappers {
   export const addInvoice = baseUrl + "/api/invoice/addinvoice";
   export const addInvoiceProduct = baseUrl + "/api/invoice/addinvoiceproduct";
   export const getCustomerNames = baseUrl + "/api/invoice/getCustomerNames/";
+  export const getAllInvoices = baseUrl + "/api/invoice/getallinvoices/";
+  export const deleteInvoice = baseUrl + "/api/invoice/deleteinvoice/";
 
   export const addExpense = baseUrl + "/api/expense/addexpense";
   export const getAllExpense = baseUrl + "/api/expense/getallexpense/";
@@ -27,5 +29,5 @@ export module UrlMappers {
   export const deleteExpense = baseUrl + "/api/expense/deleteexpense";
   export const getExpenseByid = baseUrl + "/api/expense/getexpensebyid/";
   export const getinvoiceReportsData = baseUrl + "/api/expense/getinvoicereportsdata";
-  
+
 }

@@ -15,7 +15,7 @@ import { InvoicFilter } from '../models/invoic-filter.model';
   providedIn: "root",
 })
 export class InvoiceServiceService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addInvoice(invoiceObj: InvoiceInformation): Observable<any> {
     const content = {
@@ -84,6 +84,36 @@ export class InvoiceServiceService {
   getDateForReports(invoioceFilterData: InvoicFilter): Observable<InvoiceInformation[]> {
     return this.http
       .post<any>(UrlMappers.getinvoiceReportsData, invoioceFilterData, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  getAllInvoices(email: string): Observable<InvoiceInformation[]> {
+    return this.http
+      .get<any>(UrlMappers.getAllInvoices + email, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  deleteInvoice(id:string){
+    return this.http
+      .delete<any>(UrlMappers.deleteInvoice + id, {
         headers: getHeaders(),
       })
       .pipe(

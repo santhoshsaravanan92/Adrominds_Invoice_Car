@@ -134,24 +134,6 @@ exports.addInvoice = (invoiceObj) => {
 };
 
 exports.addinvoiceproduct = (invoiceProductObj) => {
-    console.log('in model')
-    console.log(invoiceProductObj)
-    // return InvoiceProduct.create({
-    //         Invoice_Number: invoiceObj.InvoiceId,
-    //         Description: invoiceObj.description,
-    //         Rate: invoiceObj.rate,
-    //         Quantity: invoiceObj.quantity,
-    //         Price: invoiceObj.price,
-    //     })
-    //     .then((a) => {
-    //         return 'success';
-    //     })
-    //     .catch((err) => {
-    //         handleError(err);
-    //         return err;
-    //     });
-
-
     return InvoiceProduct.bulkCreate(invoiceProductObj, {
             returning: true
         })
@@ -178,4 +160,32 @@ exports.getCustomerNames = (name) => {
         handleError(err);
         return err;
     });
+};
+
+exports.getallinvoices = (email) => {
+    return Invoice.findAll({
+        where: {
+            Email: email
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};
+
+exports.deleteInvoice = (id) => {
+    return Invoice.destroy({
+            where: {
+                InvoiceId: id
+            },
+        })
+        .then((result) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
 };

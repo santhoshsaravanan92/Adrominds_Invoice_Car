@@ -117,7 +117,6 @@ exports.updateExpense = (expenseObj) => {
         });
 };
 
-
 exports.getInvoiceReportsData = (filterData) => {
     const dates = filterData.FromDate.split('-')
     const date = `${dates[2]}/${dates[1]}/${dates[0]}`
