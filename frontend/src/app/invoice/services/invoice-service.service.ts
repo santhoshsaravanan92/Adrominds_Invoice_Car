@@ -155,4 +155,53 @@ export class InvoiceServiceService {
         })
       );
   }
+
+  updateInvoice(invoiceObj: InvoiceInformation): Observable<any> {
+    const content = {
+      sgst: invoiceObj.sgst,
+      cgst: invoiceObj.cgst,
+      amount: invoiceObj.amount,
+      amountwithdiscount: invoiceObj.amountwithdiscount,
+      discount: invoiceObj.discount,
+      discount_option: invoiceObj.discount_option,
+      InvoiceId: invoiceObj.InvoiceId,
+      Dated: invoiceObj.Dated,
+      BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
+      DeliveryNotes: invoiceObj.DeliveryNotes,
+      Email: invoiceObj.Email,
+      Name: invoiceObj.Name,
+      VehicleNumber: invoiceObj.VehicleNumber,
+      km: invoiceObj.km,
+      mode: invoiceObj.mode,
+      model: invoiceObj.model,
+      otherNotes: invoiceObj.otherNotes,
+    };
+    return this.http
+      .post<InvoiceInformation>(UrlMappers.updateInvoice, content, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  updateInvoiceProducts(invoiceObj: ProductInformation[]): Observable<any> {
+    return this.http
+      .post<InvoiceInformation>(UrlMappers.updateInvoiceProducts, invoiceObj, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }

@@ -10,13 +10,17 @@ const {
     getallinvoices,
     deleteInvoice,
     getInvoiceById,
-    getInvoiceProductById
+    getInvoiceProductById,
+    updateInvoice,
+    updateInvoiceProducts
 } = require('../controllers/invoice');
 
 const invoiceRouter = express.Router();
 
 invoiceRouter.post('/addinvoice', addInvoice);
+invoiceRouter.post('/updateinvoice', updateInvoice);
 invoiceRouter.post('/addinvoiceproduct', addinvoiceproduct);
+invoiceRouter.post('/updateinvoiceproduct', updateInvoiceProducts);
 invoiceRouter.get('/getallinvoices/:email',
     [check('email', 'email should be in format').isEmail()], getallinvoices);
 invoiceRouter.delete('/deleteinvoice/:id', [

@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BaseComponent } from "src/app/components/base/base.component";
 import { Constants } from "src/app/helpers/constant";
-import { ProductInformation } from "../models/invoice-models";
+import { InvoiceInformation, ProductInformation } from "../models/invoice-models";
+import { getLoggedInUserEmail } from "src/app/helpers/utilities";
 
 @Component({
   selector: "app-invoice-modal",
@@ -187,7 +188,6 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
 
   getInvoiceRecordById(id: string) {
     if (id != "") {
-      debugger;
       this.invoiceService.getInvoiceById(id).subscribe((invoiceRecord) => {
         const gstFormControls = this.getGSTFormControls;
         gstFormControls["sgst"].setValue(invoiceRecord.sgst);
@@ -218,6 +218,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
         customerFormControls["dated"].setValue(invoiceRecord.Dated);
         customerFormControls["model"].setValue(invoiceRecord.model);
         customerFormControls["km"].setValue(invoiceRecord.km);
+        localStorage.setItem("idToUpdate", id);
       }),
         (err) => {};
       // send request to get the invoice product details
@@ -225,8 +226,6 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
         .getInvoiceProductById(id)
         .subscribe((invoiceProductRecord) => {
           this.gridDatas = invoiceProductRecord;
-          // const productFormControls = this.getProductFormControls;
-          // productFormControls["description"].setValue(invoiceRecord.description);
         });
     } else {
       this.resetValues();
@@ -257,5 +256,71 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     this.emitData.emit("closemodal");
   }
 
-  update() {}
+  get getPaymentMode() {
+    return this.CustomerForm.get("mode");
+  }
+  
+  update() {
+    const gstFormControls = this.getGSTFormControls;
+    let invoiceObj = new InvoiceInformation();
+    invoiceObj.sgst = gstFormControls["sgst"].value;
+    invoiceObj.cgst = gstFormControls["cgst"].value;
+    invoiceObj.amount = this.amount;
+    invoiceObj.amountwithdiscount = this.amountwithdiscount;
+    invoiceObj.discount = gstFormControls["discount"].value;
+    invoiceObj.discount_option = this.getChangeDiscount.value.split(' ')[1];
+
+    const customerFormControls = this.getCustomerFormControls;
+    
+    invoiceObj.InvoiceId =localStorage.getItem("idToUpdate");
+    invoiceObj.Dated = customerFormControls["dated"].value;
+    invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
+    invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
+    invoiceObj.Email = getLoggedInUserEmail();
+    invoiceObj.Name = customerFormControls["customername"].value;
+    invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
+    invoiceObj.km = customerFormControls["km"].value;
+    invoiceObj.mode = this.getPaymentMode.value.split(' ')[1];
+    invoiceObj.model = customerFormControls["model"].value;
+    invoiceObj.otherNotes = customerFormControls["othernotes"].value;
+
+    this.invoiceService.updateInvoice(invoiceObj).subscribe((data) => {
+      if (data.message === "invoice updated") {
+        let data = [];
+        this.gridDatas.map((d) => {
+          data.push({ ...d, Invoice_Number: invoiceObj.InvoiceId });
+        });
+
+        // another service call
+        this.invoiceService.updateInvoiceProducts(data).subscribe((data) => {
+          if (data.message === "invoice product added") {
+            this.updateToastMessage(
+              "Invoice created.",
+              Constants.success,
+              "Invoice"
+            );
+            this.resetValues();
+          } else {
+            this.updateToastMessage(
+              "Invoice not created. Try again later.",
+              Constants.error,
+              "Invoice"
+            );
+          }
+        }),
+          (err) => {
+            console.log(err);
+          };
+      } else {
+        this.updateToastMessage(
+          "Invoice not created. Try again later.",
+          Constants.error,
+          "Invoice"
+        );
+      }
+    }),
+      (err) => {
+        console.log(err);
+      };
+  }
 }

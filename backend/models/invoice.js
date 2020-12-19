@@ -182,13 +182,28 @@ exports.deleteInvoice = (id) => {
             },
         })
         .then((result) => {
-            return 'success';
+            return deleteInvoiceProduct(id);
         })
         .catch((err) => {
             handleError(err);
             return err;
         });
 };
+
+exports.deleteInvoiceProduct = (id) => {
+    return InvoiceProduct.destroy({
+            where: {
+                Invoice_Number: id
+            },
+        })
+        .then((result) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
+}
 
 exports.getInvoiceById = (id) => {
     return Invoice.findOne({
@@ -215,3 +230,54 @@ exports.getInvoiceProductById = (id) => {
         return err;
     });
 };
+
+exports.updateInvoice = (invoiceObj) => {
+    return Invoice.update({
+            Name: invoiceObj.Name,
+            DeliveryNotes: invoiceObj.DeliveryNotes,
+            BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
+            VehicleNumber: invoiceObj.VehicleNumber,
+            otherNotes: invoiceObj.otherNotes,
+            mode: invoiceObj.mode,
+            Dated: invoiceObj.Dated,
+            model: invoiceObj.model,
+            km: invoiceObj.km,
+            sgst: invoiceObj.sgst,
+            csgt: invoiceObj.cgst,
+            discount: invoiceObj.discount,
+            discount_option: invoiceObj.discount_option,
+            amount: invoiceObj.amount,
+            amountwithdiscount: invoiceObj.amountwithdiscount,
+            Email: invoiceObj.Email,
+        }, {
+            where: {
+                InvoiceId: invoiceObj.InvoiceId,
+            },
+        })
+        .then((a) => {
+            return 'success';
+        })
+        .catch((err) => {
+            handleError(err);
+            return err;
+        });
+};
+
+// exports.updateInvoiceProducts = (invoiceProductObj) => {
+//     let isUpdated = false;
+//     invoiceProductObj.map(a => {
+//         InvoiceProduct.destroy({
+//                 where: {
+//                     Invoice_Number: a.Invoice_Number
+//                 },
+//             })
+//             .then((result) => {
+//                 console.log('its success');
+//                 isUpdated = true;
+//             })
+//             .catch((err) => {
+//                 handleError(err);
+//                 return err;
+//             });
+//     });
+// };

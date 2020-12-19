@@ -9,7 +9,9 @@ const {
     getallinvoices,
     deleteInvoice,
     getInvoiceById,
-    getInvoiceProductById
+    getInvoiceProductById,
+    updateInvoice,
+    deleteInvoiceProduct
 } = require('../models/invoice');
 
 exports.addInvoice = (req, res) => {
@@ -174,6 +176,66 @@ exports.getInvoiceProductById = (req, res) => {
         else
             return res.status(400).json({
                 message: 'not found'
+            });
+    });
+}
+
+exports.updateInvoice = (req, res) => {
+
+    if (!validateRequest(req)) {
+        return res.status(422).json({
+            error: errors.array()[0].msg,
+        });
+    }
+
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    updateInvoice(req.body).then((data) => {
+        if (data === 'success')
+            return res.status(200).json({
+                message: 'invoice updated'
+            });
+        else
+            return res.status(400).json({
+                message: 'invoice not created'
+            });
+    });
+}
+
+exports.updateInvoiceProducts = (req, res) => {
+
+    if (!validateRequest(req)) {
+        return res.status(422).json({
+            error: errors.array()[0].msg,
+        });
+    }
+
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+    const {
+        content
+    } = req.body;
+    req.body.map(a => {
+        deleteInvoiceProduct(a.Invoice_Number).then((data) => {
+            console.log('success');
+        });
+    });
+
+    addinvoiceproduct(req.body).then((data) => {
+        if (data === 'success')
+            return res.status(200).json({
+                message: 'invoice product updated'
+            });
+        else
+            return res.status(400).json({
+                message: 'not added'
             });
     });
 }
