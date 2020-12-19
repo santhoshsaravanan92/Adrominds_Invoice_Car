@@ -1,7 +1,6 @@
-<p-sidebar [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }" [(visible)]="loadAddEditModal" position="top"
+<p-sidebar [style]="{ height: '98%', width: '95%', 'margin-left': '3%', 'overflow-y':'scroll' }" [(visible)]="loadAddEditModal" position="top"
     [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
-    <!-- <app-invoice (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass"></app-invoice> -->
-    <!-- <app-invoice></app-invoice> -->
+    <app-invoice-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass"></app-invoice-modal>
 </p-sidebar>
 <div class="shadow">
     <p-table [value]="gridDatas" dataKey="id"

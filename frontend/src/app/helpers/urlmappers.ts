@@ -23,12 +23,13 @@ export module UrlMappers {
   export const getAllInvoices = baseUrl + "/api/invoice/getallinvoices/";
   export const deleteInvoice = baseUrl + "/api/invoice/deleteinvoice/";
   export const getInvoiceById = baseUrl + "/api/invoice/getinvoicebyid/";
+  export const getInvoiceProductById = baseUrl + "/api/invoice/getinvoiceproductbyid/";
 
   export const addExpense = baseUrl + "/api/expense/addexpense";
   export const getAllExpense = baseUrl + "/api/expense/getallexpense/";
   export const updateExpense = baseUrl + "/api/expense/updateexpense";
   export const deleteExpense = baseUrl + "/api/expense/deleteexpense";
   export const getExpenseByid = baseUrl + "/api/expense/getexpensebyid/";
-  export const getinvoiceReportsData = baseUrl + "/api/expense/getinvoicereportsdata";
+  export const getinvoiceReportsData = baseUrl + "/api/expense/getinvoicereportsdata/";
 
 }

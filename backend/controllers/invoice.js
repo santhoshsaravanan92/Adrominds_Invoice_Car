@@ -8,7 +8,8 @@ const {
     getCustomerNames,
     getallinvoices,
     deleteInvoice,
-    getInvoiceById
+    getInvoiceById,
+    getInvoiceProductById
 } = require('../models/invoice');
 
 exports.addInvoice = (req, res) => {
@@ -144,6 +145,30 @@ exports.getInvoiceById = (req, res) => {
     }
 
     getInvoiceById(req.params.id).then((data) => {
+        if (data)
+            return res.status(200).json(data);
+        else
+            return res.status(400).json({
+                message: 'not found'
+            });
+    });
+}
+
+exports.getInvoiceProductById = (req, res) => {
+
+    if (!validateRequest(req)) {
+        return res.status(422).json({
+            error: errors.array()[0].msg,
+        });
+    }
+
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    getInvoiceProductById(req.params.id).then((data) => {
         if (data)
             return res.status(200).json(data);
         else

@@ -202,3 +202,16 @@ exports.getInvoiceById = (id) => {
         return err;
     });
 };
+
+exports.getInvoiceProductById = (id) => {
+    return InvoiceProduct.findOne({
+        where: {
+            Invoice_Number: id,
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};

@@ -39,6 +39,7 @@ import { TabViewModule } from "primeng/tabview";
 import { ExpenseModelComponent } from './expense/expense-model/expense-model.component';
 import { InvoiceFiltersComponent } from './invoice/invoice-filters/invoice-filters.component';
 import { AllinvoicesComponent } from './invoice/allinvoices/allinvoices.component';
+import { InvoiceModalComponent } from './invoice/invoice-modal/invoice-modal.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AllinvoicesComponent } from './invoice/allinvoices/allinvoices.componen
     ExpenseModelComponent,
     InvoiceFiltersComponent,
     AllinvoicesComponent,
+    InvoiceModalComponent,
   ],
   imports: [
     BrowserModule,

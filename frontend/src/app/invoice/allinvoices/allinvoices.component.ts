@@ -1,26 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { InvoiceInformation } from '../models/invoice-models';
+import { Component, OnInit } from "@angular/core";
+import { InvoiceInformation } from "../models/invoice-models";
 import { getLoggedInUserEmail } from "../../helpers/utilities";
-import { InvoiceServiceService } from '../services/invoice-service.service';
+import { InvoiceServiceService } from "../services/invoice-service.service";
 import { BaseComponent } from "../../components/base/base.component";
-import {Constants} from "../../helpers/constant"
+import { Constants } from "../../helpers/constant";
 import { MessageService, ConfirmationService } from "primeng/api";
 
 @Component({
-  selector: 'app-allinvoices',
-  templateUrl: './allinvoices.component.html',
-  styleUrls: ['./allinvoices.component.sass']
+  selector: "app-allinvoices",
+  templateUrl: "./allinvoices.component.html",
+  styleUrls: ["./allinvoices.component.sass"],
 })
 export class AllinvoicesComponent extends BaseComponent implements OnInit {
   gridDatas: InvoiceInformation[] = [];
   isLoadingDone: boolean = false;
   modalDataToPass: any;
   loadAddEditModal = false;
-  
-  constructor(private invoiceService: InvoiceServiceService,
-     private confirmationService: ConfirmationService,
-     public messageService: MessageService,) {
-   super(messageService); }
+
+  constructor(
+    private invoiceService: InvoiceServiceService,
+    private confirmationService: ConfirmationService,
+    public messageService: MessageService
+  ) {
+    super(messageService);
+  }
 
   ngOnInit(): void {
     this.getAllInvoices();
@@ -51,39 +54,38 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
       };
   }
 
-  editInvoice(invoiceId){
+  editInvoice(invoiceId) {
     this.loadAddEditModal = true;
     this.modalDataToPass = {
-      id: invoiceId
+      id: invoiceId,
     };
   }
 
-  deleteInvoice(invoiceId, name){
+  deleteInvoice(invoiceId, name) {
     this.confirmationService.confirm({
       message: `Are you sure that you want to delete the Invoice for the customer ${name}`,
       header: "Delete Invoice",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         if (invoiceId !== "") {
-          this.invoiceService
-            .deleteInvoice(invoiceId)
-            .subscribe((res) => {
-              if (res.message === "deleted") {
-                this.getAllInvoices();
-                this.updateToastMessage(
-                  "Invoice Information Deleted Successfully",
-                  Constants.success,
-                  "Invoice Information"
-                );
-              }
-            });
+          this.invoiceService.deleteInvoice(invoiceId).subscribe((res) => {
+            if (res.message === "deleted") {
+              this.getAllInvoices();
+              this.updateToastMessage(
+                "Invoice Information Deleted Successfully",
+                Constants.success,
+                "Invoice Information"
+              );
+            }
+          });
         }
       },
       reject: () => {},
     });
   }
 
-  handleEmittedData($event){
-
+  handleEmittedData($event) {
+    if ($event == "closemodal")
+     this.loadAddEditModal = false;
   }
 }

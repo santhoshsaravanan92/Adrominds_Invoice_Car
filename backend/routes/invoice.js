@@ -9,7 +9,8 @@ const {
     getCustomerNames,
     getallinvoices,
     deleteInvoice,
-    getInvoiceById
+    getInvoiceById,
+    getInvoiceProductById
 } = require('../controllers/invoice');
 
 const invoiceRouter = express.Router();
@@ -26,9 +27,13 @@ invoiceRouter.get(
         check('name', 'name must be string and should not be empty.').isString()
     ], getCustomerNames
 );
-invoiceRouter.delete('/getinvoicebyid/:id', [
+invoiceRouter.get('/getinvoicebyid/:id', [
     check('id', 'should be a valid number').isInt()
 ], getInvoiceById);
+
+invoiceRouter.get('/getinvoiceproductbyid/:id', [
+    check('id', 'should be a valid number').isInt()
+], getInvoiceProductById);
 
 
 module.exports = invoiceRouter;

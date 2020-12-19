@@ -141,4 +141,18 @@ export class InvoiceServiceService {
       );
   }
 
+  getInvoiceProductById(id: string): Observable<ProductInformation[]> {
+    return this.http
+      .get<any>(UrlMappers.getInvoiceProductById + id, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }
