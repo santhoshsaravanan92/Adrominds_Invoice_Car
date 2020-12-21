@@ -126,7 +126,7 @@ export class InvoiceServiceService {
       );
   }
 
-  getInvoiceById(id: string): Observable<InvoiceInformation> {
+  getInvoiceById(id: string): Observable<any> {
     return this.http
       .get<any>(UrlMappers.getInvoiceById + id, {
         headers: getHeaders(),
