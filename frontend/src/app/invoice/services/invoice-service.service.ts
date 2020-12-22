@@ -66,7 +66,7 @@ export class InvoiceServiceService {
       );
   }
 
-  getCustomerNames(enteredname: string): Observable<any> {
+  getCustomerNames(enteredname: string): Observable<string[]> {
     return this.http
       .get<any>(UrlMappers.getCustomerNames + enteredname, {
         headers: getHeaders(),

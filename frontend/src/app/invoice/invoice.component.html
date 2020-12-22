@@ -11,7 +11,7 @@
                         <!-- <input type="text" placeholder="Customer Name" formControlName="customername" maxlength="15"
                     class="form-control textbox text-box-width" style="width:36em" /> -->
                         <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
-                            [suggestions]="customerNames" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
+                            [suggestions]="customerNames" field='Name' (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
                     'none', 'border-right-style': 'none','border-left-style': 'none','height': '37px'}">
                         </p-autoComplete>
                     </div>
