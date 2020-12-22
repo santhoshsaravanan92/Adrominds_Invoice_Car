@@ -50,6 +50,7 @@ export class CustomerComponent implements OnInit {
         Constants.success,
         "Customer Information"
       );
+      this.getAllCustomers();
     } else if ($event === "customer update") {
       this.getAllCustomers();
       this.updateToastMessage(

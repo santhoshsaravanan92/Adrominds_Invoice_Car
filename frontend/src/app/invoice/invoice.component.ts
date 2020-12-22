@@ -337,6 +337,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.CustomerForm.get("mode").setValue(e.target.value, {
       onlySelf: true,
     });
+    this.gstCalculation();
   }
 
   get getChangeDiscount() {

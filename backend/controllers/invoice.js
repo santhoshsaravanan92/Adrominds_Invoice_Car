@@ -5,7 +5,6 @@ const {
 const {
     addInvoice,
     addinvoiceproduct,
-    getCustomerNames,
     getallinvoices,
     deleteInvoice,
     getInvoiceById,
@@ -13,6 +12,8 @@ const {
     updateInvoice,
     deleteInvoiceProduct
 } = require('../models/invoice');
+
+const { getCustomerNames } = require('../models/customer');
 
 exports.addInvoice = (req, res) => {
 

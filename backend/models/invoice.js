@@ -107,7 +107,7 @@ const InvoiceProduct = sequelize.define('invoice_product', {
 exports.addInvoice = (invoiceObj) => {
     return Invoice.create({
             InvoiceId: invoiceObj.InvoiceId,
-            Name: invoiceObj.Name,
+            Name: invoiceObj.Name.Name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,
@@ -144,22 +144,6 @@ exports.addinvoiceproduct = (invoiceProductObj) => {
             handleError(err);
             return err;
         });
-};
-
-exports.getCustomerNames = (name) => {
-    return Invoice.findAll({
-        attributes: ['Name'],
-        where: {
-            Name: {
-                [Op.like]: `%${name}%`
-            },
-        },
-    }).then((result) => {
-        return result;
-    }).catch((err) => {
-        handleError(err);
-        return err;
-    });
 };
 
 exports.getallinvoices = (email) => {

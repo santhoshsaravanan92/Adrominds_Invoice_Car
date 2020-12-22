@@ -5,7 +5,9 @@ const {
 const {
     handleError
 } = require('../helpers/helper-methods');
-
+const {
+    Op
+} = require("sequelize");
 const Customer = sequelize.define('customer', {
     Name: {
         type: Sequelize.STRING(20),
@@ -124,4 +126,20 @@ exports.deleteCustomer = (id) => {
             handleError(err);
             return err;
         });
+};
+
+exports.getCustomerNames = (name) => {
+    return Customer.findAll({
+        attributes: ['Name'],
+        where: {
+            Name: {
+                [Op.like]: `%${name}%`
+            },
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
 };
