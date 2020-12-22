@@ -237,9 +237,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
 
   search(event) {
     this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
-      data.map((a) => {
-        this.customerNames.push(a.Name);
-      });
+      this.customerNames = data;
     });
   }
 

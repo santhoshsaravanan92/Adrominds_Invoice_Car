@@ -5,7 +5,7 @@
           <div class="form-group">
               <label for="customer name" class="label-design">Customer Name</label><br />
               <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
-                  [suggestions]="customerNames" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
+                  [suggestions]="customerNames" field="Name" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
           'none', 'border-right-style': 'none','border-left-style': 'none','height': '37px'}">
               </p-autoComplete>
           </div>
