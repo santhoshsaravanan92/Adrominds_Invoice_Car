@@ -80,8 +80,11 @@
 		},
 		{
 			"name": "get name for auto complete",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
@@ -99,7 +102,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/invoice//addinvoiceproduct",
+					"raw": "http://localhost:8000/api/invoice/getCustomerNames/g",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -108,8 +111,8 @@
 					"path": [
 						"api",
 						"invoice",
-						"",
-						"addinvoiceproduct"
+						"getCustomerNames",
+						"g"
 					]
 				}
 			},
@@ -179,7 +182,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/expense/getallexpense/abc1@gmail.com",
+					"raw": "http://localhost:8000/api/expense/getexpensebyid/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -188,13 +191,12 @@
 					"path": [
 						"api",
 						"expense",
-						"getallexpense",
-						"abc1@gmail.com"
+						"getexpensebyid",
+						"3"
 					]
 				}
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
