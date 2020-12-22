@@ -68,15 +68,22 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       );
       return;
     }
-    this.prepareDateToExport();
-    let element = document.getElementById("excel-table");
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Invoice Report");
-    XLSX.writeFile(
-      wb,
-      `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
-    );
+    if (this.prepareDateToExport()) {
+      let element = document.getElementById("excel-table");
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Invoice Report");
+      XLSX.writeFile(
+        wb,
+        `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
+      );
+    } else {
+      this.updateToastMessage(
+        "No data to export.",
+        Constants.error,
+        "AdroMinds Invoice"
+      );
+    }
   }
 
   exportPDF() {
@@ -89,50 +96,57 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       );
       return;
     }
-    this.prepareDateToExport();
-    setTimeout(() => {
-      if (this.invoices.length > 0) {
-        // let DATA = document.getElementById("excel-table");
+    if (this.prepareDateToExport()) {
+      setTimeout(() => {
+        if (this.invoices.length > 0) {
+          // let DATA = document.getElementById("excel-table");
 
-        // doc.html(DATA.innerHTML, {
-        //   callback: (doc) => {
-        //     doc.save(
-        //       `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
-        //     );
-        //   },
-        //   x: 10,
-        //   y: 10,
-        // });
+          // doc.html(DATA.innerHTML, {
+          //   callback: (doc) => {
+          //     doc.save(
+          //       `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+          //     );
+          //   },
+          //   x: 10,
+          //   y: 10,
+          // });
 
-        // let a = ["a", "b"];
-        let data = this.htmlData.nativeElement;
-        let doc = new jsPDF("p", "pt", "a4");
-        let handleElement = {
-          "#editor": function (element, renderer) {
-            return true;
-          },
-        };
-        debugger;
-        doc.html(document.getElementById("excel-table").innerHTML, {
-          callback: (doc) => {
-            doc.save(
-              `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
-            );
-          },
-          x: 10,
-          y: 10,
-        });
-        //doc.save(
-        //   `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
-        // );
-      } else {
-        this.updateToastMessage(
-          "No Records to Form PDF.",
-          Constants.error,
-          "AdroMinds Invoice"
-        );
-      }
-    }, 2000);
+          // let a = ["a", "b"];
+          let data = this.htmlData.nativeElement;
+          let doc = new jsPDF("p", "pt", "a4");
+          let handleElement = {
+            "#editor": function (element, renderer) {
+              return true;
+            },
+          };
+          debugger;
+          doc.html(document.getElementById("excel-table").innerHTML, {
+            callback: (doc) => {
+              doc.save(
+                `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+              );
+            },
+            x: 10,
+            y: 10,
+          });
+          //doc.save(
+          //   `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.pdf`
+          // );
+        } else {
+          this.updateToastMessage(
+            "No Records to Form PDF.",
+            Constants.error,
+            "AdroMinds Invoice"
+          );
+        }
+      }, 2000);
+    } else {
+      this.updateToastMessage(
+        "No data to export.",
+        Constants.error,
+        "AdroMinds Invoice"
+      );
+    }
     this.isProfileLoadDone = true;
   }
 
@@ -148,8 +162,9 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
     this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
       if (result.length > 0) {
         this.invoices = result;
-      }
+      } else return false;
     });
+    return true;
   }
 
   validateFormFields() {

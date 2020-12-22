@@ -71,13 +71,11 @@ export class ExpenseModelComponent implements OnInit {
   getExpenseRecordById(id: string) {
     if (id) {
       this.expenseService.getExpensesById(id).subscribe(expenseRecord => {
-        console.log('in subscribe')
-        console.log(expenseRecord)
         const expenseFromControls = this.getExpenseFormControls;
-        expenseFromControls["category"].setValue(expenseRecord.Category);
-        expenseFromControls["date"].setValue(expenseRecord.Date);
-        expenseFromControls["notes"].setValue(expenseRecord.Notes);
-        expenseFromControls["price"].setValue(expenseRecord.Price);
+        expenseFromControls["category"].setValue(expenseRecord.category);
+        expenseFromControls["date"].setValue(expenseRecord.date);
+        expenseFromControls["notes"].setValue(expenseRecord.notes);
+        expenseFromControls["price"].setValue(expenseRecord.price);
         expenseFromControls["id"].setValue(id);
       }),
         (err) => {
@@ -129,9 +127,9 @@ export class ExpenseModelComponent implements OnInit {
     const expenseFromControls = this.getExpenseFormControls;
 
     expense.Category = this.getchangeCategory.value;
-    expense.Date = expenseFromControls["comments"].value;
-    expense.Notes = expenseFromControls["email"].value;
-    expense.Price = expenseFromControls["gst"].value;
+    expense.Date = expenseFromControls["date"].value;
+    expense.Notes = expenseFromControls["notes"].value;
+    expense.Price = expenseFromControls["price"].value;
     expense.Email = getLoggedInUserEmail();
     expense.Id = expenseFromControls["id"].value;
 

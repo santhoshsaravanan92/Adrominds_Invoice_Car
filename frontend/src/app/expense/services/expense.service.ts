@@ -60,7 +60,7 @@ export class ExpenseService {
       );
   }
 
-  getExpensesById(id: string): Observable<ExpenseInformation> {
+  getExpensesById(id: string): Observable<any> {
     return this.http
       .get<any>(UrlMappers.getExpenseByid + id, {
         headers: getHeaders(),
