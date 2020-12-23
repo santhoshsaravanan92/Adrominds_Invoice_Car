@@ -136,12 +136,19 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   gstCalculation() {
     let gstFormControls = this.getGSTFormControls;
-    const stategst = gstFormControls["sgst"].value;
-    const centralgst = gstFormControls["cgst"].value;
+    let stategst = gstFormControls["sgst"].value;
+    let centralgst = gstFormControls["cgst"].value;
     const discount = gstFormControls["discount"].value;
     const discountOptionvalue = this.getChangeDiscount.value;
-    const discountOption = discountOptionvalue.split(" ")[1];
+    const discountOption =
+      discountOptionvalue != "" && discountOptionvalue != null
+        ? discountOptionvalue.split(" ")[1]
+        : "";
     const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
+
+    if (stategst == "" || stategst == null) stategst = 8;
+    if (centralgst == "" || centralgst == null) centralgst = 8;
+
     let sgst = totalpricewithoutgst * (stategst / 100);
     let cgst = totalpricewithoutgst * (centralgst / 100);
 
@@ -265,15 +272,21 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   prepareEntireInvoiceFormData() {
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();
-    invoiceObj.sgst = gstFormControls["sgst"].value;
-    invoiceObj.cgst = gstFormControls["cgst"].value;
+    const stategst = gstFormControls["sgst"].value;
+    const centralgst = gstFormControls["cgst"].value;
+    invoiceObj.sgst = stategst != "" && stategst != null ? stategst : 8;
+    invoiceObj.cgst = centralgst != "" && centralgst != null ? centralgst : 8;
     invoiceObj.amount = this.amount;
     invoiceObj.amountwithdiscount = this.amountwithdiscount;
     invoiceObj.discount = gstFormControls["discount"].value;
-    invoiceObj.discount_option = this.getChangeDiscount.value.split(" ")[1];
+    let discountOptionvalue = this.getChangeDiscount.value;
+    invoiceObj.discount_option =
+      discountOptionvalue != "" && discountOptionvalue != null
+        ? discountOptionvalue.split(" ")[1]
+        : "";
 
     const customerFormControls = this.getCustomerFormControls;
-    let date = new Date().toLocaleDateString("en-US").replace("/", "");
+    let date = new Date().toLocaleDateString("en-GB").replace("/", "");
     const date1 = date.replace("/", "");
     let o = new Date();
     invoiceObj.InvoiceId =
@@ -337,7 +350,6 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.CustomerForm.get("mode").setValue(e.target.value, {
       onlySelf: true,
     });
-    this.gstCalculation();
   }
 
   get getChangeDiscount() {
@@ -348,15 +360,16 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gstForm.get("discountoption").setValue(e.target.value, {
       onlySelf: true,
     });
+    this.gstCalculation();
   }
 
   resetValues() {
-    this.gridDatas = [];
-    this.amount = 0;
-    this.price = 0;
     this.gstForm.reset();
     this.CustomerForm.reset();
     this.productForm.reset();
+    this.gridDatas = [];
+    this.amount = 0;
+    this.price = 0;
   }
 
   search(event) {

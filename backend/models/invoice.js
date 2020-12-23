@@ -105,6 +105,9 @@ const InvoiceProduct = sequelize.define('invoice_product', {
 });
 
 exports.addInvoice = (invoiceObj) => {
+    console.log('in model data')
+    console.log(invoiceObj)
+
     return Invoice.create({
             InvoiceId: invoiceObj.InvoiceId,
             Name: invoiceObj.Name.Name,
