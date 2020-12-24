@@ -63,7 +63,6 @@ export class ProfileService {
   }
 
   updatePassword(newPassword: string, oldPassword: string): Observable<any> {
-    debugger;
     const content = {
       username: getLoggedInUserEmail(),
       newpassword: newPassword,

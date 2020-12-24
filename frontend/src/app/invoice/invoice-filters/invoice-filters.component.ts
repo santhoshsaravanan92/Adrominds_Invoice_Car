@@ -111,7 +111,6 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
             return true;
           },
         };
-        debugger;
         doc.html(document.getElementById("excel-table").innerHTML, {
           callback: (doc) => {
             doc.save(
@@ -137,7 +136,6 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   }
 
   prepareDateToExport() {
-    debugger;
     const controls = this.getReportFormControls;
     let fileterObj = new InvoicFilter();
     fileterObj.Name = controls["customername"].value;
