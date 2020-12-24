@@ -123,8 +123,11 @@ exports.getInvoiceReportsData = (filterData) => {
 
     let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice where Dated between '${date}'`;
 
-    if (filterData.ToDate != "") query += ` and '${filterData.ToDate}'`;
-    else query += ` and '${new Date().toLocaleDateString("en-GB")}'`;
+    if (filterData.ToDate != "") {
+        const date = filterData.ToDate.split('-')
+        const toDate = `${date[2]}/${date[1]}/${date[0]}`
+        query += ` and '${toDate}'`;
+    } else query += ` and '${new Date().toLocaleDateString("en-GB")}'`;
 
     if (filterData.Name != "") query += ` and name = '${filterData.Name}'`
     if (filterData.VehicleNumber != "") query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;

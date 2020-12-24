@@ -43,46 +43,45 @@
         </form>
     </p-fieldset>
     <p-fieldset legend="Invoice Information" [toggleable]="true" styleClass="fieldset-title">
-      <app-allinvoices></app-allinvoices>
+        <app-allinvoices></app-allinvoices>
     </p-fieldset>
-    <div id="htmlData" #htmlData>
-        <table style="display: none;font-size: 11px;border: 1px solid #000;" id="excel-table">
-            <tr>
-                <th>Invoice ID</th>
-                <th>Name</th>
-                <th>Vehicle Number</th>
-                <th>Model</th>
-                <th>Buyer Order Number</th>
-                <th>Dated</th>
-                <th>DeliveryNotes</th>
-                <th>Amount</th>
-                <th>Amount with Discount</th>
-                <th>CGST</th>
-                <th>SGST</th>
-                <th>Discount</th>
-                <th>Discount Option</th>
-                <th>KM</th>
-                <th>Mode</th>
-                <th>Other Notest</th>
-            </tr>
-            <tr *ngFor="let sup of invoices">
-                <td>{{ sup.invoiceid }}</td>
-                <td>{{ sup.name }}</td>
-                <td>{{ sup.VehicleNumber }}</td>
-                <td>{{ sup.model }}</td>
-                <td>{{ sup.BuyerOrderNumber }}</td>
-                <td>{{ sup.Dated }}</td>
-                <td>{{ sup.DeliveryNotes }}</td>
-                <td>{{ sup.amount }}</td>
-                <td>{{ sup.amountwithdiscount }}</td>
-                <td>{{ sup.csgt }}</td>
-                <td>{{ sup.sgst }}</td>
-                <td>{{ sup.discount }}</td>
-                <td>{{ sup.discount_option }}</td>
-                <td>{{ sup.km }}</td>
-                <td>{{ sup.mode }}</td>
-                <td>{{ sup.otherNotes }}</td>
-            </tr>
-        </table>
-    </div>
+
+    <table style="display: none;" id="excel-table">
+        <tr>
+            <th>Invoice ID</th>
+            <th>Name</th>
+            <th>Vehicle Number</th>
+            <th>Model</th>
+            <th>Buyer Order Number</th>
+            <th>Dated</th>
+            <th>DeliveryNotes</th>
+            <th>Amount</th>
+            <th>Amount with Discount</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>Discount</th>
+            <th>Discount Option</th>
+            <th>KM</th>
+            <th>Mode</th>
+            <th>Other Notest</th>
+        </tr>
+        <tr *ngFor="let sup of invoices">
+            <td>{{ sup.invoiceid }}</td>
+            <td>{{ sup.name }}</td>
+            <td>{{ sup.VehicleNumber }}</td>
+            <td>{{ sup.model }}</td>
+            <td>{{ sup.BuyerOrderNumber }}</td>
+            <td>{{ sup.Dated }}</td>
+            <td>{{ sup.DeliveryNotes }}</td>
+            <td>{{ sup.amount }}</td>
+            <td>{{ sup.amountwithdiscount }}</td>
+            <td>{{ sup.csgt }}</td>
+            <td>{{ sup.sgst }}</td>
+            <td>{{ sup.discount }}</td>
+            <td>{{ sup.discount_option }}</td>
+            <td>{{ sup.km }}</td>
+            <td>{{ sup.mode }}</td>
+            <td>{{ sup.otherNotes }}</td>
+        </tr>
+    </table>
 </div>
