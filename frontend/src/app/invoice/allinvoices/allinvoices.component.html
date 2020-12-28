@@ -2,6 +2,11 @@
     [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
     <app-invoice-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass"></app-invoice-modal>
 </p-sidebar>
+<div class="width-100 padding-btn">
+    <div class="edit-button margin-right cursor-pointer float-right" (click)="clearGrid()">
+        Clear Grid Filters
+    </div>
+</div>
 <div class="shadow">
     <p-table [value]="gridDatas" dataKey="id"
         styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true" [rows]="15"
@@ -25,19 +30,19 @@
         </ng-template>
         <ng-template pTemplate="body" let-data>
             <tr class="ui-selectable-row">
-                <td class="info-tbl-row-design" style="width:13%">{{ data.InvoiceId }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;">{{ data.Name }}</td>
+                <td class="info-tbl-row-design" style="width:13%">{{ data.invoiceid }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ data.name }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.VehicleNumber }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.model }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.mode }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.amount }}</td>
                 <td class="info-tbl-row-design">
                     <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
-                        srcset="" (click)="editInvoice(data.InvoiceId)" />
+                        srcset="" (click)="editInvoice(data.invoiceid)" />
                 </td>
                 <td class="info-tbl-row-design">
                     <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer" title="Delete Record"
-                        (click)="deleteInvoice(data.InvoiceId, data.Name)" />
+                        (click)="deleteInvoice(data.invoiceid, data.name)" />
                 </td>
             </tr>
         </ng-template>

@@ -77,7 +77,7 @@ export class InvoiceServiceService {
       );
   }
 
-  getAllInvoices(email: string): Observable<InvoiceInformation[]> {
+  getAllInvoices(email: string): Observable<any[]> {
     return this.http
       .get<any>(UrlMappers.getAllInvoices + email, {
         headers: getHeaders(),
@@ -138,27 +138,27 @@ export class InvoiceServiceService {
   }
 
   updateInvoice(invoiceObj: InvoiceInformation): Observable<any> {
-    const content = {
-      sgst: invoiceObj.sgst,
-      cgst: invoiceObj.cgst,
-      amount: invoiceObj.amount,
-      amountwithdiscount: invoiceObj.amountwithdiscount,
-      discount: invoiceObj.discount,
-      discount_option: invoiceObj.discount_option,
-      InvoiceId: invoiceObj.InvoiceId,
-      Dated: invoiceObj.Dated,
-      BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
-      DeliveryNotes: invoiceObj.DeliveryNotes,
-      Email: invoiceObj.Email,
-      Name: invoiceObj.Name,
-      VehicleNumber: invoiceObj.VehicleNumber,
-      km: invoiceObj.km,
-      mode: invoiceObj.mode,
-      model: invoiceObj.model,
-      otherNotes: invoiceObj.otherNotes,
-    };
+    // const content = {
+    //   sgst: invoiceObj.sgst,
+    //   cgst: invoiceObj.cgst,
+    //   amount: invoiceObj.amount,
+    //   amountwithdiscount: invoiceObj.amountwithdiscount,
+    //   discount: invoiceObj.discount,
+    //   discount_option: invoiceObj.discount_option,
+    //   InvoiceId: invoiceObj.invoiceid,
+    //   Dated: invoiceObj.Dated,
+    //   BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
+    //   DeliveryNotes: invoiceObj.DeliveryNotes,
+    //   Email: invoiceObj.Email,
+    //   Name: invoiceObj.name,
+    //   VehicleNumber: invoiceObj.VehicleNumber,
+    //   km: invoiceObj.km,
+    //   mode: invoiceObj.mode,
+    //   model: invoiceObj.model,
+    //   otherNotes: invoiceObj.otherNotes,
+    // };
     return this.http
-      .post<InvoiceInformation>(UrlMappers.updateInvoice, content, {
+      .post<InvoiceInformation>(UrlMappers.updateInvoice, invoiceObj, {
         headers: getHeaders(),
       })
       .pipe(

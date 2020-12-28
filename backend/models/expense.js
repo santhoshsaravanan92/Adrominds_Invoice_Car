@@ -9,7 +9,8 @@ const {
     sequelize
 } = require('../helpers/dbhelper');
 const {
-    handleError
+    handleError,
+    getTodayDate
 } = require('../helpers/helper-methods');
 
 
@@ -123,15 +124,15 @@ exports.getInvoiceReportsData = (filterData) => {
 
     let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice where Dated between '${date}'`;
 
-    if (filterData.ToDate != "") {
+    if (filterData.ToDate != "" && filterData.ToDate != null) {
         const date = filterData.ToDate.split('-')
         const toDate = `${date[2]}/${date[1]}/${date[0]}`
         query += ` and '${toDate}'`;
-    } else query += ` and '${new Date().toLocaleDateString("en-GB")}'`;
+    } else query += ` and '${getTodayDate()}'`;
 
-    if (filterData.Name != "") query += ` and name = '${filterData.Name}'`
-    if (filterData.VehicleNumber != "") query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;
-    if (filterData.Model != "") query += ` and model = '${filterData.Model}'`
+    if (filterData.Name != "" && filterData.Name != null) query += ` and name = '${filterData.Name.Name}'`
+    if (filterData.VehicleNumber != "" && filterData.VehicleNumber != null) query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;
+    if (filterData.Model != "" && filterData.Model != null) query += ` and model = '${filterData.Model}'`
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { InvoiceInformation } from "../models/invoice-models";
 import { getLoggedInUserEmail } from "../../helpers/utilities";
 import { InvoiceServiceService } from "../services/invoice-service.service";
@@ -16,6 +16,15 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   isLoadingDone: boolean = false;
   modalDataToPass: any;
   loadAddEditModal = false;
+  private _dataForGridOnExport: any;
+  @Input("dataForGridOnExport")
+  set dataForGridOnExport(value: any) {
+    if (value.length > 0) {
+      this.gridDatas = value;
+    } else {
+      this.getAllInvoices();
+    }
+  }
 
   constructor(
     private invoiceService: InvoiceServiceService,
@@ -38,8 +47,8 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
           this.gridDatas = [];
           data.forEach((e) => {
             let a = new InvoiceInformation();
-            a.InvoiceId = e.InvoiceId;
-            a.Name = e.Name;
+            a.invoiceid = e.InvoiceId;
+            a.name = e.Name;
             a.VehicleNumber = e.VehicleNumber;
             a.model = e.model;
             a.mode = e.mode;
@@ -96,5 +105,9 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
         "Invoice"
       );
     }
+  }
+
+  clearGrid() {
+    this.getAllInvoices();
   }
 }

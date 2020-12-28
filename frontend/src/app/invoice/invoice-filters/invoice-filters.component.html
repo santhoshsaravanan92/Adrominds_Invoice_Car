@@ -43,7 +43,7 @@
         </form>
     </p-fieldset>
     <p-fieldset legend="Invoice Information" [toggleable]="true" styleClass="fieldset-title">
-        <app-allinvoices></app-allinvoices>
+        <app-allinvoices [dataForGridOnExport]='dataForGridOnExport'></app-allinvoices>
     </p-fieldset>
 
     <table style="display: none;" id="excel-table">

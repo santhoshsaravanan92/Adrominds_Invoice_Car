@@ -19,6 +19,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   isProfileLoadDone: boolean = true;
   customerNames: string[] = [];
   invoices = [];
+  dataForGridOnExport = [];
   @ViewChild("htmlData") htmlData: ElementRef;
 
   constructor(
@@ -147,6 +148,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
     this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
       if (result.length > 0) {
         this.invoices = result;
+        this.dataForGridOnExport = result;
         setTimeout(() => {
           let element = document.getElementById("excel-table");
           const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -156,6 +158,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
             wb,
             `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
           );
+          this.clearForm();
         }, 2000);
       } else {
         this.updateToastMessage(
@@ -170,7 +173,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   validateFormFields() {
     const controls = this.getReportFormControls;
     const fromDate = controls["fromdate"].value;
-    if (fromDate == "") {
+    if (fromDate == "" || fromDate == null) {
       return false;
     }
     return true;

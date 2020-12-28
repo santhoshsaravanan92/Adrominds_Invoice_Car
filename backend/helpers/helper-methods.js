@@ -1,5 +1,9 @@
-const { validationResult } = require('express-validator');
-const { v4: uuidv4 } = require('uuid');
+const {
+	validationResult
+} = require('express-validator');
+const {
+	v4: uuidv4
+} = require('uuid');
 
 exports.validateRequest = (req) => {
 	const errors = validationResult(req);
@@ -25,3 +29,12 @@ exports.validateHeader = (req) => {
 exports.handleError = (err) => {
 	console.log(err);
 };
+
+exports.getTodayDate = () => {
+	const date = new Date();
+	m = date.getMonth() + 1;
+	y = date.getFullYear();
+	d = date.getDate();
+
+	return `${d}/${m}/${y}`; //d + "/" + m + "/" + y;
+}

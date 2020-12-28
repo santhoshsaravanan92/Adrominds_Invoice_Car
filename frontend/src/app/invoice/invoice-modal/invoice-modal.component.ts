@@ -287,12 +287,12 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
 
     const customerFormControls = this.getCustomerFormControls;
 
-    invoiceObj.InvoiceId = localStorage.getItem("idToUpdate");
+    invoiceObj.invoiceid = localStorage.getItem("idToUpdate");
     invoiceObj.Dated = customerFormControls["dated"].value;
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
     invoiceObj.Email = getLoggedInUserEmail();
-    invoiceObj.Name = customerFormControls["customername"].value;
+    invoiceObj.name = customerFormControls["customername"].value;
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
     invoiceObj.km = customerFormControls["km"].value;
     invoiceObj.mode = this.getPaymentMode.value.split(" ")[1];
@@ -303,7 +303,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
       if (data.message === "invoice updated") {
         let data = [];
         this.gridDatas.map((d) => {
-          data.push({ ...d, Invoice_Number: invoiceObj.InvoiceId });
+          data.push({ ...d, Invoice_Number: invoiceObj.invoiceid });
         });
 
         // another service call

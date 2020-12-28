@@ -76,9 +76,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gstForm = this.formBuilder.group({
       sgst: ["8"],
       cgst: ["8"],
-      amountwithgst: ["0"],
-      discount: ["0"],
-      amount: ["0"],
+      amountwithgst: [""],
+      discount: [""],
+      amount: [""],
       discountoption: [""],
     });
   }
@@ -289,13 +289,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let date = new Date().toLocaleDateString("en-GB").replace("/", "");
     const date1 = date.replace("/", "");
     let o = new Date();
-    invoiceObj.InvoiceId =
+    invoiceObj.invoiceid =
       date1 + o.getHours() + o.getMinutes() + o.getSeconds();
     invoiceObj.Dated = customerFormControls["dated"].value;
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
     invoiceObj.Email = getLoggedInUserEmail();
-    invoiceObj.Name = customerFormControls["customername"].value;
+    invoiceObj.name = customerFormControls["customername"].value;
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
     invoiceObj.km = customerFormControls["km"].value;
     invoiceObj.mode = this.getPaymentMode.value.split(" ")[1];
@@ -306,7 +306,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       if (data.message === "invoice added") {
         let data = [];
         this.gridDatas.map((d) => {
-          data.push({ ...d, Invoice_Number: invoiceObj.InvoiceId });
+          data.push({ ...d, Invoice_Number: invoiceObj.invoiceid });
         });
 
         // another service call

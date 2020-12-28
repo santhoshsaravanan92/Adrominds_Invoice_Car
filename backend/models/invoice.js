@@ -109,8 +109,8 @@ exports.addInvoice = (invoiceObj) => {
     console.log(invoiceObj)
 
     return Invoice.create({
-            InvoiceId: invoiceObj.InvoiceId,
-            Name: invoiceObj.Name.Name,
+            InvoiceId: invoiceObj.invoiceid,
+            Name: invoiceObj.name.Name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,
@@ -220,7 +220,7 @@ exports.getInvoiceProductById = (id) => {
 
 exports.updateInvoice = (invoiceObj) => {
     return Invoice.update({
-            Name: invoiceObj.Name,
+            Name: invoiceObj.name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,
@@ -238,7 +238,7 @@ exports.updateInvoice = (invoiceObj) => {
             Email: invoiceObj.Email,
         }, {
             where: {
-                InvoiceId: invoiceObj.InvoiceId,
+                InvoiceId: invoiceObj.invoiceid,
             },
         })
         .then((a) => {

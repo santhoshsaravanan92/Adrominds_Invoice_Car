@@ -7,8 +7,8 @@ export class ProductInformation {
 }
 
 export class InvoiceInformation {
-  InvoiceId: string;
-  Name: string;
+  invoiceid: string;
+  name: string;
   DeliveryNotes: string;
   BuyerOrderNumber: string;
   VehicleNumber: string;
