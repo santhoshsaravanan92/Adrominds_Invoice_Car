@@ -1,5 +1,5 @@
 <div class="margin-top font-family">
-    <div *ngIf="!isProfileLoadDone">
+    <div *ngIf="isloading">
         <p-progressSpinner class="loading"></p-progressSpinner>
     </div>
     <p-fieldset legend="Invoice Reports" [toggleable]="true" styleClass="fieldset-title">
@@ -43,7 +43,7 @@
         </form>
     </p-fieldset>
     <p-fieldset legend="Invoice Information" [toggleable]="true" styleClass="fieldset-title">
-        <app-allinvoices [dataForGridOnExport]='dataForGridOnExport'></app-allinvoices>
+        <app-allinvoices [dataForGridOnExport]='dataForGridOnExport' [_isTabChanged]="_isTabChanged"></app-allinvoices>
     </p-fieldset>
 
     <table style="display: none;" id="excel-table">

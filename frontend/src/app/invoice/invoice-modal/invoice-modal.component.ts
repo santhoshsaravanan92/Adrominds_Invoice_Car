@@ -138,10 +138,15 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     let productFormControls = this.getProductFormControls;
     const rate = productFormControls["rate"].value;
     const quantity = productFormControls["quantity"].value;
-    let r = rate != "" && rate > 0 ? rate : 1;
-    let q = quantity != "" && quantity > 0 ? quantity : 1;
-    this.price = r * q;
-    localStorage.setItem("price", "" + this.price);
+    if (rate && quantity) {
+      let r = rate != "" && rate > 0 ? rate : 1;
+      let q = quantity != "" && quantity > 0 ? quantity : 1;
+      this.price = r * q;
+      if (localStorage.getItem("price") != null) {
+        const _price = parseInt(localStorage.getItem("price"));
+        localStorage.setItem("price", (this.price + _price).toString());
+      } else localStorage.setItem("price", "" + this.price);
+    }
   }
 
   gstCalculation() {
@@ -154,17 +159,16 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
       discountOptionvalue != "" && discountOptionvalue != null
         ? discountOptionvalue.split(" ")[1]
         : "";
-
     const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
 
-    if (stategst == "" || stategst == null) stategst = 8;
-    if (centralgst == "" || centralgst == null) centralgst = 8;
+    if (!stategst) stategst = 8;
+    // if (!centralgst) centralgst = 8;
 
-    let sgst = totalpricewithoutgst * (stategst / 100);
-    let cgst = totalpricewithoutgst * (centralgst / 100);
+    const gst = (totalpricewithoutgst * stategst) / 100;
+    //const cgst = (totalpricewithoutgst * centralgst) / 100;
 
     this.amount = this.amountwithdiscount = parseFloat(
-      (totalpricewithoutgst + sgst + cgst).toFixed(2)
+      (totalpricewithoutgst + gst).toFixed(2)
     );
 
     if (discount > 0 && discountOption != "") {

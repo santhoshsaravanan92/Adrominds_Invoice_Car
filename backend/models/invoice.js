@@ -169,7 +169,7 @@ exports.deleteInvoice = (id) => {
             },
         })
         .then((result) => {
-            return deleteInvoiceProduct(id);
+            return deleteInvoiceProducedetails(id);
         })
         .catch((err) => {
             handleError(err);
@@ -178,6 +178,10 @@ exports.deleteInvoice = (id) => {
 };
 
 exports.deleteInvoiceProduct = (id) => {
+    return deleteInvoiceProducedetails(id);
+}
+
+function deleteInvoiceProducedetails(id) {
     return InvoiceProduct.destroy({
             where: {
                 Invoice_Number: id

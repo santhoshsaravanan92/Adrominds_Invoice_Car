@@ -1,9 +1,12 @@
+<div *ngIf="isLoading">
+    <p-progressSpinner class="loading"></p-progressSpinner>
+</div>
 <div class="margin-top font-family">
-    <p-tabView>
+    <p-tabView (onChange)="handleTabChange($event)">
         <p-tabPanel header="Invoices">
-            <app-invoice-filters></app-invoice-filters>
+            <app-invoice-filters [isTabChanged]="isTabChanged"></app-invoice-filters>
         </p-tabPanel>
-        <p-tabPanel header="Create Invoice">
+        <p-tabPanel header="Create Invoice" righticon="pi pi-file-o">
             <form [formGroup]="CustomerForm" class="form-modal-design">
                 <div class="width-50 float-left padding1em">
                     <div class="form-group">
@@ -60,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label for="buyers order number" class="label-design">Dated</label>
-                        <input type="text" placeholder="Date" formControlName="dated"
+                        <input type="text" placeholder="Date (dd/mm/yyyy)" formControlName="dated"
                             class="form-control textbox text-box-width" />
                     </div>
                     <div class="form-group">

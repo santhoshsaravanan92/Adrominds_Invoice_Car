@@ -26,6 +26,14 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
     }
   }
 
+  @Input("_isTabChanged")
+  set _isTabChanged(value:any){
+    debugger;
+    if(value){
+      this.getAllInvoices();
+    }
+  }
+
   constructor(
     private invoiceService: InvoiceServiceService,
     private confirmationService: ConfirmationService,
@@ -53,6 +61,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
             a.model = e.model;
             a.mode = e.mode;
             a.amount = e.amount;
+            a.Dated = e.Dated;
             this.gridDatas.push(a);
           });
         }

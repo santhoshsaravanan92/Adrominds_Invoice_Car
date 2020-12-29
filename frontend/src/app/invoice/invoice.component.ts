@@ -22,8 +22,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   invoiceFormSubmitted: boolean = false;
   addItemFormsSubmitted: boolean = false;
   isLoadingDone: boolean = false;
+  isLoading: boolean = false;
   loadCustomerPage: boolean = false;
   gridDatas: ProductInformation[] = [];
+  isTabChanged:boolean = false;
   amount: number = 0;
   price: number = 0;
   amountwithdiscount: number = 0;
@@ -128,10 +130,15 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let productFormControls = this.getProductFormControls;
     const rate = productFormControls["rate"].value;
     const quantity = productFormControls["quantity"].value;
-    let r = rate != "" && rate > 0 ? rate : 1;
-    let q = quantity != "" && quantity > 0 ? quantity : 1;
-    this.price = r * q;
-    localStorage.setItem("price", "" + this.price);
+    if (rate && quantity) {
+      let r = rate != "" && rate > 0 ? rate : 1;
+      let q = quantity != "" && quantity > 0 ? quantity : 1;
+      this.price = r * q;
+      if (localStorage.getItem("price") != null) {
+        const _price = parseInt(localStorage.getItem("price"));
+        localStorage.setItem("price", (this.price + _price).toString());
+      } else localStorage.setItem("price", "" + this.price);
+    }
   }
 
   gstCalculation() {
@@ -146,14 +153,14 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         : "";
     const totalpricewithoutgst = parseInt(localStorage.getItem("price"));
 
-    if (stategst == "" || stategst == null) stategst = 8;
-    if (centralgst == "" || centralgst == null) centralgst = 8;
+    if (!stategst) stategst = 8;
+    // if (!centralgst) centralgst = 8;
 
-    let sgst = totalpricewithoutgst * (stategst / 100);
-    let cgst = totalpricewithoutgst * (centralgst / 100);
+    const gst = (totalpricewithoutgst * stategst) / 100;
+    //const cgst = (totalpricewithoutgst * centralgst) / 100;
 
     this.amount = this.amountwithdiscount = parseFloat(
-      (totalpricewithoutgst + sgst + cgst).toFixed(2)
+      (totalpricewithoutgst + gst).toFixed(2)
     );
 
     if (discount > 0 && discountOption != "") {
@@ -270,6 +277,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   prepareEntireInvoiceFormData() {
+    this.isLoading = true;
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();
     const stategst = gstFormControls["sgst"].value;
@@ -312,6 +320,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         // another service call
         this.invoiceService.addInvoiceProducts(data).subscribe((data) => {
           if (data.message === "invoice product added") {
+            localStorage.setItem("price", "0");
             this.updateToastMessage(
               "Invoice created.",
               Constants.success,
@@ -325,6 +334,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
               "Invoice"
             );
           }
+          this.isLoading = false;
+          this.isTabChanged = true;
         }),
           (err) => {
             console.log(err);
@@ -376,5 +387,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
       this.customerNames = data;
     });
+  }
+
+  handleTabChange(e){
+    this.isTabChanged = true;
   }
 }

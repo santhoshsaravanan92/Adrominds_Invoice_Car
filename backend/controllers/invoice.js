@@ -220,9 +220,7 @@ exports.updateInvoiceProducts = (req, res) => {
             error: 'UnAuthorized',
         });
     }
-    const {
-        content
-    } = req.body;
+   
     req.body.map(a => {
         deleteInvoiceProduct(a.Invoice_Number).then((data) => {
             console.log('success');

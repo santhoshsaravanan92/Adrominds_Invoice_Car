@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BaseComponent } from "src/app/components/base/base.component";
@@ -16,11 +16,17 @@ import { jsPDF } from "jspdf";
 })
 export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   reportForm: FormGroup;
-  isProfileLoadDone: boolean = true;
+  isloading: boolean = false;
   customerNames: string[] = [];
   invoices = [];
   dataForGridOnExport = [];
+  _isTabChanged;
   @ViewChild("htmlData") htmlData: ElementRef;
+
+  @Input("isTabChanged")
+  set isTabChanged(value:any){
+    this._isTabChanged = value;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,19 +74,10 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       return;
     }
     this.prepareDateToExport();
-    // let element = document.getElementById("excel-table");
-    // const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, "Invoice Report");
-    // XLSX.writeFile(
-    //   wb,
-    //   `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
-    // );
-    //this.invoices = [];
   }
 
   exportPDF() {
-    this.isProfileLoadDone = false;
+    this.isloading = false;
     if (!this.validateFormFields()) {
       this.updateToastMessage(
         "From date is mandatory to generate report.",
@@ -133,10 +130,11 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       }
       this.invoices = [];
     }, 2000);
-    this.isProfileLoadDone = true;
+    this.isloading = true;
   }
 
   prepareDateToExport() {
+    this.isloading = true;
     const controls = this.getReportFormControls;
     let fileterObj = new InvoicFilter();
     fileterObj.Name = controls["customername"].value;
@@ -159,6 +157,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
             `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
           );
           this.clearForm();
+          this.isloading = false;
         }, 2000);
       } else {
         this.updateToastMessage(
@@ -166,6 +165,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
           Constants.error,
           "AdroMinds Invoice"
         );
+        this.isloading = false;
       }
     });
   }
