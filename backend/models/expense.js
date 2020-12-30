@@ -119,16 +119,21 @@ exports.updateExpense = (expenseObj) => {
 };
 
 exports.getInvoiceReportsData = (filterData) => {
+    console.log('from model');
+    console.log(filterData);
+
     const dates = filterData.FromDate.split('-')
     const date = `${dates[2]}/${dates[1]}/${dates[0]}`
 
-    let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice where Dated between '${date}'`;
+    let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice where Dated `;
 
     if (filterData.ToDate != "" && filterData.ToDate != null) {
         const date = filterData.ToDate.split('-')
         const toDate = `${date[2]}/${date[1]}/${date[0]}`
-        query += ` and '${toDate}'`;
-    } else query += ` and '${getTodayDate()}'`;
+        query += ` between '${date}' and '${toDate}'`;
+    } else {
+        query += `= '${date}'`
+    }
 
     if (filterData.Name != "" && filterData.Name != null) query += ` and name = '${filterData.Name.Name}'`
     if (filterData.VehicleNumber != "" && filterData.VehicleNumber != null) query += ` and VehicleNumber = '${filterData.VehicleNumber}'`;

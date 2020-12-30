@@ -106,6 +106,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
     if ($event == "closemodal") this.loadAddEditModal = false;
     else if ($event == "updated") {
       this.loadAddEditModal = false;
+      this.getAllInvoices();
       this.updateToastMessage("Invoice updated.", Constants.success, "Invoice");
     } else {
       this.updateToastMessage(

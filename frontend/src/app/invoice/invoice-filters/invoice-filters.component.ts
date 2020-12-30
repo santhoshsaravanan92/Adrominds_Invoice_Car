@@ -24,7 +24,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   @ViewChild("htmlData") htmlData: ElementRef;
 
   @Input("isTabChanged")
-  set isTabChanged(value:any){
+  set isTabChanged(value: any) {
     this._isTabChanged = value;
   }
 
@@ -146,7 +146,6 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
     this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
       if (result.length > 0) {
         this.invoices = result;
-        this.dataForGridOnExport = result;
         setTimeout(() => {
           let element = document.getElementById("excel-table");
           const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -156,7 +155,6 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
             wb,
             `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
           );
-          this.clearForm();
           this.isloading = false;
         }, 2000);
       } else {
@@ -177,5 +175,33 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  applyFilter() {
+    if (!this.validateFormFields()) {
+      this.updateToastMessage(
+        "From date is mandatory to filter data.",
+        Constants.error,
+        "AdroMinds Invoice"
+      );
+      return;
+    }
+
+    if (this.invoices.length > 0) this.dataForGridOnExport = this.invoices;
+    else {
+      this.isloading = true;
+      const controls = this.getReportFormControls;
+      let fileterObj = new InvoicFilter();
+      fileterObj.Name = controls["customername"].value;
+      fileterObj.FromDate = controls["fromdate"].value;
+      fileterObj.ToDate = controls["todate"].value;
+      fileterObj.VehicleNumber = controls["vehiclenumber"].value;
+      fileterObj.Model = controls["model"].value;
+
+      this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
+        this.dataForGridOnExport = result;
+        this.isloading = false;
+      });
+    }
   }
 }
