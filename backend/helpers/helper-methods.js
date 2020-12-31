@@ -30,11 +30,3 @@ exports.handleError = (err) => {
 	console.log(err);
 };
 
-exports.getTodayDate = () => {
-	const date = new Date();
-	m = date.getMonth() + 1;
-	y = date.getFullYear();
-	d = date.getDate();
-
-	return `${d}/${m}/${y}`; //d + "/" + m + "/" + y;
-}

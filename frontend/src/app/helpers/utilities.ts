@@ -18,3 +18,21 @@ export const getLoggedInUserEmail = () => {
 		return userdata.split(';')[1].split(':')[1];
 	return '';
 };
+
+export const getTodayDate = () => {
+	const date = new Date();
+	const m = date.getMonth() + 1;
+	const y = date.getFullYear();
+	const d = date.getDate();
+
+	return `${d}/${m}/${y}`; //dd/mm/yyyy
+}
+
+export const getTodayDateWithoutsplit = () => {
+	const date = new Date();
+	const m = date.getMonth() + 1;
+	const y = date.getFullYear();
+	const d = date.getDate();
+
+	return `${d}${m}${y}`; //ddmmyyyy
+}

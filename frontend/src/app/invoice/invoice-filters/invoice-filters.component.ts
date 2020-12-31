@@ -8,6 +8,7 @@ import { InvoicFilter } from "../models/invoic-filter.model";
 import { InvoiceInformation } from "../models/invoice-models";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
+import { getTodayDate } from "src/app/helpers/utilities";
 
 @Component({
   selector: "app-invoice-filters",
@@ -65,27 +66,19 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   }
 
   exportExcel() {
-    if (!this.validateFormFields()) {
-      this.updateToastMessage(
-        "From date is mandatory to generate report.",
-        Constants.error,
-        "AdroMinds Invoice"
-      );
-      return;
-    }
     this.prepareDateToExport();
   }
 
   exportPDF() {
     this.isloading = false;
-    if (!this.validateFormFields()) {
-      this.updateToastMessage(
-        "From date is mandatory to generate report.",
-        Constants.error,
-        "AdroMinds Invoice"
-      );
-      return;
-    }
+    // if (!this.validateFormFields()) {
+    //   this.updateToastMessage(
+    //     "From date is mandatory to generate report.",
+    //     Constants.error,
+    //     "AdroMinds Invoice"
+    //   );
+    //   return;
+    // }
     this.prepareDateToExport();
     setTimeout(() => {
       if (this.invoices.length > 0) {
@@ -153,7 +146,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
           XLSX.utils.book_append_sheet(wb, ws, "Invoice Report");
           XLSX.writeFile(
             wb,
-            `Invoice_Reports_${new Date().toLocaleDateString("en-GB")}.xlsx`
+            `Invoice_Reports_${getTodayDate()}.xlsx`
           );
           this.isloading = false;
         }, 2000);
@@ -168,25 +161,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
     });
   }
 
-  validateFormFields() {
-    const controls = this.getReportFormControls;
-    const fromDate = controls["fromdate"].value;
-    if (fromDate == "" || fromDate == null) {
-      return false;
-    }
-    return true;
-  }
-
   applyFilter() {
-    if (!this.validateFormFields()) {
-      this.updateToastMessage(
-        "From date is mandatory to filter data.",
-        Constants.error,
-        "AdroMinds Invoice"
-      );
-      return;
-    }
-
     if (this.invoices.length > 0) this.dataForGridOnExport = this.invoices;
     else {
       this.isloading = true;

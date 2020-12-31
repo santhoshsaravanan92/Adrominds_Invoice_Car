@@ -7,7 +7,7 @@ import {
   ProductInformation,
   InvoiceInformation,
 } from "./models/invoice-models";
-import { getLoggedInUserEmail } from "../helpers/utilities";
+import { getLoggedInUserEmail, getTodayDate, getTodayDateWithoutsplit } from "../helpers/utilities";
 import { InvoiceServiceService } from "./services/invoice-service.service";
 
 @Component({
@@ -59,7 +59,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       othernotes: [""],
       templatename: ["Default Template"],
       mode: ["", [Validators.required]],
-      dated: [new Date().toLocaleDateString("en-GB")],
+      dated: [getTodayDate()],
       model: [""],
       km: [""],
     });
@@ -294,11 +294,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         : "";
 
     const customerFormControls = this.getCustomerFormControls;
-    let date = new Date().toLocaleDateString("en-GB").replace("/", "");
-    const date1 = date.replace("/", "");
-    let o = new Date();
+    const o = new Date();
     invoiceObj.invoiceid =
-      date1 + o.getHours() + o.getMinutes() + o.getSeconds();
+    getTodayDateWithoutsplit() + o.getHours() + o.getMinutes() + o.getSeconds();
     invoiceObj.Dated = customerFormControls["dated"].value;
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;

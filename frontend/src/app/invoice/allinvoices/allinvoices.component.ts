@@ -27,8 +27,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   }
 
   @Input("_isTabChanged")
-  set _isTabChanged(value:any){
-    debugger;
+  set _isTabChanged(value:any){    
     if(value){
       this.getAllInvoices();
     }
