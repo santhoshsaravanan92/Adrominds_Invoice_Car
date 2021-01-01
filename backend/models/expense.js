@@ -119,11 +119,6 @@ exports.updateExpense = (expenseObj) => {
 };
 
 exports.getInvoiceReportsData = (filterData) => {
-    console.log('from model');
-    console.log(filterData);
-
-
-
     let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice `;
 
     if (filterData.ToDate || filterData.FromDate || filterData.Name || filterData.VehicleNumber || filterData.Model) {

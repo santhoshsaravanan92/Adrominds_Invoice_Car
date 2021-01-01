@@ -19,15 +19,9 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   private _dataForGridOnExport: any;
   @Input("dataForGridOnExport")
   set dataForGridOnExport(value: any) {
-    debugger;
     if (value.length > 0) {
       this.gridDatas = value;
     } else {
-      this.updateToastMessage(
-        "No data for applied filter",
-        Constants.error,
-        "Invoice Information"
-      );
       this.getAllInvoices();
     }
   }

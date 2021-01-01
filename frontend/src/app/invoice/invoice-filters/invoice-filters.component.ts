@@ -144,10 +144,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
           const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, "Invoice Report");
-          XLSX.writeFile(
-            wb,
-            `Invoice_Reports_${getTodayDate()}.xlsx`
-          );
+          XLSX.writeFile(wb, `Invoice_Reports_${getTodayDate()}.xlsx`);
           this.isloading = false;
         }, 2000);
       } else {
@@ -174,7 +171,15 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       fileterObj.Model = controls["model"].value;
 
       this.invoiceService.getDateForReports(fileterObj).subscribe((result) => {
-        this.dataForGridOnExport = result;
+        if (result.length > 0) this.dataForGridOnExport = result;
+        else {
+          this.updateToastMessage(
+            "No Data for given filters.",
+            Constants.error,
+            "Invoice Information"
+          );
+          this.dataForGridOnExport = [];
+        }
         this.isloading = false;
       });
     }
