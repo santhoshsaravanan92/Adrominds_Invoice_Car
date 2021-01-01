@@ -128,32 +128,46 @@ exports.getInvoiceReportsData = (filterData) => {
 
     if (filterData.ToDate || filterData.FromDate || filterData.Name || filterData.VehicleNumber || filterData.Model) {
         query += 'where ';
-
+        let isConditionAdded = false;
         if (filterData.FromDate && filterData.ToDate) {
             const dates = filterData.FromDate.split('-');
             const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-
             const date = filterData.ToDate.split('-')
             const toDate = `${date[2]}/${date[1]}/${date[0]}`
             query += `dated between '${fromDate}' and '${toDate}' `;
-
-
+            isConditionAdded = true;
         } else if (filterData.FromDate && !filterData.ToDate) {
             const dates = filterData.FromDate.split('-');
             const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = ${fromDate} `;
-        } else {
+            query += `dated = '${fromDate}' `;
+            isConditionAdded = true;
+        } else if (!filterData.FromDate && filterData.ToDate) {
             const dates = filterData.ToDate.split('-');
             const ToDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = ${ToDate} `;
+            query += `dated = '${ToDate}' `;
+            isConditionAdded = true;
         }
 
-        if (filterData.Name && filterData.Name)
+        if (filterData.Name && isConditionAdded)
             query += ` and name = '${filterData.Name.Name}' `
-        if (filterData.VehicleNumber && filterData.VehicleNumber)
+        else if (filterData.Name && !isConditionAdded) {
+            query += ` name = '${filterData.Name.Name}' `;
+            isConditionAdded = true;
+        }
+
+        if (filterData.VehicleNumber && isConditionAdded)
             query += ` and VehicleNumber = '${filterData.VehicleNumber}' `;
-        if (filterData.Model && filterData.Model)
-            query += ` and model = '${filterData.Model}' `
+        else if (filterData.VehicleNumber && !isConditionAdded) {
+            query += ` VehicleNumber = '${filterData.VehicleNumber}' `;
+            isConditionAdded = true;
+        }
+
+        if (filterData.Model && isConditionAdded)
+            query += ` and model = '${filterData.Model}' `;
+        else if (filterData.Model && !isConditionAdded) {
+            query += `  model = '${filterData.Model}' `;
+            isConditionAdded = true;
+        }
     }
 
     return sequelize.query(query, {
