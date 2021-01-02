@@ -161,15 +161,16 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
         "{amount}",
         invoiceRecord.amountwithdiscount.toString()
       );
-      
+
       let namereplaced = actualcontent.replace("{name}", invoiceRecord.Name);
       let modelreplaced = namereplaced.replace("{model}", invoiceRecord.model);
-      let kmreplaced = modelreplaced.replace("{km}", invoiceRecord.km);
+      let kmreplaced = modelreplaced.replace("{vn}", invoiceRecord.VehicleNumber);
       let modereplaced = kmreplaced.replace("{mode}", invoiceRecord.mode);
       let notes = modereplaced.replace("{notes}", invoiceRecord.DeliveryNotes);
 
       let b = notes.replace("{sgst}", invoiceRecord.sgst);
       const a = b.replace("{cgst}", invoiceRecord.csgt);
+      const invoiceIDUpdate = a.replace("{invoiceid}", invoiceId);
 
       // send request to get the invoice product details
       this.invoiceService
@@ -187,11 +188,12 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
               a.Price +
               "</td></tr>";
           });
-          const printContent = a.replace("{bodycontent}", bodyContent);
+          const printContent = invoiceIDUpdate.replace(
+            "{bodycontent}",
+            bodyContent
+          );
           print(printContent, invoiceRecord.Name);
         });
-
-      
     }),
       (err) => {};
   }
