@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { InvoiceInformation } from "../models/invoice-models";
-import { getLoggedInUserEmail } from "../../helpers/utilities";
+import {
+  getLoggedInUserEmail,
+  getTodayDate,
+  print,
+} from "../../helpers/utilities";
 import { InvoiceServiceService } from "../services/invoice-service.service";
 import { BaseComponent } from "../../components/base/base.component";
 import { Constants } from "../../helpers/constant";
@@ -27,7 +31,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   }
 
   // @Input("_isTabChanged")
-  // set _isTabChanged(value:any){    
+  // set _isTabChanged(value:any){
   //   if(value){
   //     this.getAllInvoices();
   //   }
@@ -118,5 +122,77 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
 
   clearGrid() {
     this.getAllInvoices();
+  }
+
+  printInvoice(invoiceId) {
+    let bodyContent = "";
+    this.invoiceService.getInvoiceById(invoiceId).subscribe((invoiceRecord) => {
+      // const gstFormControls = this.getGSTFormControls;
+      // gstFormControls["sgst"].setValue(invoiceRecord.sgst);
+      // gstFormControls["cgst"].setValue(invoiceRecord.csgt);
+      // gstFormControls["amountwithgst"].setValue(invoiceRecord.amount);
+      // gstFormControls["discount"].setValue(invoiceRecord.discount);
+      // gstFormControls["discountoption"].setValue(invoiceRecord.discount_option);
+      // gstFormControls["amount"].setValue(invoiceRecord.amountwithdiscount);
+
+      // const customerFormControls = this.getCustomerFormControls;
+      // customerFormControls["customername"].setValue(invoiceRecord.Name);
+      // customerFormControls["deliverynotes"].setValue(
+      //   invoiceRecord.DeliveryNotes
+      // );
+      // customerFormControls["ordernumber"].setValue(
+      //   invoiceRecord.BuyerOrderNumber
+      // );
+      // customerFormControls["vehiclenumber"].setValue(
+      //   invoiceRecord.VehicleNumber
+      // );
+      // customerFormControls["othernotes"].setValue(invoiceRecord.otherNotes);
+      // customerFormControls["templatename"].setValue("Default Template");
+      // customerFormControls["mode"].setValue(invoiceRecord.mode);
+      // customerFormControls["dated"].setValue(invoiceRecord.Dated);
+      // customerFormControls["model"].setValue(invoiceRecord.model);
+      // customerFormControls["km"].setValue(invoiceRecord.km);
+
+      let htmlContent = Constants.printTemplate.replace(
+        "{today}",
+        getTodayDate()
+      );
+      let actualcontent = htmlContent.replace(
+        "{amount}",
+        invoiceRecord.amountwithdiscount.toString()
+      );
+      
+      let namereplaced = actualcontent.replace("{name}", invoiceRecord.Name);
+      let modelreplaced = namereplaced.replace("{model}", invoiceRecord.model);
+      let kmreplaced = modelreplaced.replace("{km}", invoiceRecord.km);
+      let modereplaced = kmreplaced.replace("{mode}", invoiceRecord.mode);
+      let notes = modereplaced.replace("{notes}", invoiceRecord.DeliveryNotes);
+
+      let b = notes.replace("{sgst}", invoiceRecord.sgst);
+      const a = b.replace("{cgst}", invoiceRecord.csgt);
+
+      // send request to get the invoice product details
+      this.invoiceService
+        .getInvoiceProductById(invoiceId)
+        .subscribe((invoiceProductRecord) => {
+          invoiceProductRecord.map((a) => {
+            bodyContent +=
+              '<tr class="item"><td>' +
+              a.Description +
+              "</td><td>" +
+              a.Rate +
+              "</td><td>" +
+              a.Quantity +
+              "</td><td>" +
+              a.Price +
+              "</td></tr>";
+          });
+          const printContent = a.replace("{bodycontent}", bodyContent);
+          print(printContent, invoiceRecord.Name);
+        });
+
+      
+    }),
+      (err) => {};
   }
 }
