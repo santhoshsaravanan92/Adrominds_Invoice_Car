@@ -1,4 +1,7 @@
-const Sequelize = require('sequelize');
+const {
+    Sequelize,
+    QueryTypes
+} = require('sequelize');
 const {
     Op
 } = require("sequelize");
@@ -254,21 +257,12 @@ exports.updateInvoice = (invoiceObj) => {
         });
 };
 
-// exports.updateInvoiceProducts = (invoiceProductObj) => {
-//     let isUpdated = false;
-//     invoiceProductObj.map(a => {
-//         InvoiceProduct.destroy({
-//                 where: {
-//                     Invoice_Number: a.Invoice_Number
-//                 },
-//             })
-//             .then((result) => {
-//                 console.log('its success');
-//                 isUpdated = true;
-//             })
-//             .catch((err) => {
-//                 handleError(err);
-//                 return err;
-//             });
-//     });
-// };
+exports.getInvoiceDetailsForDashboard = (email, from, to) => {
+    const query = `SELECT sum(amountwithdiscount) as price FROM invoice WHERE Email = '${email}' and dated between '${from}' and '${to}'`;
+
+    return sequelize.query(query, {
+        type: QueryTypes.SELECT
+    }).then(result => {
+        return result;
+    });
+}

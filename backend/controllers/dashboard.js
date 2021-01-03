@@ -7,6 +7,10 @@ const {
     getExpenseDetailsForDashboard
 } = require('../models/expense');
 
+const {
+    getInvoiceDetailsForDashboard
+} = require('../models/invoice');
+
 exports.getExpense = (req, res) => {
     if (!validateHeader(req)) {
         return res.status(401).json({
@@ -15,6 +19,28 @@ exports.getExpense = (req, res) => {
     }
 
     getExpenseDetailsForDashboard(req.params.email, req.params.from, req.params.to).then((data) => {
+        if (data != null)
+            return res.status(200).json(data);
+        else
+            return res.status(200).json({
+                message: 'no expense found'
+            });
+    });
+}
+
+exports.getInvoiceDetails = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    const {
+        fromDate,
+        toDate
+    } = req.body;
+
+    getInvoiceDetailsForDashboard(req.params.email, fromDate, toDate).then((data) => {
         if (data != null)
             return res.status(200).json(data);
         else

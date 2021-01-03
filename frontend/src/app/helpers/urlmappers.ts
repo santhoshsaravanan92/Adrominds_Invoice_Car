@@ -35,4 +35,5 @@ export module UrlMappers {
   export const getinvoiceReportsData = baseUrl + "/api/expense/getinvoicereportsdata/";
 
   export const getExpenseDashboardDetails = baseUrl + "/api/dashboard/getexpensedetails/";
+  export const getInvoiceDashboardDetails = baseUrl + "/api/dashboard/getinvoicedetails/";
 }

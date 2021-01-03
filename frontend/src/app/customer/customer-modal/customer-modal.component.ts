@@ -42,8 +42,8 @@ export class CustomerModalComponent implements OnInit {
   customerFormCreation() {
     this.customerForm = this.formBuilder.group({
       name: ["", [Validators.required]],
-      email: ["", [Validators.email]],
-      mobile: [""],
+      email: [""],
+      mobile: ["",[Validators.email]],
       address: [""],
       gst: [""],
       comments: [""],

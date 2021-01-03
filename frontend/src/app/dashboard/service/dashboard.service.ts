@@ -32,4 +32,24 @@ export class DashboardService {
         })
       );
   }
+
+  getinvoiceDashboardDetails(from: string, to: string) {
+    const content = { fromDate: from, toDate: to };
+    return this.http
+      .post<any>(
+        UrlMappers.getInvoiceDashboardDetails + getLoggedInUserEmail(),
+        content,
+        {
+          headers: getHeaders(),
+        }
+      )
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }

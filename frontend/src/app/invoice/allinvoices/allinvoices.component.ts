@@ -231,8 +231,10 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
                 "{branch}",
                 `${result.data.Branchname} & ${result.data.Ifsc}`
               );
-              const km = ifsc.replace('{km}', invoiceRecord.km);
-              print(km, invoiceRecord.Name);
+              const printContent = ifsc.replace('{km}', invoiceRecord.km);
+              print(printContent, invoiceRecord.Name);
+              
+              // TODO: Customer address pending
             }),
             (err) => {
               console.log(err);

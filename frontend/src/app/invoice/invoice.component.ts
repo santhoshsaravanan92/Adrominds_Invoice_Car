@@ -11,8 +11,10 @@ import {
   getLoggedInUserEmail,
   getTodayDate,
   getTodayDateWithoutsplit,
+  print,
 } from "../helpers/utilities";
 import { InvoiceServiceService } from "./services/invoice-service.service";
+import { ProfileService } from "../services/profile.service";
 
 @Component({
   selector: "app-invoice",
@@ -37,13 +39,11 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   discounts: any = ["%", "nos"];
   customerNames: string[] = [];
 
-  // testHTMLContent: string =
-  //   '<html><head><style>md-dialog-actions{display:none}.invoice-box{max-width:800px;margin:auto;padding:30px;border:1px solid #eee;box-shadow:0 0 10px rgba(0, 0, 0, .15);font-size:16px;line-height:24px;color:#555}.invoice-box table{width:100%;line-height:inherit;text-align:left}.invoice-box table td{padding:5px;vertical-align:top}.invoice-box table tr td:nth-child(2){text-align:right}.invoice-box table tr.top table td{padding-bottom:20px}.invoice-box table tr.top table td.title{font-size:45px;line-height:45px;color:#333}.invoice-box table tr.information table td{padding-bottom:40px}.invoice-box table tr.heading td{background:#eee;border-bottom:1px solid #ddd;font-weight:700}.invoice-box table tr.details td{padding-bottom:20px}.invoice-box table tr.item td{border-bottom:1px solid #eee}.invoice-box table tr.item.last td{border-bottom:none}.invoice-box table tr.total td:nth-child(2){border-top:2px solid #eee;font-weight:700}</style></head><body><div class="invoice-box"><table cellpadding="0" cellspacing="0" border="1"><tr class="top"><td colspan="4"><table><tr><td colspan="4">Invoice #: 123<br>Created: {today}<br></td></tr></table></td></tr><tr class="information"><td colspan="4"><table><tr><td>Service center Address 1<br>no 1<br>Test Address<br>center email</td><td>{name}<br>{model}<br>{km}<br>{mode}</td></tr></table></td></tr><tr class="heading"><td colspan="4">Delivery Notes</td></tr><tr class="details"><td colspan="4">{notes}</td></tr><tr class="heading"><td>Items</td><td style="border-bottom: 1px solid #000;">Each Price</td><td>Quantity</td><td>Amount</td></tr>{bodycontent}<tr class="total"><td></td><td></td><td></td><td>State GST: {sgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Central GST: {cgst}</td></tr><tr class="total"><td></td><td></td><td></td><td>Total: {amount}</td></tr></table></div></body></html>';
-
   constructor(
     public formBuilder: FormBuilder,
     public messageService: MessageService,
-    private invoiceService: InvoiceServiceService
+    private invoiceService: InvoiceServiceService,
+    private profileSerive: ProfileService
   ) {
     super(messageService);
   }
@@ -205,13 +205,11 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   printOnly() {
     if (this.validateForms()) {
-      var WinPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-      );
       let bodyContent = this.prepareBodyContentForPrint();
-      let htmlContent = Constants.printTemplate.replace("{today}", getTodayDate());
+      let htmlContent = Constants.printTemplate.replace(
+        "{today}",
+        getTodayDate()
+      );
       let actualcontent = htmlContent.replace(
         "{amount}",
         this.amount.toString()
@@ -220,7 +218,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
       let controls = this.getCustomerFormControls;
       const customerName = controls["customername"].value;
-      let namereplaced = a.replace("{name}", customerName);
+      let namereplaced = a.replace("{name}", customerName.Name);
       let modelreplaced = namereplaced.replace(
         "{model}",
         controls["model"].value
@@ -234,18 +232,50 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
       const gstFormControls = this.getGSTFormControls;
       let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
-      let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
+      let gst = b.replace("{cgst}", gstFormControls["cgst"].value);
 
-      
+      this.profileSerive
+        .getProfileInformation(getLoggedInUserEmail())
+        .subscribe((result) => {
+          const c = (gst as any).replaceAll(
+            "{companyname}",
+            result.data.Company
+          );
+          const ca = c.replace(
+            "{companyaddress}",
+            `${result.data.Name} <br>${result.data.Address}<br>email: ${result.data.Email}<br>phone: ${result.data.Mobile}/${result.data.Landline}<br>GST:${result.data.GST}<br>${result.data.Website}`
+          );
+          const bankname = ca.replace("{bankname}", result.data.Bankname);
+          const acc = bankname.replace("{accno}", result.data.AccountNumber);
+          const ifsc = acc.replace(
+            "{branch}",
+            `${result.data.Branchname} & ${result.data.Ifsc}`
+          );
+          const vn = ifsc.replace("{vn}", controls["vehiclenumber"].value);
+          const buy = vn.replace("{buyerorder}", controls["ordernumber"].value);
+          const othernotes = buy.replace(
+            "{othernote}",
+            controls["othernotes"].value
+          );
+          const amountwithgst = othernotes.replace(
+            "{amountwithoutdiscount}",
+            gstFormControls["amountwithgst"].value
+          );
+          let discountOptionvalue = this.getChangeDiscount.value;
 
-      WinPrint.document.write(printContent);
-      WinPrint.document.close();
-      WinPrint.setTimeout(function () {
-        WinPrint.focus();
-        WinPrint.document.title = `${customerName}_${getTodayDate()}`;
-        WinPrint.print();
-        WinPrint.close();
-      }, 1000);
+          const printContent = amountwithgst.replace(
+            "{discount}",
+            `${gstFormControls["discount"].value} ${
+              discountOptionvalue != "" && discountOptionvalue != null
+                ? discountOptionvalue.split(" ")[1]
+                : "0"
+            }`
+          );
+          print(printContent, customerName.Name);
+        }),
+        (err) => {
+          console.log(err);
+        };
     }
   }
 

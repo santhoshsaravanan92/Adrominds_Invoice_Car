@@ -15,11 +15,8 @@
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            border: 1px solid #eee;
             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
             font-size: 16px;
-            line-height: 24px;
-            color: #555
         }
 
         .invoice-box table {
@@ -29,7 +26,6 @@
         }
 
         .invoice-box table td {
-            padding: 5px;
             vertical-align: top
         }
 
@@ -38,7 +34,7 @@
         }
 
         .invoice-box table tr.top table td {
-            padding-bottom: 20px
+            padding-bottom: 5px
         }
 
         .invoice-box table tr.top table td.title {
@@ -97,7 +93,7 @@
         <div class="center"><strong>Tax Invoice</strong></div>
         <table cellpadding="0" cellspacing="0" border="1">
             <tr class="top">
-                <td colspan="2">
+                <td colspan="3">
                     <table>
                         <tr>
                             <td>
@@ -108,14 +104,12 @@
                         <tr>
                             <td style="text-align: left; border-top: 1px solid #000">
                                 <strong>{name}</strong><br>
-                                No 12 kohinoor avneue <br>
-                                nethaji salai thiruvallur - 602001<br>
-                                Contact: 1234567890 <br>
+                                {customeraddress}
                             </td>
                         </tr>
                     </table>
                 </td>
-                <td colspan="2">
+                <td colspan="3">
                     <table>
                         <tr>
                             <td class="border-right border-bottom">

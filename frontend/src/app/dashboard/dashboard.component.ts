@@ -1,3 +1,4 @@
+import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DashboardService } from "./service/dashboard.service";
@@ -14,7 +15,9 @@ export class DashboardComponent implements OnInit {
   spare: number = 0;
   salary: number = 0;
   others: number = 0;
-
+  totalInvoiceAmount: number = 0;
+  profit: number = 0;
+  amt: number = 0; // for calculating profit
   constructor(
     private formBuilder: FormBuilder,
     private dashboardService: DashboardService
@@ -60,12 +63,46 @@ export class DashboardComponent implements OnInit {
       .subscribe((result) => {
         result.map((value) => {
           if (value.category === "Salary") {
-            this.salary = value.price > 0 ? value.price : 0;
+            this.salary = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
           } else if (value.category === "Spare") {
-            this.spare = value.price > 0 ? value.price : 0;
+            this.spare = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
           } else {
-            this.others = value.price > 0 ? value.price : 0;
+            this.others = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
           }
+          this.amt = this.salary + this.spare + this.others;
+        });
+      }),
+      (err) => {
+        console.log(err);
+      };
+
+    if (!formData.fromDate && !formData.toDate) {
+      var date = new Date();
+      formData.fromDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1
+      ).toLocaleDateString();
+
+      formData.toDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        this.daysInMonth(date.getMonth() + 1, date.getFullYear())
+      ).toLocaleDateString();
+    } else {
+      let t = formData.toDate.split("-");
+      formData.toDate = t[2] + "/" + t[1] + "/" + t[0];
+
+      let f = formData.fromDate.split("-");
+      formData.fromDate = f[2] + "/" + f[1] + "/" + f[0];
+    }
+
+    this.dashboardService
+      .getinvoiceDashboardDetails(formData.fromDate, formData.toDate)
+      .subscribe((result) => {
+        result.map((value) => {
+          this.totalInvoiceAmount = value.price > 0 ? value.price : 0;
+          this.profit = this.totalInvoiceAmount - this.amt;
         });
       }),
       (err) => {
