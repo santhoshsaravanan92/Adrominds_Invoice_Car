@@ -23,6 +23,9 @@ export class CustomerModalComponent implements OnInit {
     if (value) {
       this._modalDataToPass = value;
       this._id = this._modalDataToPass.id;
+      this._title = this._modalDataToPass.isEdit
+        ? "Edit Customer Information"
+        : "Add Customer Information";
       if (this._id != "") this.getCustomerRecordById(this._id);
     }
   }
@@ -42,8 +45,8 @@ export class CustomerModalComponent implements OnInit {
   customerFormCreation() {
     this.customerForm = this.formBuilder.group({
       name: ["", [Validators.required]],
-      email: [""],
-      mobile: ["",[Validators.email]],
+      email: ["", [Validators.email]],
+      mobile: ["", [Validators.required]],
       address: [""],
       gst: [""],
       comments: [""],

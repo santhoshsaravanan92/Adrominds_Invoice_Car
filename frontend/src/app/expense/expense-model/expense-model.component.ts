@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { getLoggedInUserEmail } from "src/app/helpers/utilities";
+import { getLoggedInUserEmail, getTodayDate } from "src/app/helpers/utilities";
 import { ExpenseInformation } from "../models/expense.model";
 import { ExpenseService } from "../services/expense.service";
 
@@ -46,7 +46,7 @@ export class ExpenseModelComponent implements OnInit {
 
   expenseFormCreation() {
     this.expenseForm = this.formBuilder.group({
-      date: [new Date().toLocaleDateString("en-US"), [Validators.required]],
+      date: [getTodayDate(), [Validators.required]],
       category: ["", [Validators.required]],
       price: ["", [Validators.required]],
       notes: ["", [Validators.required]],
