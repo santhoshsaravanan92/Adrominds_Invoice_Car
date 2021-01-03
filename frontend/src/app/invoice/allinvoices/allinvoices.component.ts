@@ -214,7 +214,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
           this.profileSerive
             .getProfileInformation(getLoggedInUserEmail())
             .subscribe((result) => {
-              const c = bodyupdated.replace(
+              const c = (bodyupdated as any).replaceAll(
                 "{companyname}",
                 result.data.Company
               );

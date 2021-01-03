@@ -236,6 +236,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       let b = notes.replace("{sgst}", gstFormControls["sgst"].value);
       let printContent = b.replace("{cgst}", gstFormControls["cgst"].value);
 
+      
+
       WinPrint.document.write(printContent);
       WinPrint.document.close();
       WinPrint.setTimeout(function () {
