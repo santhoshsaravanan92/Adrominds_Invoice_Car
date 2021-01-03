@@ -1,1 +1,71 @@
-dashboard works
+<div style="margin:0 1em 1em 1em !important;" class="font-family shadow">
+    <form [formGroup]="DashboardForm" class="form-modal-design" (ngSubmit)="updateDashBoard(DashboardForm.value)">
+        <div class="grid-container padding-3">
+            <div class="form-group width80">
+                <label for="Date" class="label-design">From Date</label>
+                <input type="date" id="date" formControlName="fromDate" class="form-control textbox">
+            </div>
+            <div class="form-group width80">
+                <label for="Date" class="label-design">To Date</label>
+                <input type="date" id="date" formControlName="toDate" class="form-control textbox">
+            </div>
+            <div class="form-group width80">
+                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard" type="submit">
+                    Apply Filter
+                </button>
+                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard" (click)="clearForm()">
+                    Clear filter
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="grid-container">
+        <div class="card-border-pink shadow">
+            <div><i class="pi pi-money-bill icon-pink"></i><span class="title">Expense</span></div>
+            <div class="grid-container">
+                <div class="card-details hr">
+                    Spare
+                    <div>{{spare}}</div>
+                </div>
+                <div class="card-details hr">
+                    Salary
+                    <div>{{salary}}</div>
+                </div>
+                <div class="card-details">
+                    others
+                    <div>{{others}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-border-green shadow">
+            <div><i class="pi pi-th-large icon-green"></i><span class="title title-color-green">Invoice</span></div>
+            <div class="grid-container">
+                <div class="card-details hr">
+                    Spare
+                    <div>10000</div>
+                </div>
+                <div class="card-details">
+                    others
+                    <div>10000</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-border-blue shadow">
+            <div><i class="pi pi-id-card icon-blue"></i><span class="title title-color-blue">Others</span></div>
+            <div class="grid-container">
+                <div class="card-details hr">
+                    Spare
+                    <div>10000</div>
+                </div>
+                <div class="card-details">
+                    others
+                    <div>10000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

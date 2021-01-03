@@ -9,6 +9,7 @@ import { InvoiceServiceService } from "../services/invoice-service.service";
 import { BaseComponent } from "../../components/base/base.component";
 import { Constants } from "../../helpers/constant";
 import { MessageService, ConfirmationService } from "primeng/api";
+import { ProfileService } from "src/app/services/profile.service";
 
 @Component({
   selector: "app-allinvoices",
@@ -40,7 +41,8 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   constructor(
     private invoiceService: InvoiceServiceService,
     private confirmationService: ConfirmationService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private profileSerive: ProfileService
   ) {
     super(messageService);
   }
@@ -164,13 +166,29 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
 
       let namereplaced = actualcontent.replace("{name}", invoiceRecord.Name);
       let modelreplaced = namereplaced.replace("{model}", invoiceRecord.model);
-      let kmreplaced = modelreplaced.replace("{vn}", invoiceRecord.VehicleNumber);
+      let kmreplaced = modelreplaced.replace(
+        "{vn}",
+        invoiceRecord.VehicleNumber
+      );
       let modereplaced = kmreplaced.replace("{mode}", invoiceRecord.mode);
       let notes = modereplaced.replace("{notes}", invoiceRecord.DeliveryNotes);
 
       let b = notes.replace("{sgst}", invoiceRecord.sgst);
       const a = b.replace("{cgst}", invoiceRecord.csgt);
       const invoiceIDUpdate = a.replace("{invoiceid}", invoiceId);
+      const on = invoiceIDUpdate.replace(
+        "{othernote}",
+        invoiceRecord.otherNotes
+      );
+      const buyerno = on.replace(
+        "{buyerorder}",
+        invoiceRecord.BuyerOrderNumber
+      );
+      const discount = buyerno.replace("{discount}", invoiceRecord.discount);
+      const amountwithoutdiscount = discount.replace(
+        "{amountwithoutdiscount}",
+        invoiceRecord.amount
+      );
 
       // send request to get the invoice product details
       this.invoiceService
@@ -188,11 +206,37 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
               a.Price +
               "</td></tr>";
           });
-          const printContent = invoiceIDUpdate.replace(
+          const bodyupdated = amountwithoutdiscount.replace(
             "{bodycontent}",
             bodyContent
           );
-          print(printContent, invoiceRecord.Name);
+
+          this.profileSerive
+            .getProfileInformation(getLoggedInUserEmail())
+            .subscribe((result) => {
+              const c = bodyupdated.replace(
+                "{companyname}",
+                result.data.Company
+              );
+              const ca = c.replace(
+                "{companyaddress}",
+                `${result.data.Name} <br>${result.data.Address}<br>email: ${result.data.Email}<br>phone: ${result.data.Mobile}/${result.data.Landline}<br>GST:${result.data.GST}<br>${result.data.Website}`
+              );
+              const bankname = ca.replace("{bankname}", result.data.Bankname);
+              const acc = bankname.replace(
+                "{accno}",
+                result.data.AccountNumber
+              );
+              const ifsc = acc.replace(
+                "{branch}",
+                `${result.data.Branchname} & ${result.data.Ifsc}`
+              );
+              const km = ifsc.replace('{km}', invoiceRecord.km);
+              print(km, invoiceRecord.Name);
+            }),
+            (err) => {
+              console.log(err);
+            };
         });
     }),
       (err) => {};

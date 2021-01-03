@@ -171,3 +171,13 @@ exports.getInvoiceReportsData = (filterData) => {
         return result;
     });
 };
+
+exports.getExpenseDetailsForDashboard = (email, from, to) => {
+    const query = `SELECT sum(price) price, category FROM expense where owner_email = '${email}' and date BETWEEN '${from}' and '${to}' group by category`;
+
+    return sequelize.query(query, {
+        type: QueryTypes.SELECT
+    }).then(result => {
+        return result;
+    });
+}

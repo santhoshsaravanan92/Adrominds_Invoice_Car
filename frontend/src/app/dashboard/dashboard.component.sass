@@ -1,6 +1,71 @@
 @import '../../sass/variables'
 @import '../../sass/common'
 
+$blue: #64B5F6
+$green: #00BC40
+
 .width100
     width: 100%
 
+.grid-container 
+    display: grid
+    grid-template-columns: auto auto auto
+
+.card
+    width: 80%
+    padding: 1em
+    border-radius: 5px
+    margin: 0 4em 4em 1em
+
+.card-border-pink
+    @extend .card
+    border-left: 5px solid deeppink
+
+.card-border-green
+    @extend .card
+    border-left: 5px solid $green
+
+.card-border-blue
+    @extend .card
+    border-left: 5px solid $blue
+
+.icon
+    padding: 0.6em
+    border-radius: 3px
+
+.icon-pink
+    @extend .icon
+    background-color: deeppink
+
+.icon-green
+    @extend .icon
+    background-color: $green
+
+.icon-blue
+    @extend .icon
+    background-color: $blue
+
+.title
+    font-weight: 700
+    margin-left: 1em
+    font-size: 1.5em
+
+
+.title-color-blue
+    color: $blue
+
+.title-color-green
+    color: $green
+
+.card-details
+    margin: 1em 0.5em 0 0
+    font-weight: 600
+
+.hr
+    border-right: 1px solid #000
+
+.width80
+    width: 80%
+
+.padding-3
+    padding: 3em

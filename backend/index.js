@@ -12,6 +12,8 @@ const profileRoutes = require('./routes/profile');
 const customerRoutes = require('./routes/customer');
 const invoiceRoutes = require('./routes/invoice');
 const expenseRoutes = require('./routes/expense');
+const dashboardRoutes = require('./routes/dashboard');
+
 const app = express();
 
 db.connection();
@@ -32,6 +34,7 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/invoice', invoiceRoutes);
 app.use('/api/expense', expenseRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 const port = process.env.PORT;
 
