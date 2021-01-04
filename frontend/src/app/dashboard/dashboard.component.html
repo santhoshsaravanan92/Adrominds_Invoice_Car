@@ -2,7 +2,7 @@
     <form [formGroup]="DashboardForm" class="form-modal-design" (ngSubmit)="updateDashBoard(DashboardForm.value)">
         <div class="grid-container padding-3">
             <div class="form-group width80">
-                <label for="Date" class="label-design">From Date</label>
+                <label for="Date" class="label-design">From Date</label> <br>
                 <!-- <input type="date" id="date" formControlName="fromDate" class="form-control textbox"> -->
                 <p-calendar formControlName="fromDate" class="form-control textbox" dateFormat="dd/mm/yy"
                     showButtonBar="true"></p-calendar>
