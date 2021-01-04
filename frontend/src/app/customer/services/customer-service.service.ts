@@ -107,4 +107,34 @@ export class CustomerServiceService {
         })
       );
   }
+
+  isCustomerExists(name: string): Observable<any> {
+    return this.http
+      .get<any>(UrlMappers.isCustomerExists + name, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
+
+  getCustomerByName(name: string): Observable<CustomerInformation> {
+    return this.http
+      .get<any>(UrlMappers.getCustomerByName + name, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }

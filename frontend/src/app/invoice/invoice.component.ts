@@ -15,6 +15,7 @@ import {
 } from "../helpers/utilities";
 import { InvoiceServiceService } from "./services/invoice-service.service";
 import { ProfileService } from "../services/profile.service";
+import { CustomerServiceService } from "../customer/services/customer-service.service";
 
 @Component({
   selector: "app-invoice",
@@ -43,7 +44,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     public formBuilder: FormBuilder,
     public messageService: MessageService,
     private invoiceService: InvoiceServiceService,
-    private profileSerive: ProfileService
+    private profileSerive: ProfileService,
+    private customerService: CustomerServiceService
   ) {
     super(messageService);
   }
@@ -263,7 +265,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
           );
           let discountOptionvalue = this.getChangeDiscount.value;
 
-          const printContent = amountwithgst.replace(
+          const discountOptionforprint = amountwithgst.replace(
             "{discount}",
             `${gstFormControls["discount"].value} ${
               discountOptionvalue != "" && discountOptionvalue != null
@@ -271,7 +273,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
                 : "0"
             }`
           );
-          print(printContent, customerName.Name);
+          // service call to get customer information
+          this.customerService.getCustomerByName(customerName.Name).subscribe(result => {
+            console.log(result);
+            const printContent = discountOptionforprint.replace('{customeraddress}', `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`);
+            print(printContent, customerName.Name);
+          });
+          
         }),
         (err) => {
           console.log(err);

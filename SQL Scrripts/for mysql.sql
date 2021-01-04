@@ -38,7 +38,8 @@ CREATE TABLE Customer(
 	owner_email varchar(50) references personalinformation(Email),
 	created_date timestamp default current_timestamp,
 	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
-	ON UPDATE CURRENT_TIMESTAMP   
+	ON UPDATE CURRENT_TIMESTAMP,
+	unique (Name)
 );
 
 CREATE TABLE Invoice(

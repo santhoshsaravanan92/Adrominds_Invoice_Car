@@ -64,6 +64,12 @@ export class CustomerComponent implements OnInit {
         Constants.error,
         "Customer Information"
       );
+    } else if ($event === "customer exists") {
+      this.updateToastMessage(
+        "Customer Already exists in system.",
+        Constants.error,
+        "Customer Information"
+      );
     } else if ($event === "error") {
       this.updateToastMessage(
         "Something went wrong. Please try again later.",
@@ -107,18 +113,16 @@ export class CustomerComponent implements OnInit {
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         if (id !== "") {
-          this.customerService
-            .deleteCustomer(id)
-            .subscribe((res) => {
-              if (res.message === "customer deleted") {
-                this.getAllCustomers();
-                this.updateToastMessage(
-                  "Customer Information Deleted Successfully",
-                  Constants.success,
-                  "Customer Information"
-                );
-              }
-            });
+          this.customerService.deleteCustomer(id).subscribe((res) => {
+            if (res.message === "customer deleted") {
+              this.getAllCustomers();
+              this.updateToastMessage(
+                "Customer Information Deleted Successfully",
+                Constants.success,
+                "Customer Information"
+              );
+            }
+          });
         }
       },
       reject: () => {},

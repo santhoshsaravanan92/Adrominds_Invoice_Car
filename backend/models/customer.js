@@ -143,3 +143,29 @@ exports.getCustomerNames = (name) => {
         return err;
     });
 };
+
+exports.isCustomerExists = (name) => {
+    return Customer.findOne({
+        where: {
+            Name: name,
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};
+
+exports.getCustomerByName = (name) => {
+    return Customer.findOne({
+        where: {
+            Name: name,
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        handleError(err);
+        return err;
+    });
+};

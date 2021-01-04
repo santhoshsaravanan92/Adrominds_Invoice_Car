@@ -24,11 +24,14 @@
             </div>
             <div class="form-group">
                 <label for="mobile" class="label-design">Mobile</label>
-                <input type="text" placeholder="Mobile Number" formControlName="mobile" maxlength="10"
+                <input type="text" placeholder="Mobile Number" formControlName="mobile" maxlength="10" minlength="10"
                     class="form-control textbox" allowonlynumbers />
             </div>
             <div *ngIf="submitted && getCustomerFormControls.mobile.errors" class="error-message">
                 <div *ngIf="getCustomerFormControls.mobile.errors.required">
+                    Mobile number is required
+                </div>
+                <div *ngIf="getCustomerFormControls.mobile.errors">
                     Mobile number is required
                 </div>
             </div>
@@ -52,7 +55,7 @@
                 <input type="text" maxlength="50" placeholder="Your Comments" formControlName="comments"
                     class="form-control textbox" />
             </div>
-            <input type="text"  formControlName="id" style="display:none"/>
+            <input type="text" formControlName="id" style="display:none" />
             <div class="form-group">
                 <button type="submit" *ngIf="!_isEdit" class="button float-right cursor-pointer margin-left"
                     id="btnSaveCustomer" (click)="CustomerFormSubmit()">

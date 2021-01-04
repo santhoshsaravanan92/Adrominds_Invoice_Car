@@ -10,6 +10,7 @@ import { BaseComponent } from "../../components/base/base.component";
 import { Constants } from "../../helpers/constant";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { ProfileService } from "src/app/services/profile.service";
+import { CustomerServiceService } from "src/app/customer/services/customer-service.service";
 
 @Component({
   selector: "app-allinvoices",
@@ -42,7 +43,8 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
     private invoiceService: InvoiceServiceService,
     private confirmationService: ConfirmationService,
     public messageService: MessageService,
-    private profileSerive: ProfileService
+    private profileSerive: ProfileService,
+    private customerService:CustomerServiceService
   ) {
     super(messageService);
   }
@@ -129,32 +131,6 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   printInvoice(invoiceId) {
     let bodyContent = "";
     this.invoiceService.getInvoiceById(invoiceId).subscribe((invoiceRecord) => {
-      // const gstFormControls = this.getGSTFormControls;
-      // gstFormControls["sgst"].setValue(invoiceRecord.sgst);
-      // gstFormControls["cgst"].setValue(invoiceRecord.csgt);
-      // gstFormControls["amountwithgst"].setValue(invoiceRecord.amount);
-      // gstFormControls["discount"].setValue(invoiceRecord.discount);
-      // gstFormControls["discountoption"].setValue(invoiceRecord.discount_option);
-      // gstFormControls["amount"].setValue(invoiceRecord.amountwithdiscount);
-
-      // const customerFormControls = this.getCustomerFormControls;
-      // customerFormControls["customername"].setValue(invoiceRecord.Name);
-      // customerFormControls["deliverynotes"].setValue(
-      //   invoiceRecord.DeliveryNotes
-      // );
-      // customerFormControls["ordernumber"].setValue(
-      //   invoiceRecord.BuyerOrderNumber
-      // );
-      // customerFormControls["vehiclenumber"].setValue(
-      //   invoiceRecord.VehicleNumber
-      // );
-      // customerFormControls["othernotes"].setValue(invoiceRecord.otherNotes);
-      // customerFormControls["templatename"].setValue("Default Template");
-      // customerFormControls["mode"].setValue(invoiceRecord.mode);
-      // customerFormControls["dated"].setValue(invoiceRecord.Dated);
-      // customerFormControls["model"].setValue(invoiceRecord.model);
-      // customerFormControls["km"].setValue(invoiceRecord.km);
-
       let htmlContent = Constants.printTemplate.replace(
         "{today}",
         getTodayDate()
@@ -231,10 +207,14 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
                 "{branch}",
                 `${result.data.Branchname} & ${result.data.Ifsc}`
               );
-              const printContent = ifsc.replace('{km}', invoiceRecord.km);
-              print(printContent, invoiceRecord.Name);
-              
-              // TODO: Customer address pending
+              const km = ifsc.replace("{km}", invoiceRecord.km);
+
+              // service call to get customer information
+              this.customerService.getCustomerByName(invoiceRecord.Name).subscribe(result => {
+                console.log(result);
+                const printContent = km.replace('{customeraddress}', `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`);
+                print(printContent, invoiceRecord.Name);
+              });
             }),
             (err) => {
               console.log(err);

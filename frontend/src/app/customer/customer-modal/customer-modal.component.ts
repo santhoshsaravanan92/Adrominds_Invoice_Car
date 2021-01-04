@@ -15,6 +15,7 @@ export class CustomerModalComponent implements OnInit {
   submitted: boolean = false;
   _isEdit: boolean = false;
   _title: string = "";
+  customerName_testpurpose: string = "";
   private _id: string = "";
   private _modalDataToPass: any;
 
@@ -23,6 +24,7 @@ export class CustomerModalComponent implements OnInit {
     if (value) {
       this._modalDataToPass = value;
       this._id = this._modalDataToPass.id;
+      this._isEdit = this._modalDataToPass.isEdit; 
       this._title = this._modalDataToPass.isEdit
         ? "Edit Customer Information"
         : "Add Customer Information";
@@ -46,7 +48,7 @@ export class CustomerModalComponent implements OnInit {
     this.customerForm = this.formBuilder.group({
       name: ["", [Validators.required]],
       email: ["", [Validators.email]],
-      mobile: ["", [Validators.required]],
+      mobile: ["", [Validators.required, Validators.min(10)]],
       address: [""],
       gst: [""],
       comments: [""],
@@ -79,12 +81,24 @@ export class CustomerModalComponent implements OnInit {
     customer.Name = customerFromControls["name"].value;
     customer.OwnerEmail = getLoggedInUserEmail();
 
-    this.customerService.addCustomer(customer).subscribe((data) => {
-      if (data.message === "customer added") {
-        this.closeModal();
-        this.emitData.emit("customer added");
-      }
-    }),
+    this.customerService
+      .isCustomerExists(customer.Name)
+      .subscribe((isExists) => {
+        if (isExists.message) {
+          this.closeModal();
+          this.emitData.emit("customer exists");
+        } else {
+          this.customerService.addCustomer(customer).subscribe((data) => {
+            if (data.message === "customer added") {
+              this.closeModal();
+              this.emitData.emit("customer added");
+            }
+          }),
+            (err) => {
+              this.emitData.emit("error");
+            };
+        }
+      }),
       (err) => {
         this.emitData.emit("error");
       };
@@ -100,6 +114,8 @@ export class CustomerModalComponent implements OnInit {
         customerFromControls["gst"].setValue(customerRecord.GST);
         customerFromControls["mobile"].setValue(customerRecord.Mobile);
         customerFromControls["name"].setValue(customerRecord.Name);
+        // for test purpose holding the name of the cstomer
+        this.customerName_testpurpose = customerRecord.Name;
         customerFromControls["id"].setValue(id);
       }),
         (err) => {};
@@ -127,16 +143,47 @@ export class CustomerModalComponent implements OnInit {
     customer.OwnerEmail = getLoggedInUserEmail();
     customer.Id = customerFromControls["id"].value;
 
-    this.customerService.updateCustomerById(customer).subscribe((data) => {
-      if (data.message === "customer update") {
-        this.closeModal();
-        this.emitData.emit("customer update");
-      } else {
-        this.emitData.emit("error");
-      }
-    }),
-      (err) => {
-        this.emitData.emit("error");
-      };
+    if (
+      this.customerName_testpurpose != "" &&
+      this.customerName_testpurpose === customer.Name
+    ) {
+      this.customerService.updateCustomerById(customer).subscribe((data) => {
+        if (data.message === "customer update") {
+          this.closeModal();
+          this.emitData.emit("customer update");
+        } else {
+          this.emitData.emit("error");
+        }
+      }),
+        (err) => {
+          this.emitData.emit("error");
+        };
+    } else {
+      this.customerService
+        .isCustomerExists(customer.Name)
+        .subscribe((isExists) => {
+          if (isExists.message) {
+            this.closeModal();
+            this.emitData.emit("customer exists");
+          } else {
+            this.customerService
+              .updateCustomerById(customer)
+              .subscribe((data) => {
+                if (data.message === "customer update") {
+                  this.closeModal();
+                  this.emitData.emit("customer update");
+                } else {
+                  this.emitData.emit("error");
+                }
+              }),
+              (err) => {
+                this.emitData.emit("error");
+              };
+          }
+        }),
+        (err) => {
+          this.emitData.emit("error");
+        };
+    }
   }
 }

@@ -7,7 +7,9 @@ const {
 	getAllCustomers,
 	getCustomerById,
 	updateCustomer,
-	deleteCustomer
+	deleteCustomer,
+	isCustomerExists,
+	getCustomerByName
 } = require('../controllers/customer');
 
 const router = express.Router();
@@ -37,5 +39,8 @@ router.delete(
 		check('id', 'should be a valid number').isInt()
 	], deleteCustomer
 );
+
+router.get('/iscustomerexists/:name', isCustomerExists);
+router.get('/getCustomerByName/:name', getCustomerByName);
 
 module.exports = router;

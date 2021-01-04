@@ -7,7 +7,9 @@ const {
     getAllCustomers,
     getCustomerById,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    isCustomerExists,
+    getCustomerByName
 } = require('../models/customer');
 
 exports.addcustomer = (req, res) => {
@@ -120,5 +122,39 @@ exports.deleteCustomer = (req, res) => {
             return res.status(400).json({
                 message: 'customer not deleted'
             });
+    });
+}
+
+exports.isCustomerExists = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    isCustomerExists(req.params.name).then((data) => {
+        if (data)
+            return res.status(200).json({
+                message: true
+            });
+        else
+            return res.status(200).json({
+                message: false
+            });
+    });
+}
+
+exports.getCustomerByName = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    getCustomerByName(req.params.name).then((data) => {
+        if (data)
+            return res.status(200).json(data);
+        else
+            return res.status(200).json('not found');
     });
 }
