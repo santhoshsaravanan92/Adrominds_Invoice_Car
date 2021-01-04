@@ -14,11 +14,13 @@
                 </div>
                 <div class="pad1em">
                     <label for="from date" class="label-design">From Date</label><br />
-                    <input type="date" formControlName="fromdate" class="form-control textbox">
+                    <!-- <input type="date" formControlName="fromdate" class="form-control textbox"> -->
+                    <p-calendar formControlName="fromdate" class="form-control textbox" dateFormat="dd/mm/yy" showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
                 </div>
                 <div class="pad1em">
                     <label for="To Date" class="label-design">To Date</label><br />
-                    <input type="date" formControlName="todate" class="form-control textbox">
+                    <!-- <input type="date" formControlName="todate" class="form-control textbox"> -->
+                    <p-calendar formControlName="todate" class="form-control textbox" dateFormat="dd/mm/yy" showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
                 </div>
                 <div class="pad1em">
                     <label for="model" class="label-design">Model</label><br />

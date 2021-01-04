@@ -22,18 +22,20 @@ export const getLoggedInUserEmail = () => {
 
 export const getTodayDate = () => {
   const date = new Date();
-  const m = date.getMonth() + 1;
+  const month = date.getMonth() + 1;
+  const m = month < 10 ? `0${month}` : month;
   const y = date.getFullYear();
-  const d = date.getDate();
+  const d = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
 
   return `${d}/${m}/${y}`; //dd/mm/yyyy
 };
 
 export const getTodayDateWithoutsplit = () => {
   const date = new Date();
-  const m = date.getMonth() + 1;
+  const month = date.getMonth() + 1;
+  const m = month < 10 ? `0${month}` : month;
   const y = date.getFullYear();
-  const d = date.getDate();
+  const d = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
 
   return `${d}${m}${y}`; //ddmmyyyy
 };

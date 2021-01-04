@@ -41,9 +41,6 @@ export class DashboardComponent implements OnInit {
   }
 
   updateDashBoard(formData) {
-    let fromDate = formData.fromDate;
-    let toDate = formData.toDate;
-
     if (formData.fromDate != null && formData.toDate != null) {
       if (!formData.fromDate.includes("/") && !formData.toDate.includes("/")) {
         var date = new Date();

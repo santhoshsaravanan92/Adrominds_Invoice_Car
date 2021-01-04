@@ -339,7 +339,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       o.getHours() +
       o.getMinutes() +
       o.getSeconds();
-    invoiceObj.Dated = customerFormControls["dated"].value;
+    invoiceObj.Dated = customerFormControls["dated"].value.toLocaleDateString();
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
     invoiceObj.Email = getLoggedInUserEmail();

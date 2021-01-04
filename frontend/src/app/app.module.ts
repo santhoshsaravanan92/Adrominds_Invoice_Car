@@ -36,10 +36,11 @@ import { AccordionModule } from "primeng/accordion";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ExpenseComponent } from "./expense/expense.component";
 import { TabViewModule } from "primeng/tabview";
-import { ExpenseModelComponent } from './expense/expense-model/expense-model.component';
-import { InvoiceFiltersComponent } from './invoice/invoice-filters/invoice-filters.component';
-import { AllinvoicesComponent } from './invoice/allinvoices/allinvoices.component';
-import { InvoiceModalComponent } from './invoice/invoice-modal/invoice-modal.component';
+import { ExpenseModelComponent } from "./expense/expense-model/expense-model.component";
+import { InvoiceFiltersComponent } from "./invoice/invoice-filters/invoice-filters.component";
+import { AllinvoicesComponent } from "./invoice/allinvoices/allinvoices.component";
+import { InvoiceModalComponent } from "./invoice/invoice-modal/invoice-modal.component";
+import { CalendarModule } from "primeng/calendar";
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { InvoiceModalComponent } from './invoice/invoice-modal/invoice-modal.com
     AccordionModule,
     AutoCompleteModule,
     TabViewModule,
+    CalendarModule,
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -3,17 +3,22 @@
         <div class="grid-container padding-3">
             <div class="form-group width80">
                 <label for="Date" class="label-design">From Date</label>
-                <input type="date" id="date" formControlName="fromDate" class="form-control textbox">
+                <!-- <input type="date" id="date" formControlName="fromDate" class="form-control textbox"> -->
+                <p-calendar formControlName="fromDate" class="form-control textbox" dateFormat="dd/mm/yy"
+                    showButtonBar="true"></p-calendar>
             </div>
             <div class="form-group width80">
                 <label for="Date" class="label-design">To Date</label>
-                <input type="date" id="date" formControlName="toDate" class="form-control textbox">
+                <!-- <input type="date" id="date" formControlName="toDate" class="form-control textbox"> -->
+                <p-calendar formControlName="toDate" class="form-control textbox" dateFormat="dd/mm/yy"
+                    showButtonBar="true"></p-calendar>
             </div>
             <div class="form-group width80">
                 <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard" type="submit">
                     Apply Filter
                 </button>
-                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard" (click)="clearForm()">
+                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard"
+                    (click)="clearForm()">
                     Clear filter
                 </button>
             </div>

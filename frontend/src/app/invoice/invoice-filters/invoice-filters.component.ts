@@ -165,8 +165,14 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       const controls = this.getReportFormControls;
       let fileterObj = new InvoicFilter();
       fileterObj.Name = controls["customername"].value;
-      fileterObj.FromDate = controls["fromdate"].value;
-      fileterObj.ToDate = controls["todate"].value;
+      fileterObj.FromDate =
+        controls["fromdate"].value != ""
+          ? controls["fromdate"].value.toLocaleDateString()
+          : "";
+      fileterObj.ToDate =
+        controls["todate"].value != ""
+          ? controls["todate"].value.toLocaleDateString()
+          : "";
       fileterObj.VehicleNumber = controls["vehiclenumber"].value;
       fileterObj.Model = controls["model"].value;
 

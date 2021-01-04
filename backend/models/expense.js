@@ -119,27 +119,31 @@ exports.updateExpense = (expenseObj) => {
 };
 
 exports.getInvoiceReportsData = (filterData) => {
+
+    console.log('in model')
+    console.log(filterData)
+
     let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice `;
 
     if (filterData.ToDate || filterData.FromDate || filterData.Name || filterData.VehicleNumber || filterData.Model) {
         query += 'where ';
         let isConditionAdded = false;
         if (filterData.FromDate && filterData.ToDate) {
-            const dates = filterData.FromDate.split('-');
-            const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            const date = filterData.ToDate.split('-')
-            const toDate = `${date[2]}/${date[1]}/${date[0]}`
-            query += `dated between '${fromDate}' and '${toDate}' `;
+            // const dates = filterData.FromDate.split('-');
+            // const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
+            // const date = filterData.ToDate.split('-')
+            // const toDate = `${date[2]}/${date[1]}/${date[0]}`
+            query += `dated between '${filterData.FromDate}' and '${filterData.ToDate}' `;
             isConditionAdded = true;
         } else if (filterData.FromDate && !filterData.ToDate) {
-            const dates = filterData.FromDate.split('-');
-            const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = '${fromDate}' `;
+            // const dates = filterData.FromDate.split('-');
+            // const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
+            query += `dated = '${filterData.FromDate}' `;
             isConditionAdded = true;
         } else if (!filterData.FromDate && filterData.ToDate) {
-            const dates = filterData.ToDate.split('-');
-            const ToDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = '${ToDate}' `;
+            // const dates = filterData.ToDate.split('-');
+            // const ToDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
+            query += `dated = '${filterData.ToDate}' `;
             isConditionAdded = true;
         }
 
