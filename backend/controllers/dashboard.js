@@ -17,8 +17,12 @@ exports.getExpense = (req, res) => {
             error: 'UnAuthorized',
         });
     }
-
-    getExpenseDetailsForDashboard(req.params.email, req.params.from, req.params.to).then((data) => {
+    const {
+        fromDate,
+        toDate
+    } = req.body;
+    
+    getExpenseDetailsForDashboard(req.params.email, fromDate, toDate).then((data) => {
         if (data != null)
             return res.status(200).json(data);
         else

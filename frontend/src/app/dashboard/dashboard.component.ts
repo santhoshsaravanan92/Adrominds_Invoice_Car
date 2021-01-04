@@ -41,47 +41,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateDashBoard(formData) {
-    if (formData.fromDate != null && formData.toDate != null) {
-      if (!formData.fromDate.includes("/") && !formData.toDate.includes("/")) {
-        var date = new Date();
-        let d = new Date(date.getFullYear(), date.getMonth(), 1)
-          .toLocaleDateString()
-          .split("/");
-        formData.fromDate = `${d[2]}-${d[1]}-${d[0]}`;
-
-        let t = new Date(
-          date.getFullYear(),
-          date.getMonth(),
-          this.daysInMonth(date.getMonth() + 1, date.getFullYear())
-        )
-          .toLocaleDateString()
-          .split("/");
-        formData.toDate = `${t[2]}-${t[1]}-${t[0]}`;
-
-        this.dashboardService
-          .getExpenseDashboardDetails(formData.fromDate, formData.toDate)
-          .subscribe((result) => {
-            result.map((value) => {
-              if (value.category === "Salary") {
-                this.salary =
-                  parseInt(value.price) > 0 ? parseInt(value.price) : 0;
-              } else if (value.category === "Spare") {
-                this.spare =
-                  parseInt(value.price) > 0 ? parseInt(value.price) : 0;
-              } else {
-                this.others =
-                  parseInt(value.price) > 0 ? parseInt(value.price) : 0;
-              }
-              this.amt = this.salary + this.spare + this.others;
-            });
-          }),
-          (err) => {
-            console.log(err);
-          };
-      }
-    }
-
-    if (formData.fromDate != null && formData.toDate != null) {
+    if (
+      (formData.fromDate == "" && formData.toDate == "") ||
+      (formData.fromDate == null && formData.toDate == null)
+    ) {
       var date = new Date();
       formData.fromDate = new Date(
         date.getFullYear(),
@@ -94,16 +57,65 @@ export class DashboardComponent implements OnInit {
         date.getMonth(),
         this.daysInMonth(date.getMonth() + 1, date.getFullYear())
       ).toLocaleDateString();
+    }
+    // if (!formData.fromDate.includes("/") && !formData.toDate.includes("/")) {
+    //   var date = new Date();
+    //   let d = new Date(date.getFullYear(), date.getMonth(), 1)
+    //     .toLocaleDateString()
+    //     .split("/");
+    //   formData.fromDate = `${d[2]}-${d[1]}-${d[0]}`;
 
-      if (formData.fromDate.includes("-") && formData.toDate.includes("-")) {
-        let t = formData.toDate.split("-");
-        formData.toDate = t[2] + "/" + t[1] + "/" + t[0];
+    //   let t = new Date(
+    //     date.getFullYear(),
+    //     date.getMonth(),
+    //     this.daysInMonth(date.getMonth() + 1, date.getFullYear())
+    //   )
+    //     .toLocaleDateString()
+    //     .split("/");
+    //   formData.toDate = `${t[2]}-${t[1]}-${t[0]}`;
 
-        let f = formData.fromDate.split("-");
-        formData.fromDate = f[2] + "/" + f[1] + "/" + f[0];
-      }
+    this.dashboardService
+      .getExpenseDashboardDetails(formData.fromDate, formData.toDate)
+      .subscribe((result) => {
+        result.map((value) => {
+          if (value.category === "Salary") {
+            this.salary = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+          } else if (value.category === "Spare") {
+            this.spare = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+          } else {
+            this.others = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+          }
+          this.amt = this.salary + this.spare + this.others;
+        });
+      }),
+      (err) => {
+        console.log(err);
+      };
+    //}
 
-      this.dashboardService
+    //if (formData.fromDate != null && formData.toDate != null) {
+    // var date = new Date();
+    // formData.fromDate = new Date(
+    //   date.getFullYear(),
+    //   date.getMonth(),
+    //   1
+    // ).toLocaleDateString();
+
+    // formData.toDate = new Date(
+    //   date.getFullYear(),
+    //   date.getMonth(),
+    //   this.daysInMonth(date.getMonth() + 1, date.getFullYear())
+    // ).toLocaleDateString();
+
+    // if (formData.fromDate.includes("-") && formData.toDate.includes("-")) {
+    //   let t = formData.toDate.split("-");
+    //   formData.toDate = t[2] + "/" + t[1] + "/" + t[0];
+
+    //   let f = formData.fromDate.split("-");
+    //   formData.fromDate = f[2] + "/" + f[1] + "/" + f[0];
+    // }
+
+    this.dashboardService
       .getinvoiceDashboardDetails(formData.fromDate, formData.toDate)
       .subscribe((result) => {
         result.map((value) => {
@@ -114,9 +126,7 @@ export class DashboardComponent implements OnInit {
       (err) => {
         console.log(err);
       };
-    }
-
-    
+    //}
   }
 
   clearForm() {

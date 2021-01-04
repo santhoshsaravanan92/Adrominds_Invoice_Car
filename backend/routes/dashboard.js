@@ -9,8 +9,8 @@ const {
 
 const router = express.Router();
 
-router.get(
-    '/getexpensedetails/:email/:from/:to', [check('email', 'email should be in format').isEmail()], getExpense
+router.post(
+    '/getexpensedetails/:email', [check('email', 'email should be in format').isEmail()], getExpense
 );
 
 router.post(

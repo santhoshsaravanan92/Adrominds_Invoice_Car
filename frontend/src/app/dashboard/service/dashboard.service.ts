@@ -11,14 +11,11 @@ export class DashboardService {
   constructor(private http: HttpClient) {}
 
   getExpenseDashboardDetails(from: string, to: string) {
+    const content = { fromDate: from, toDate: to };
     return this.http
-      .get<any>(
-        UrlMappers.getExpenseDashboardDetails +
-          getLoggedInUserEmail() +
-          "/" +
-          from +
-          "/" +
-          to,
+      .post<any>(
+        UrlMappers.getExpenseDashboardDetails + getLoggedInUserEmail(),
+        content,
         {
           headers: getHeaders(),
         }
