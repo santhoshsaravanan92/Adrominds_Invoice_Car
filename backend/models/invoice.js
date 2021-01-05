@@ -157,6 +157,9 @@ exports.getallinvoices = (email) => {
         where: {
             Email: email
         },
+        order: [
+            ['dated', 'ASC']
+        ],
     }).then((result) => {
         return result;
     }).catch((err) => {

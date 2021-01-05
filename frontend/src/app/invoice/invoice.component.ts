@@ -69,7 +69,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       mode: ["", [Validators.required]],
       dated: [new Date()],
       model: [""],
-      km: [""],
+      km: ["0"],
     });
   }
 
@@ -87,7 +87,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       sgst: ["8"],
       cgst: ["8"],
       amountwithgst: [""],
-      discount: [""],
+      discount: ["0"],
       amount: [""],
       discountoption: [""],
     });
@@ -353,7 +353,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
     invoiceObj.km =
       customerFormControls["km"].value == null
-        ? ""
+        ? "0"
         : customerFormControls["km"].value;
     invoiceObj.mode = this.getPaymentMode.value.split(" ")[1];
     invoiceObj.model = customerFormControls["model"].value;
@@ -375,8 +375,6 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
               Constants.success,
               "Invoice"
             );
-            // redirect to dashboard page.
-            this.router.navigateByUrl("/dashboard");
             this.resetValues();
           } else {
             this.updateToastMessage(
@@ -387,6 +385,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
           }
           this.isLoading = false;
           this.isTabChanged = true;
+          // redirect to dashboard page.
+          this.router.navigateByUrl("/dashboard");
         }),
           (err) => {
             console.log(err);
@@ -426,9 +426,26 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   resetValues() {
-    this.gstForm.reset();
-    this.CustomerForm.reset();
-    this.productForm.reset();
+    const gstFormControls = this.getGSTFormControls;
+    gstFormControls["sgst"].setValue("8");
+    gstFormControls["cgst"].setValue("8");
+    gstFormControls["amountwithgst"].setValue("");
+    gstFormControls["discount"].setValue("0");
+    gstFormControls["discountoption"].setValue("");
+    gstFormControls["amount"].setValue("");
+
+    const customerFormControls = this.getCustomerFormControls;
+    customerFormControls["customername"].setValue("");
+    customerFormControls["deliverynotes"].setValue("");
+    customerFormControls["ordernumber"].setValue("");
+    customerFormControls["vehiclenumber"].setValue("");
+    customerFormControls["othernotes"].setValue("");
+    customerFormControls["templatename"].setValue("Default Template");
+    customerFormControls["mode"].setValue("");
+    customerFormControls["dated"].setValue(new Date());
+    customerFormControls["model"].setValue("");
+    customerFormControls["km"].setValue(0);
+
     this.gridDatas = [];
     this.amount = 0;
     this.price = 0;

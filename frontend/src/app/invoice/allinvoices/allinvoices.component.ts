@@ -32,12 +32,12 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
     }
   }
 
-  // @Input("_isTabChanged")
-  // set _isTabChanged(value:any){
-  //   if(value){
-  //     this.getAllInvoices();
-  //   }
-  // }
+  @Input("_isTabChanged")
+  set _isTabChanged(value:any){
+    if(value){
+      this.getAllInvoices();
+    }
+  }
 
   constructor(
     private invoiceService: InvoiceServiceService,

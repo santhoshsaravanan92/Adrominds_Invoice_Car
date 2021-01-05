@@ -3,9 +3,6 @@
 </div>
 <div class="margin-top font-family">
     <p-tabView (onChange)="handleTabChange($event)">
-        <p-tabPanel header="Invoices">
-            <app-invoice-filters [isTabChanged]="isTabChanged"></app-invoice-filters>
-        </p-tabPanel>
         <p-tabPanel header="Create Invoice" righticon="pi pi-file-o">
             <form [formGroup]="CustomerForm" class="form-modal-design">
                 <div class="width-50 float-left padding1em">
@@ -79,7 +76,7 @@
                     </div>
                     <div class="form-group">
                         <label for="KM Driven" class="label-design">KM Driven</label>
-                        <input type="text" placeholder="KM Driven" formControlName="km" maxlength="10"
+                        <input type="text" placeholder="KM Driven" formControlName="km" maxlength="6"
                             class="form-control textbox text-box-width" allowonlynumbers />
                     </div>
                 </div>
@@ -142,7 +139,7 @@
                     <div></div>
                     <div></div>
                     <div class="form-group">
-                        <button class="button float-right cursor-pointer margin-left" id="btnAddITem"
+                        <button class="button float-right cursor-pointer margin-left" id="btnAddITems"
                             (click)="addItemBtnclick()">
                             Add Item
                         </button>
@@ -216,15 +213,15 @@
                                 allowonlynumbers />
                         </div>
                         <div class="form-group">
-                            <button class="button float-right cursor-pointer margin-left" id="btnSaveOnly"
+                            <button class="button float-right cursor-pointer margin-left" id="btnSaveOnlys"
                                 (click)="saveOnly()">
                                 Save Only
                             </button>
-                            <button class="button float-right cursor-pointer margin-left" id="btnPrintOnly"
+                            <button class="button float-right cursor-pointer margin-left" id="btnPrintOnlys"
                                 (click)="printOnly()">
                                 Print Only
                             </button>
-                            <button class="button float-right cursor-pointer" id="btnSavePrint"
+                            <button class="button float-right cursor-pointer" id="btnSavePrints"
                                 (click)="saveAndPrint()">
                                 Save & Print
                             </button>
@@ -232,6 +229,9 @@
                     </div>
                 </div>
             </form>
+        </p-tabPanel>
+        <p-tabPanel header="Invoices">
+            <app-invoice-filters [isTabChanged]="isTabChanged"></app-invoice-filters>
         </p-tabPanel>
     </p-tabView>
 </div>

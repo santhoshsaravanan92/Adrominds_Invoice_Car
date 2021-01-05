@@ -56,8 +56,10 @@
             </div>
             <div class="form-group">
                 <label for="buyers order number" class="label-design">Dated</label>
-                <input type="text" placeholder="Date" formControlName="dated"
-                    class="form-control textbox text-box-width" />
+                <!-- <input type="text" placeholder="Date" formControlName="dated"
+                    class="form-control textbox text-box-width" /> -->
+                <p-calendar formControlName="dated" class="form-control textbox text-box-width" dateFormat="dd/mm/yy"
+                    showButtonBar="true"></p-calendar>
             </div>
             <div class="form-group">
                 <label for="model" class="label-design">Model</label>

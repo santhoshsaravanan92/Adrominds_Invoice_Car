@@ -1,5 +1,5 @@
 <div *ngIf="isLoading">
-	<p-progressSpinner class="loading"></p-progressSpinner>
+    <p-progressSpinner class="loading"></p-progressSpinner>
 </div>
 <section id="customersection font-family">
     <div class="grid-bg color pad1em">{{ _title }}</div>
@@ -19,7 +19,7 @@
                 <label for="email" class="label-design">Category</label><br />
                 <select class="ddl-design" formControlName="category" (change)="changeCategory($event)"
                     style="width: 100%;">
-                    <option value="">Select Category</option>
+                    <option value="">Select Category Value</option>
                     <option *ngFor="let d of categories" [ngValue]="d">{{d}}</option>
                 </select>
             </div>
