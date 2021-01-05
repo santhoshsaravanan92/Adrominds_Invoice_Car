@@ -15,6 +15,7 @@ export class ExpenseModelComponent implements OnInit {
   submitted: boolean = false;
   _isEdit: boolean = false;
   selectedDateValidationPurpose = "";
+  isLoading: boolean = false;
   private _modalDataToPass: any;
   private _id: string = "";
   categories: any = ["Spare", "Salary", "Others"];
@@ -47,7 +48,7 @@ export class ExpenseModelComponent implements OnInit {
 
   expenseFormCreation() {
     this.expenseForm = this.formBuilder.group({
-      date: [getTodayDate(), [Validators.required]],
+      date: [new Date(), [Validators.required]],
       category: ["", [Validators.required]],
       price: ["", [Validators.required]],
       notes: ["", [Validators.required]],
@@ -71,6 +72,7 @@ export class ExpenseModelComponent implements OnInit {
 
   getExpenseRecordById(id: string) {
     if (id) {
+      this.isLoading = true;
       this.expenseService.getExpensesById(id).subscribe((expenseRecord) => {
         const expenseFromControls = this.getExpenseFormControls;
         expenseFromControls["category"].setValue(expenseRecord.category);
@@ -79,12 +81,15 @@ export class ExpenseModelComponent implements OnInit {
         expenseFromControls["notes"].setValue(expenseRecord.notes);
         expenseFromControls["price"].setValue(expenseRecord.price);
         expenseFromControls["id"].setValue(id);
+        this.isLoading = false;
       }),
         (err) => {
           console.log(err);
+          this.isLoading = false;
         };
     } else {
       this.closeModal();
+      this.isLoading = false;
     }
   }
 
@@ -97,7 +102,7 @@ export class ExpenseModelComponent implements OnInit {
   saveExpense() {
     this.submitted = true;
     if (this.expenseForm.invalid) return;
-
+    this.isLoading = true;
     const expense = new ExpenseInformation();
     const expenseFormControls = this.getExpenseFormControls;
     let category = expenseFormControls["category"].value;
@@ -109,11 +114,13 @@ export class ExpenseModelComponent implements OnInit {
 
     this.expenseService.addExpense(expense).subscribe((data) => {
       if (data.message === "expense added") {
+        this.isLoading = false;
         this.closeModal();
         this.emitData.emit("added");
       }
     }),
       (err) => {
+        this.isLoading = false;
         this.emitData.emit("error");
       };
   }
@@ -124,6 +131,7 @@ export class ExpenseModelComponent implements OnInit {
       this.emitData.emit("check form data");
       return;
     }
+    this.isLoading = true;
 
     const expense = new ExpenseInformation();
     const expenseFromControls = this.getExpenseFormControls;
@@ -140,6 +148,7 @@ export class ExpenseModelComponent implements OnInit {
     expense.Id = expenseFromControls["id"].value;
 
     this.expenseService.updateExpenseById(expense).subscribe((data) => {
+      this.isLoading = false;
       if (data.message === "expense updated") {
         this.closeModal();
         this.emitData.emit("updated");
@@ -148,6 +157,7 @@ export class ExpenseModelComponent implements OnInit {
       }
     }),
       (err) => {
+        this.isLoading = false;
         this.emitData.emit("error");
       };
   }

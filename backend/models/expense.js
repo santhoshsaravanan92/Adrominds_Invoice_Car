@@ -60,6 +60,9 @@ exports.getallexpense = (email) => {
             owner_email: email,
             isactive: 1,
         },
+        order: [
+            ['date', 'ASC']
+        ],
     }).then((result) => {
         return result;
     }).catch((err) => {

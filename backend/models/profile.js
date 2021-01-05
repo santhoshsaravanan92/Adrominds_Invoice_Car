@@ -9,7 +9,7 @@ const {
 	handleError
 } = require('../helpers/helper-methods');
 
-const PersonalInformation = sequelize.define('PersonalInformation', {
+const PersonalInformation = sequelize.define('personalinformation', {
 	Name: {
 		type: Sequelize.STRING(50),
 		allowNull: true,

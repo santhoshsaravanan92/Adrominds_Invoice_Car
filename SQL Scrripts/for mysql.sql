@@ -1,7 +1,7 @@
-create database if not exists abinvoice;
-USE abinvoice;
+create database if not exists Adrominds_invoice;
+USE Adrominds_invoice;
 
-CREATE TABLE Login(
+CREATE TABLE login(
 	ID int AUTO_INCREMENT primary key,
 	Email nvarchar(50) NOT NULL unique,
 	Password varchar(300) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Login(
     is_assistant bit default 0
  );
 
-CREATE TABLE PersonalInformation(
+CREATE TABLE personalinformation(
 	ID int AUTO_INCREMENT primary key,
 	Name varchar(50) NOT NULL,
 	Company varchar(150) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE PersonalInformation(
 	Ifsc varchar(15) Null
 );
 
-CREATE TABLE Customer(
+CREATE TABLE customer(
 	ID int AUTO_INCREMENT primary key,
 	Name varchar(20) not null,
 	Address varchar(50) NULL,
@@ -42,7 +42,7 @@ CREATE TABLE Customer(
 	unique (Name)
 );
 
-CREATE TABLE Invoice(
+CREATE TABLE invoice(
 	ID int AUTO_INCREMENT primary key,
 	InvoiceId bigint(20) not null,
 	Name varchar(15) not null,
@@ -66,7 +66,7 @@ CREATE TABLE Invoice(
 	ON UPDATE CURRENT_TIMESTAMP   
 );
 
-CREATE TABLE Invoice_Product(
+CREATE TABLE invoice_product(
 	ID int AUTO_INCREMENT primary key,
 	Description varchar(50) not null,
 	Rate varchar(10) not null,

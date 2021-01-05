@@ -1,3 +1,6 @@
+<div *ngIf="isLoading">
+	<p-progressSpinner class="loading"></p-progressSpinner>
+</div>
 <p-sidebar [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }" [(visible)]="loadAddEditModal" position="top"
     [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
     <app-expense-model (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass">

@@ -1,3 +1,4 @@
+import { TmplAstRecursiveVisitor } from "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { Constants } from "../helpers/constant";
@@ -13,6 +14,7 @@ import { ExpenseService } from "./services/expense.service";
 export class ExpenseComponent implements OnInit {
   loadAddEditModal: boolean = false;
   gridDatas = [];
+  isLoading: boolean = false;
   isLoadingDone: boolean = false;
   modalDataToPass: any;
 
@@ -51,24 +53,21 @@ export class ExpenseComponent implements OnInit {
         Constants.success,
         "Expense Information"
       );
-    } 
-    else if ($event == "updated") {
+    } else if ($event == "updated") {
       this.getAllExpenses();
       this.updateToastMessage(
         "Expense Updated successfully",
         Constants.success,
         "Expense Information"
       );
-    }
-    else if ($event == "check form data") {
+    } else if ($event == "check form data") {
       this.getAllExpenses();
       this.updateToastMessage(
         "All form fields are mandatory.",
         Constants.error,
         "Expense Information"
       );
-    }
-    else {
+    } else {
       this.updateToastMessage(
         "Something went wrong. Please try again later.",
         Constants.error,
@@ -118,18 +117,18 @@ export class ExpenseComponent implements OnInit {
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         if (id !== "") {
-          this.expenseService
-            .deleteExpense(id)
-            .subscribe((res) => {
-              if (res.message === "expense deleted") {
-                this.getAllExpenses();
-                this.updateToastMessage(
-                  "Expense Information Deleted Successfully",
-                  Constants.success,
-                  "Expense Information"
-                );
-              }
-            });
+          this.isLoading = true;
+          this.expenseService.deleteExpense(id).subscribe((res) => {
+            if (res.message === "expense deleted") {
+              this.getAllExpenses();
+              this.updateToastMessage(
+                "Expense Information Deleted Successfully",
+                Constants.success,
+                "Expense Information"
+              );
+              this.isLoading = false;
+            }
+          });
         }
       },
       reject: () => {},
