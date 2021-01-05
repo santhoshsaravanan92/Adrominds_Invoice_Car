@@ -15,6 +15,7 @@ export class CustomerModalComponent implements OnInit {
   submitted: boolean = false;
   _isEdit: boolean = false;
   _title: string = "";
+  isLoading:boolean = false;
   customerName_testpurpose: string = "";
   private _id: string = "";
   private _modalDataToPass: any;
@@ -69,7 +70,7 @@ export class CustomerModalComponent implements OnInit {
   CustomerFormSubmit() {
     this.submitted = true;
     if (this.customerForm.invalid) return;
-
+this.isLoading = true;
     const customer = new CustomerInformation();
     const customerFromControls = this.getCustomerFormControls;
 
@@ -86,26 +87,31 @@ export class CustomerModalComponent implements OnInit {
       .subscribe((isExists) => {
         if (isExists.message) {
           this.closeModal();
+          this.isLoading = false;
           this.emitData.emit("customer exists");
         } else {
           this.customerService.addCustomer(customer).subscribe((data) => {
             if (data.message === "customer added") {
               this.closeModal();
+              this.isLoading = false;
               this.emitData.emit("customer added");
             }
           }),
             (err) => {
+              this.isLoading = false;
               this.emitData.emit("error");
             };
         }
       }),
       (err) => {
+        this.isLoading = false;
         this.emitData.emit("error");
       };
   }
 
   getCustomerRecordById(id: string) {
     if (id) {
+      this.isLoading = true;
       this.customerService.getCustomerById(id).subscribe((customerRecord) => {
         const customerFromControls = this.getCustomerFormControls;
         customerFromControls["address"].setValue(customerRecord.Address);
@@ -117,6 +123,7 @@ export class CustomerModalComponent implements OnInit {
         // for test purpose holding the name of the cstomer
         this.customerName_testpurpose = customerRecord.Name;
         customerFromControls["id"].setValue(id);
+        this.isLoading = false;
       }),
         (err) => {};
     } else {
@@ -130,7 +137,7 @@ export class CustomerModalComponent implements OnInit {
       this.emitData.emit("check form data");
       return;
     }
-
+    this.isLoading = true;
     const customer = new CustomerInformation();
     const customerFromControls = this.getCustomerFormControls;
 
@@ -150,12 +157,15 @@ export class CustomerModalComponent implements OnInit {
       this.customerService.updateCustomerById(customer).subscribe((data) => {
         if (data.message === "customer update") {
           this.closeModal();
+          this.isLoading = false;
           this.emitData.emit("customer update");
         } else {
+          this.isLoading = false;
           this.emitData.emit("error");
         }
       }),
         (err) => {
+          this.isLoading = false;
           this.emitData.emit("error");
         };
     } else {
@@ -164,6 +174,7 @@ export class CustomerModalComponent implements OnInit {
         .subscribe((isExists) => {
           if (isExists.message) {
             this.closeModal();
+            this.isLoading = false;
             this.emitData.emit("customer exists");
           } else {
             this.customerService
@@ -171,12 +182,15 @@ export class CustomerModalComponent implements OnInit {
               .subscribe((data) => {
                 if (data.message === "customer update") {
                   this.closeModal();
+                  this.isLoading = false;
                   this.emitData.emit("customer update");
                 } else {
+                  this.isLoading = false;
                   this.emitData.emit("error");
                 }
               }),
               (err) => {
+                this.isLoading = false;
                 this.emitData.emit("error");
               };
           }

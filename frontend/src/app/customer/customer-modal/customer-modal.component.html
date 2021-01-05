@@ -1,3 +1,6 @@
+<div *ngIf="isLoading">
+	<p-progressSpinner class="loading"></p-progressSpinner>
+</div>
 <section id="customersection font-family">
     <div class="grid-bg color pad1em">{{ _title }}</div>
     <form [formGroup]="customerForm" class="form-modal-design">
