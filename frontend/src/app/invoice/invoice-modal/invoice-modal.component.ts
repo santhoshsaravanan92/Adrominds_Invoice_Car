@@ -67,9 +67,9 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
       othernotes: [""],
       templatename: ["Default Template"],
       mode: ["", [Validators.required]],
-      dated: [new Date().toLocaleDateString("en-GB")],
+      dated: [new Date()],
       model: [""],
-      km: [""],
+      km: ["0"],
     });
   }
 
@@ -292,7 +292,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     const customerFormControls = this.getCustomerFormControls;
 
     invoiceObj.invoiceid = localStorage.getItem("idToUpdate");
-    invoiceObj.Dated = customerFormControls["dated"].value;
+    invoiceObj.Dated = customerFormControls["dated"].value.toLocaleDateString();
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
     invoiceObj.Email = getLoggedInUserEmail();

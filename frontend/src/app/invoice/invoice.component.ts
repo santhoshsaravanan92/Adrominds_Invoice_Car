@@ -86,9 +86,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.gstForm = this.formBuilder.group({
       sgst: ["8"],
       cgst: ["8"],
-      amountwithgst: [""],
+      amountwithgst: ["0"],
       discount: ["0"],
-      amount: [""],
+      amount: ["0"],
       discountoption: [""],
     });
   }

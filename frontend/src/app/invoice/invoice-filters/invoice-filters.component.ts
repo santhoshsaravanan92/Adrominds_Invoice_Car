@@ -166,11 +166,11 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
       let fileterObj = new InvoicFilter();
       fileterObj.Name = controls["customername"].value;
       fileterObj.FromDate =
-        controls["fromdate"].value != ""
+        controls["fromdate"].value != "" && controls["fromdate"].value != null
           ? controls["fromdate"].value.toLocaleDateString()
           : "";
       fileterObj.ToDate =
-        controls["todate"].value != ""
+        controls["todate"].value != "" && controls["todate"].value != null
           ? controls["todate"].value.toLocaleDateString()
           : "";
       fileterObj.VehicleNumber = controls["vehiclenumber"].value;
