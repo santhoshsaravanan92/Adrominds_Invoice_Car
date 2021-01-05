@@ -14,6 +14,7 @@ export class ExpenseModelComponent implements OnInit {
   _title: string = "";
   submitted: boolean = false;
   _isEdit: boolean = false;
+  selectedDateValidationPurpose = "";
   private _modalDataToPass: any;
   private _id: string = "";
   categories: any = ["Spare", "Salary", "Others"];
@@ -50,7 +51,7 @@ export class ExpenseModelComponent implements OnInit {
       category: ["", [Validators.required]],
       price: ["", [Validators.required]],
       notes: ["", [Validators.required]],
-      id: [""],// for edit purpose
+      id: [""], // for edit purpose
     });
   }
 
@@ -70,10 +71,11 @@ export class ExpenseModelComponent implements OnInit {
 
   getExpenseRecordById(id: string) {
     if (id) {
-      this.expenseService.getExpensesById(id).subscribe(expenseRecord => {
+      this.expenseService.getExpensesById(id).subscribe((expenseRecord) => {
         const expenseFromControls = this.getExpenseFormControls;
         expenseFromControls["category"].setValue(expenseRecord.category);
         expenseFromControls["date"].setValue(expenseRecord.date);
+        this.selectedDateValidationPurpose = expenseRecord.date;
         expenseFromControls["notes"].setValue(expenseRecord.notes);
         expenseFromControls["price"].setValue(expenseRecord.price);
         expenseFromControls["id"].setValue(id);
@@ -126,8 +128,12 @@ export class ExpenseModelComponent implements OnInit {
     const expense = new ExpenseInformation();
     const expenseFromControls = this.getExpenseFormControls;
 
-    expense.Category = this.getchangeCategory.value;
-    expense.Date = expenseFromControls["date"].value.toLocaleDateString();
+    let category = expenseFromControls["category"].value;
+    expense.Category = category.split(" ")[1];
+    expense.Date =
+      this.selectedDateValidationPurpose === expenseFromControls["date"].value
+        ? expenseFromControls["date"].value
+        : expenseFromControls["date"].value.toLocaleDateString();
     expense.Notes = expenseFromControls["notes"].value;
     expense.Price = expenseFromControls["price"].value;
     expense.Email = getLoggedInUserEmail();
