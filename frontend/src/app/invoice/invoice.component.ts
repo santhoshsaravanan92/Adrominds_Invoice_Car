@@ -16,6 +16,7 @@ import {
 import { InvoiceServiceService } from "./services/invoice-service.service";
 import { ProfileService } from "../services/profile.service";
 import { CustomerServiceService } from "../customer/services/customer-service.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-invoice",
@@ -45,7 +46,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     public messageService: MessageService,
     private invoiceService: InvoiceServiceService,
     private profileSerive: ProfileService,
-    private customerService: CustomerServiceService
+    private customerService: CustomerServiceService,
+    private router: Router
   ) {
     super(messageService);
   }
@@ -65,7 +67,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       othernotes: [""],
       templatename: ["Default Template"],
       mode: ["", [Validators.required]],
-      dated: [getTodayDate()],
+      dated: [new Date()],
       model: [""],
       km: [""],
     });
@@ -274,12 +276,16 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
             }`
           );
           // service call to get customer information
-          this.customerService.getCustomerByName(customerName.Name).subscribe(result => {
-            console.log(result);
-            const printContent = discountOptionforprint.replace('{customeraddress}', `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`);
-            print(printContent, customerName.Name);
-          });
-          
+          this.customerService
+            .getCustomerByName(customerName.Name)
+            .subscribe((result) => {
+              console.log(result);
+              const printContent = discountOptionforprint.replace(
+                "{customeraddress}",
+                `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`
+              );
+              print(printContent, customerName.Name);
+            });
         }),
         (err) => {
           console.log(err);
@@ -345,7 +351,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     invoiceObj.Email = getLoggedInUserEmail();
     invoiceObj.name = customerFormControls["customername"].value;
     invoiceObj.VehicleNumber = customerFormControls["vehiclenumber"].value;
-    invoiceObj.km = customerFormControls["km"].value;
+    invoiceObj.km =
+      customerFormControls["km"].value == null
+        ? ""
+        : customerFormControls["km"].value;
     invoiceObj.mode = this.getPaymentMode.value.split(" ")[1];
     invoiceObj.model = customerFormControls["model"].value;
     invoiceObj.otherNotes = customerFormControls["othernotes"].value;
@@ -366,6 +375,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
               Constants.success,
               "Invoice"
             );
+            // redirect to dashboard page.
+            this.router.navigateByUrl("/dashboard");
             this.resetValues();
           } else {
             this.updateToastMessage(

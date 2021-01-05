@@ -127,7 +127,7 @@ export class ExpenseModelComponent implements OnInit {
     const expenseFromControls = this.getExpenseFormControls;
 
     expense.Category = this.getchangeCategory.value;
-    expense.Date = expenseFromControls["date"].value;
+    expense.Date = expenseFromControls["date"].value.toLocaleDateString();
     expense.Notes = expenseFromControls["notes"].value;
     expense.Price = expenseFromControls["price"].value;
     expense.Email = getLoggedInUserEmail();
