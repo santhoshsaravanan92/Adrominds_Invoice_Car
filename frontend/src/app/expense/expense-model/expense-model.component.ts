@@ -80,10 +80,10 @@ export class ExpenseModelComponent implements OnInit {
       this.expenseService.getExpensesById(id).subscribe((expenseRecord) => {
         const expenseFromControls = this.getExpenseFormControls;
         expenseFromControls["category"].setValue(expenseRecord.category);
+        this.selectedDateValidationPurpose = getDateddmmyyyyformat(expenseRecord.date);
         expenseFromControls["date"].setValue(
-          getDateddmmyyyyformat(expenseRecord.date)
+          this.selectedDateValidationPurpose
         );
-        this.selectedDateValidationPurpose = expenseRecord.date;
         expenseFromControls["notes"].setValue(expenseRecord.notes);
         expenseFromControls["price"].setValue(expenseRecord.price);
         expenseFromControls["id"].setValue(id);

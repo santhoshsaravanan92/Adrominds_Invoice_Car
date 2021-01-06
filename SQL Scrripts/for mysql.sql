@@ -45,7 +45,7 @@ CREATE TABLE customer(
 CREATE TABLE invoice(
 	ID int AUTO_INCREMENT primary key,
 	InvoiceId bigint(20) not null,
-	Name varchar(15) not null,
+	Name varchar(20) not null,
 	DeliveryNotes varchar(50) NULL,
 	BuyerOrderNumber varchar(15) NULL,
 	VehicleNumber varchar(15) NOT NULL,
