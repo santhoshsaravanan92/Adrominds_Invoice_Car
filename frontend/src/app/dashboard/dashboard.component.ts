@@ -44,20 +44,27 @@ export class DashboardComponent implements OnInit {
     this.amt = this.salary = this.spare = this.others = 0;
     this.totalInvoiceAmount = this.profit = 0;
     var date = new Date();
-    
+
     if (formData.fromDate == "" || formData.fromDate == null) {
       formData.fromDate = new Date(
         date.getFullYear(),
         date.getMonth(),
         1
       ).toLocaleDateString();
-    } else if (formData.toDate == "" || formData.toDate == null) {
+    }
+    if (formData.toDate == "" || formData.toDate == null) {
       formData.toDate = new Date(
         date.getFullYear(),
         date.getMonth(),
         this.daysInMonth(date.getMonth() + 1, date.getFullYear())
       ).toLocaleDateString();
-    } else {
+    }
+    if (
+      formData.fromDate == "" &&
+      formData.fromDate == null &&
+      formData.toDate == "" &&
+      formData.toDate == null
+    ) {
       formData.fromDate = formData.fromDate.toLocaleDateString();
       formData.toDate = formData.toDate.toLocaleDateString();
     }
