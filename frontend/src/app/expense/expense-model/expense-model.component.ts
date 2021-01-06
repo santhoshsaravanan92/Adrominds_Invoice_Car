@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { getLoggedInUserEmail, getTodayDate } from "src/app/helpers/utilities";
+import {
+  getDateddmmyyyyformat,
+  getLoggedInUserEmail,
+  getTodayDate,
+} from "src/app/helpers/utilities";
 import { ExpenseInformation } from "../models/expense.model";
 import { ExpenseService } from "../services/expense.service";
 
@@ -76,7 +80,9 @@ export class ExpenseModelComponent implements OnInit {
       this.expenseService.getExpensesById(id).subscribe((expenseRecord) => {
         const expenseFromControls = this.getExpenseFormControls;
         expenseFromControls["category"].setValue(expenseRecord.category);
-        expenseFromControls["date"].setValue(expenseRecord.date);
+        expenseFromControls["date"].setValue(
+          getDateddmmyyyyformat(expenseRecord.date)
+        );
         this.selectedDateValidationPurpose = expenseRecord.date;
         expenseFromControls["notes"].setValue(expenseRecord.notes);
         expenseFromControls["price"].setValue(expenseRecord.price);

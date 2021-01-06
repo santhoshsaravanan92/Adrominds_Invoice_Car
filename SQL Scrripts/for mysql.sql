@@ -51,7 +51,7 @@ CREATE TABLE invoice(
 	VehicleNumber varchar(15) NOT NULL,
 	otherNotes varchar(50) NULL,
 	mode varchar(10) not null, 
-	Dated varchar(15) not null, 
+	Dated date not null, 
 	model varchar(40) not null,
 	km int not null, 
 	sgst int not null, 
@@ -80,7 +80,7 @@ CREATE TABLE invoice_product(
 
 CREATE TABLE expense(
 	id int AUTO_INCREMENT primary key,	
-	date varchar(15) not null, 
+	date date not null, 
 	category varchar(25) not null, 
 	price decimal not null, 
 	notes varchar(50) not null, 

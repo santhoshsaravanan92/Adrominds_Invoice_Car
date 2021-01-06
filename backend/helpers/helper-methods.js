@@ -30,3 +30,8 @@ exports.handleError = (err) => {
 	console.log(err);
 };
 
+
+exports.changeDateFormatyyyymmdd = (d) => {
+	const splittedDate = d.split('/');
+	return (splittedDate[2] + "-" + splittedDate[1] + "-" + splittedDate[0]);
+};

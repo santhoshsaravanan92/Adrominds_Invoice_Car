@@ -8,7 +8,10 @@ import {
   InvoiceInformation,
   ProductInformation,
 } from "../models/invoice-models";
-import { getLoggedInUserEmail } from "src/app/helpers/utilities";
+import {
+  getLoggedInUserEmail,
+  getDateddmmyyyyformat,
+} from "src/app/helpers/utilities";
 
 @Component({
   selector: "app-invoice-modal",
@@ -31,7 +34,7 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
   invoiceFormSubmitted: boolean = false;
   addItemFormsSubmitted: boolean = false;
   isLoadingDone: boolean = false;
-
+  private dated = "";
   @Input("modalDataToPass")
   set modalDataToPass(value: any) {
     if (value) {
@@ -229,7 +232,8 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
         customerFormControls["othernotes"].setValue(invoiceRecord.otherNotes);
         customerFormControls["templatename"].setValue("Default Template");
         customerFormControls["mode"].setValue(invoiceRecord.mode);
-        customerFormControls["dated"].setValue(invoiceRecord.Dated);
+        this.dated = getDateddmmyyyyformat(invoiceRecord.Dated);
+        customerFormControls["dated"].setValue(this.dated);
         customerFormControls["model"].setValue(invoiceRecord.model);
         customerFormControls["km"].setValue(invoiceRecord.km);
         localStorage.setItem("idToUpdate", id);
@@ -290,9 +294,12 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
     invoiceObj.discount_option = this.getChangeDiscount.value.split(" ")[1];
 
     const customerFormControls = this.getCustomerFormControls;
-
     invoiceObj.invoiceid = localStorage.getItem("idToUpdate");
-    invoiceObj.Dated = customerFormControls["dated"].value.toLocaleDateString();
+
+    invoiceObj.Dated =
+      this.dated == customerFormControls["dated"].value
+        ? customerFormControls["dated"].value
+        : customerFormControls["dated"].value.toLocaleDateString();
     invoiceObj.BuyerOrderNumber = customerFormControls["ordernumber"].value;
     invoiceObj.DeliveryNotes = customerFormControls["deliverynotes"].value;
     invoiceObj.Email = getLoggedInUserEmail();

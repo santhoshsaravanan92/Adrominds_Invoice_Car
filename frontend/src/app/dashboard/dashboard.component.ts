@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
     this.amt = this.salary = this.spare = this.others = 0;
     this.totalInvoiceAmount = this.profit = 0;
     var date = new Date();
+    
     if (formData.fromDate == "" || formData.fromDate == null) {
       formData.fromDate = new Date(
         date.getFullYear(),

@@ -55,3 +55,9 @@ export const print = (printContent, customerName) => {
     WinPrint.close();
   }, 1000);
 };
+
+export const getDateddmmyyyyformat = (d) => {
+  //2021-01-06
+  const date = d.toString().split('-')
+  return `${date[2]}/${date[1]}/${date[0]}`; //dd/mm/yyyy
+};

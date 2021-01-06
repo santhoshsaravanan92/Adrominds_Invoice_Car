@@ -1,5 +1,5 @@
 <div *ngIf="isLoading" class="loading-div">
-	<p-progressSpinner class="loading"></p-progressSpinner>
+    <p-progressSpinner class="loading"></p-progressSpinner>
 </div>
 <p-sidebar [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }" [(visible)]="loadAddEditModal" position="top"
     [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
@@ -32,10 +32,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-data>
             <tr class="ui-selectable-row">
-                <td class="info-tbl-row-design" style="width:10%">{{ data.date }}</td>
+                <td class="info-tbl-row-design" style="width:10%">{{ data.date | date:'dd/MM/yyyy'}}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.category }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.price }}</td>
-                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">{{ data.notes }}</td>
+                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">{{ data.notes }}
+                </td>
                 <td class="info-tbl-row-design">
                     <!-- <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
                         srcset="" (click)="editExpense(data.id)" /> -->

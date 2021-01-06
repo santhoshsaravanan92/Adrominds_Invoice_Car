@@ -9,7 +9,8 @@ const {
     sequelize
 } = require('../helpers/dbhelper');
 const {
-    handleError
+    handleError,
+    changeDateFormatyyyymmdd
 } = require('../helpers/helper-methods');
 
 
@@ -108,9 +109,6 @@ const InvoiceProduct = sequelize.define('invoice_product', {
 });
 
 exports.addInvoice = (invoiceObj) => {
-    console.log('in model data')
-    console.log(invoiceObj)
-
     return Invoice.create({
             InvoiceId: invoiceObj.invoiceid,
             Name: invoiceObj.name.Name,
@@ -119,7 +117,7 @@ exports.addInvoice = (invoiceObj) => {
             VehicleNumber: invoiceObj.VehicleNumber,
             otherNotes: invoiceObj.otherNotes,
             mode: invoiceObj.mode,
-            Dated: invoiceObj.Dated,
+            Dated: changeDateFormatyyyymmdd(invoiceObj.Dated),
             model: invoiceObj.model,
             km: invoiceObj.km,
             sgst: invoiceObj.sgst,
@@ -158,6 +156,7 @@ exports.getallinvoices = (email) => {
             Email: email
         },
         order: [
+            ['Name', 'ASC'],
             ['dated', 'ASC']
         ],
     }).then((result) => {
@@ -236,7 +235,7 @@ exports.updateInvoice = (invoiceObj) => {
             VehicleNumber: invoiceObj.VehicleNumber,
             otherNotes: invoiceObj.otherNotes,
             mode: invoiceObj.mode,
-            Dated: invoiceObj.Dated,
+            Dated: changeDateFormatyyyymmdd(invoiceObj.Dated),
             model: invoiceObj.model,
             km: invoiceObj.km,
             sgst: invoiceObj.sgst,
@@ -261,7 +260,9 @@ exports.updateInvoice = (invoiceObj) => {
 };
 
 exports.getInvoiceDetailsForDashboard = (email, from, to) => {
-    const query = `SELECT sum(amountwithdiscount) as price FROM invoice WHERE Email = '${email}' and dated between '${from}' and '${to}'`;
+    const fromDate = changeDateFormatyyyymmdd(from);
+    const toDate = changeDateFormatyyyymmdd(to);
+    const query = `SELECT sum(amountwithdiscount) as price FROM invoice WHERE Email = '${email}' and dated between '${fromDate}' and '${toDate}'`;
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

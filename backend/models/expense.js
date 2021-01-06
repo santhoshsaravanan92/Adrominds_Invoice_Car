@@ -10,7 +10,8 @@ const {
 } = require('../helpers/dbhelper');
 const {
     handleError,
-    getTodayDate
+    getTodayDate,
+    changeDateFormatyyyymmdd
 } = require('../helpers/helper-methods');
 
 
@@ -39,7 +40,7 @@ const Expense = sequelize.define('expense', {
 
 exports.addExpense = (expenseObj) => {
     return Expense.create({
-            date: expenseObj.Date,
+            date: changeDateFormatyyyymmdd(expenseObj.Date),
             category: expenseObj.Category,
             price: expenseObj.Price,
             notes: expenseObj.Notes,
@@ -102,7 +103,7 @@ exports.getexpensebyid = (id) => {
 
 exports.updateExpense = (expenseObj) => {
     return Expense.update({
-            date: expenseObj.Date,
+            date: changeDateFormatyyyymmdd(expenseObj.Date),
             category: expenseObj.Category,
             price: expenseObj.Price,
             notes: expenseObj.Notes,
@@ -122,31 +123,21 @@ exports.updateExpense = (expenseObj) => {
 };
 
 exports.getInvoiceReportsData = (filterData) => {
-
-    console.log('in model')
-    console.log(filterData)
-
     let query = `SELECT invoiceid, name, DeliveryNotes, BuyerOrderNumber, VehicleNumber, otherNotes, mode, Dated, model, km, sgst, csgt, discount, discount_option, amount, amountwithdiscount FROM invoice `;
 
     if (filterData.ToDate || filterData.FromDate || filterData.Name || filterData.VehicleNumber || filterData.Model) {
         query += 'where ';
         let isConditionAdded = false;
         if (filterData.FromDate && filterData.ToDate) {
-            // const dates = filterData.FromDate.split('-');
-            // const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            // const date = filterData.ToDate.split('-')
-            // const toDate = `${date[2]}/${date[1]}/${date[0]}`
-            query += `dated between '${filterData.FromDate}' and '${filterData.ToDate}' `;
+            const fromDate = changeDateFormatyyyymmdd(filterData.FromDate);
+            const toDate = changeDateFormatyyyymmdd(filterData.ToDate);
+            query += `dated between '${fromDate}' and '${toDate}' `;
             isConditionAdded = true;
         } else if (filterData.FromDate && !filterData.ToDate) {
-            // const dates = filterData.FromDate.split('-');
-            // const fromDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = '${filterData.FromDate}' `;
+            query += `dated = '${changeDateFormatyyyymmdd(filterData.FromDate)}' `;
             isConditionAdded = true;
         } else if (!filterData.FromDate && filterData.ToDate) {
-            // const dates = filterData.ToDate.split('-');
-            // const ToDate = `${dates[2]}/${dates[1]}/${dates[0]}`;
-            query += `dated = '${filterData.ToDate}' `;
+            query += `dated = '${changeDateFormatyyyymmdd(filterData.ToDate)}' `;
             isConditionAdded = true;
         }
 
@@ -180,7 +171,9 @@ exports.getInvoiceReportsData = (filterData) => {
 };
 
 exports.getExpenseDetailsForDashboard = (email, from, to) => {
-    const query = `SELECT sum(price) price, category FROM expense where owner_email = '${email}' and date BETWEEN '${from}' and '${to}' group by category`;
+    const fromDate = changeDateFormatyyyymmdd(from);
+    const toDate = changeDateFormatyyyymmdd(to);
+    const query = `SELECT sum(price) price, category FROM expense where owner_email = '${email}' and date BETWEEN '${fromDate}' and '${toDate}' group by category`;
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT
