@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   DashboardForm: FormGroup;
   errorMessage: string = "";
   submitted: boolean = false;
-
+  isControlDisabled: boolean = true;
   spare: number = 0;
   salary: number = 0;
   others: number = 0;
@@ -40,10 +40,24 @@ export class DashboardComponent implements OnInit {
     return new Date(year, month, 0).getDate();
   }
 
+  dateSelected() {
+    this.isControlDisabled = false;
+  }
+
+  calenderClearClick() {
+    this.isControlDisabled = true;
+  }
   updateDashBoard(formData) {
     this.amt = this.salary = this.spare = this.others = 0;
     this.totalInvoiceAmount = this.profit = 0;
     var date = new Date();
+
+    if (formData.fromDate !== "" && formData.fromDate !== null) {
+      formData.fromDate = formData.fromDate.toLocaleDateString();
+    }
+    if (formData.toDate !== "" && formData.toDate !== null) {
+      formData.toDate = formData.toDate.toLocaleDateString();
+    }
 
     if (formData.fromDate == "" || formData.fromDate == null) {
       formData.fromDate = new Date(
@@ -58,15 +72,6 @@ export class DashboardComponent implements OnInit {
         date.getMonth(),
         this.daysInMonth(date.getMonth() + 1, date.getFullYear())
       ).toLocaleDateString();
-    }
-    if (
-      formData.fromDate == "" &&
-      formData.fromDate == null &&
-      formData.toDate == "" &&
-      formData.toDate == null
-    ) {
-      formData.fromDate = formData.fromDate.toLocaleDateString();
-      formData.toDate = formData.toDate.toLocaleDateString();
     }
 
     this.dashboardService
@@ -101,6 +106,9 @@ export class DashboardComponent implements OnInit {
   }
 
   clearForm() {
-    this.DashboardForm.reset();
+    const a = this.getFormControls;
+    a["fromDate"].setValue("");
+    a["toDate"].setValue("");
+    // this.DashboardForm.reset();
   }
 }
