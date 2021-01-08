@@ -3,6 +3,29 @@
     <app-customer-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass">
     </app-customer-modal>
 </p-sidebar>
+<form [formGroup]="customerFilterForm" class="form-modal-design font-family width-50" (ngSubmit)="applyFilter(customerFilterForm.value)">
+    <div class="form-group grid-container">
+        <div class="pad1em">
+            <label for="customer name" class="label-design">Customer Name</label><br />
+            <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width widht-15"
+                [suggestions]="customerNames" field="Name" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
+    'none', 'border-right-style': 'none','border-left-style': 'none','height': '37px'}">
+            </p-autoComplete>
+        </div>
+        <div class="pad1em">
+            <label for="customer name" class="label-design">Customer Mobile No.</label><br />
+            <input type="text" formControlName="mobilenumber" minlength="10" maxlength="10" class="form-control textbox widht-15">
+        </div>
+        <button class="button float-right cursor-pointer margin-left btn-width" type='submit'>
+            Apply Filter
+        </button>
+    </div>
+    <!-- <div class="form-group">
+        
+    </div> -->
+</form>
+
+
 <div class="width-100 padding-btn">
     <div class="edit-button margin-right cursor-pointer float-right" (click)="openDialog()">
         Add Customer
@@ -32,11 +55,14 @@
         <ng-template pTemplate="body" let-data>
             <tr class="ui-selectable-row">
                 <td class="info-tbl-row-design" style="width:15%">{{ data.Name }}</td>
-                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">{{ data.Address }}</td>
+                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">
+                    {{ data.Address }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.Mobile }}</td>
                 <td class="info-tbl-row-design" style="text-align: center;">{{ data.GST }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;overflow-wrap: break-word;">{{ data.Email }}</td>
-                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">{{ data.Comments }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;overflow-wrap: break-word;">{{ data.Email }}
+                </td>
+                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">
+                    {{ data.Comments }}</td>
                 <td class="info-tbl-row-design">
                     <!-- <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
                         srcset="" (click)="editCustomer(data.id)" /> -->

@@ -137,4 +137,27 @@ export class CustomerServiceService {
         })
       );
   }
+
+  getCustomerDetailsForFilter(
+    name: string,
+    number: string
+  ): Observable<CustomerInformation[]> {
+    const content = {
+      name: name,
+      number: number,
+    };
+    
+    return this.http
+      .post<any>(UrlMappers.getCustomerDetailsForFiler, content, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }

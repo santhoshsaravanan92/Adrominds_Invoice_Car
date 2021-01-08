@@ -18,6 +18,7 @@ export module UrlMappers {
   export const updateCustomer = baseUrl + "/api/customer/updatecustomer";
   export const deleteCustomer = baseUrl + "/api/customer/deleteCustomer/";
   export const isCustomerExists = baseUrl + "/api/customer/iscustomerexists/";
+  export const getCustomerDetailsForFiler = baseUrl + "/api/customer/getCustomerDetailsForFilter";
 
   export const addInvoice = baseUrl + "/api/invoice/addinvoice";
   export const updateInvoice = baseUrl + "/api/invoice/updateinvoice";

@@ -9,7 +9,8 @@ const {
 	updateCustomer,
 	deleteCustomer,
 	isCustomerExists,
-	getCustomerByName
+	getCustomerByName,
+	getCustomerDetailsForFilter
 } = require('../controllers/customer');
 
 const router = express.Router();
@@ -42,5 +43,6 @@ router.delete(
 
 router.get('/iscustomerexists/:name', isCustomerExists);
 router.get('/getCustomerByName/:name', getCustomerByName);
+router.post('/getCustomerDetailsForFilter', getCustomerDetailsForFilter);
 
 module.exports = router;

@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { Constants } from "../helpers/constant";
 import { getLoggedInUserEmail } from "../helpers/utilities";
+import { InvoiceServiceService } from "../invoice/services/invoice-service.service";
 import { CustomerInformation } from "./models/customer-model";
 import { CustomerServiceService } from "./services/customer-service.service";
 
@@ -15,15 +17,27 @@ export class CustomerComponent implements OnInit {
   gridDatas: CustomerInformation[] = [];
   isLoadingDone: boolean = false;
   modalDataToPass: any;
+  customerNames: string[] = [];
+  customerFilterForm: FormGroup;
 
   constructor(
     public messageService: MessageService,
     private customerService: CustomerServiceService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private formBuilder: FormBuilder,
+    private invoiceService: InvoiceServiceService
   ) {}
 
   ngOnInit(): void {
+    this.customerFilterFormCreation();
     this.getAllCustomers();
+  }
+
+  customerFilterFormCreation() {
+    this.customerFilterForm = this.formBuilder.group({
+      customername: [""],
+      mobilenumber: [""],
+    });
   }
 
   openDialog() {
@@ -135,5 +149,51 @@ export class CustomerComponent implements OnInit {
       id: id,
       isEdit: true,
     };
+  }
+
+  search(event) {
+    this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
+      this.customerNames = data;
+    });
+  }
+
+  applyFilter(formDate) {
+    this.isLoadingDone = true;
+    if (formDate.mobilenumber.length > 0 && formDate.mobilenumber.length < 10) {
+      this.updateToastMessage(
+        "Mobile number should be 10 digits",
+        Constants.error,
+        "Customer Information"
+      );
+      this.isLoadingDone = false; 
+      return;
+    }
+    if (formDate.mobilenumber == "") formDate.mobilenumber = 0;
+    this.customerService
+      .getCustomerDetailsForFilter(
+        formDate.customername.Name,
+        formDate.mobilenumber
+      )
+      .subscribe((data) => {
+        if (data.length > 0) {
+          let datas = [];
+          data.forEach((e) => {
+            let a = new CustomerInformation();
+            a.Address = e.Address;
+            a.Comments = e.Comments;
+            a.Email = e.Email;
+            a.GST = e.GST;
+            a.Mobile = e.Mobile;
+            a.Name = e.Name;
+            datas.push(a);
+          });
+          this.gridDatas = data;
+        }
+
+        this.isLoadingDone = false;
+      }),
+      (err) => {
+        console.log(err);
+      };
   }
 }

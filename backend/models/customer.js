@@ -1,4 +1,7 @@
-const Sequelize = require('sequelize');
+const {
+    Sequelize,
+    QueryTypes
+} = require('sequelize');
 const {
     sequelize
 } = require('../helpers/dbhelper');
@@ -169,3 +172,28 @@ exports.getCustomerByName = (name) => {
         return err;
     });
 };
+
+exports.getCustomerDetailsForFilter = (name, mobileno) => {
+    isNameAdded = false;
+    let query = 'SELECT * FROM customer';
+    if (name || mobileno)
+        query += " where"
+
+    if (name) {
+        query += " name = '" + name + "'"
+        isNameAdded = true;
+    }
+
+    if (mobileno != 0 && isNameAdded) {
+        query += " and mobile = '" + mobileno + "'"
+    } else if (mobileno != 0 && !isNameAdded) query += " mobile = '" + mobileno + "'"
+
+    query += " order by Name asc";
+
+
+    return sequelize.query(query, {
+        type: QueryTypes.SELECT
+    }).then(result => {
+        return result;
+    });
+}

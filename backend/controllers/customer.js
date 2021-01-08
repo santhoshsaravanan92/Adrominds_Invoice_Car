@@ -9,7 +9,8 @@ const {
     updateCustomer,
     deleteCustomer,
     isCustomerExists,
-    getCustomerByName
+    getCustomerByName,
+    getCustomerDetailsForFilter
 } = require('../models/customer');
 
 exports.addcustomer = (req, res) => {
@@ -152,6 +153,26 @@ exports.getCustomerByName = (req, res) => {
     }
 
     getCustomerByName(req.params.name).then((data) => {
+        if (data)
+            return res.status(200).json(data);
+        else
+            return res.status(200).json('not found');
+    });
+}
+
+exports.getCustomerDetailsForFilter = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    const {
+        name,
+        number
+    } = req.body;
+
+    getCustomerDetailsForFilter(name, number).then((data) => {
         if (data)
             return res.status(200).json(data);
         else
