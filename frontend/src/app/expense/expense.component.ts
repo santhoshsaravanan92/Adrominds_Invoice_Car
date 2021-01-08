@@ -1,5 +1,6 @@
 import { TmplAstRecursiveVisitor } from "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { Constants } from "../helpers/constant";
 import { getLoggedInUserEmail } from "../helpers/utilities";
@@ -17,15 +18,27 @@ export class ExpenseComponent implements OnInit {
   isLoading: boolean = false;
   isLoadingDone: boolean = false;
   modalDataToPass: any;
+  categories: any = ["Spare", "Salary", "Others"];
+  expenseFilterForm: FormGroup;
 
   constructor(
     public messageService: MessageService,
     private expenseService: ExpenseService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.getAllExpenses();
+    this.expenseFilterFormCreation();
+  }
+
+  expenseFilterFormCreation() {
+    this.expenseFilterForm = this.formBuilder.group({
+      category: [""],
+      fromdate: [""],
+      todate: [""],
+    });
   }
 
   openDialog() {
@@ -134,4 +147,16 @@ export class ExpenseComponent implements OnInit {
       reject: () => {},
     });
   }
+
+  changeCategory(e) {
+    this.expenseFilterForm.get("category").setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+
+  get getchangeCategory() {
+    return this.expenseFilterForm.get("category");
+  }
+
+  applyFilter(formData) {}
 }
