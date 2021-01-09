@@ -225,7 +225,7 @@ exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
         if (isWhereAdded) {
             query += " and ";
         }
-        query += " date between = '" + fromdate.toLocaleDateString() + "' and '" + getToDate() + "'";
+        query += " date between = '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(getToDate()) + "'";
         isWhereAdded = true;
     }
 
@@ -233,7 +233,7 @@ exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
         if (isWhereAdded) {
             query += " and ";
         }
-        query += " date between = '" + getFromDate() + "' and '" + todate.toLocaleDateString() + "'";
+        query += " date between '" + changeDateFormatyyyymmdd(getFromDate()) + "' and '" + changeDateFormatyyyymmdd(todate) + "'";
     }
 
     query += " order by date asc";
