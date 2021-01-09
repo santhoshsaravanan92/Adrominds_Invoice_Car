@@ -225,7 +225,7 @@ exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
         if (isWhereAdded) {
             query += " and ";
         }
-        query += " date between = '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(getToDate()) + "'";
+        query += " date between '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(getToDate()) + "'";
         isWhereAdded = true;
     }
 
