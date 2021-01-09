@@ -7,7 +7,9 @@ const {
     getallexpense,
     deleteExpense,
     getexpensebyid,
-    updateExpense,getInvoiceReportsData
+    updateExpense,
+    getInvoiceReportsData,
+    getExpenseDetailsForFilter
 } = require('../controllers/expense');
 
 const expenseRouter = express.Router();
@@ -20,6 +22,6 @@ expenseRouter.get('/getexpensebyid/:id',
     [check('id', 'should be integer').isInt()], getexpensebyid);
 expenseRouter.post('/updateexpense', updateExpense);
 expenseRouter.post('/getinvoicereportsdata', getInvoiceReportsData);
-
+expenseRouter.post('/getExpenseDetailsForFilter', getExpenseDetailsForFilter);
 
 module.exports = expenseRouter;

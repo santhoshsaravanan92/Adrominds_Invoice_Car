@@ -7,7 +7,9 @@ const {
     getallexpense,
     deleteExpense,
     getexpensebyid,
-    updateExpense, getInvoiceReportsData
+    updateExpense,
+    getInvoiceReportsData,
+    getExpenseDetailsForFilter
 } = require('../models/expense');
 
 exports.addExpense = (req, res) => {
@@ -144,13 +146,13 @@ exports.getInvoiceReportsData = (req, res) => {
             error: errors.array()[0].msg,
         });
     }
-    
+
     if (!validateHeader(req)) {
         return res.status(401).json({
             error: 'UnAuthorized',
         });
     }
-    
+
     getInvoiceReportsData(req.body).then((data) => {
         if (data)
             return res.status(200).json(data);
@@ -158,5 +160,29 @@ exports.getInvoiceReportsData = (req, res) => {
             return res.status(400).json({
                 message: 'no record found'
             });
+    });
+}
+
+
+exports.getExpenseDetailsForFilter = (req, res) => {
+    if (!validateHeader(req)) {
+        return res.status(401).json({
+            error: 'UnAuthorized',
+        });
+    }
+
+    const {
+        category,
+        fromdate,
+        todate,
+    } = req.body;
+
+    getExpenseDetailsForFilter(category, fromdate, todate).then((data) => {
+        console.log(data)
+        console.log("in controller")
+        if (data)
+            return res.status(200).json(data);
+        else
+            return res.status(200).json('not found');
     });
 }

@@ -112,11 +112,11 @@ export class ExpenseModelComponent implements OnInit {
     const expense = new ExpenseInformation();
     const expenseFormControls = this.getExpenseFormControls;
     let category = expenseFormControls["category"].value;
-    expense.Category = category.split(" ")[1];
-    expense.Date = expenseFormControls["date"].value.toLocaleDateString();
-    expense.Notes = expenseFormControls["notes"].value;
-    expense.Price = expenseFormControls["price"].value;
-    expense.Email = getLoggedInUserEmail();
+    expense.category = category.split(" ")[1];
+    expense.date = expenseFormControls["date"].value.toLocaleDateString();
+    expense.notes = expenseFormControls["notes"].value;
+    expense.price = expenseFormControls["price"].value;
+    expense.email = getLoggedInUserEmail();
 
     this.expenseService.addExpense(expense).subscribe((data) => {
       if (data.message === "expense added") {
@@ -143,15 +143,15 @@ export class ExpenseModelComponent implements OnInit {
     const expenseFromControls = this.getExpenseFormControls;
 
     let category = expenseFromControls["category"].value;
-    expense.Category = category.split(" ")[1];
-    expense.Date =
+    expense.category = category.split(" ")[1];
+    expense.date =
       this.selectedDateValidationPurpose === expenseFromControls["date"].value
         ? expenseFromControls["date"].value
         : expenseFromControls["date"].value.toLocaleDateString();
-    expense.Notes = expenseFromControls["notes"].value;
-    expense.Price = expenseFromControls["price"].value;
-    expense.Email = getLoggedInUserEmail();
-    expense.Id = expenseFromControls["id"].value;
+    expense.notes = expenseFromControls["notes"].value;
+    expense.price = expenseFromControls["price"].value;
+    expense.email = getLoggedInUserEmail();
+    expense.id = expenseFromControls["id"].value;
 
     this.expenseService.updateExpenseById(expense).subscribe((data) => {
       this.isLoading = false;

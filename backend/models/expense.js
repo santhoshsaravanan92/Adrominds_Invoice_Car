@@ -181,3 +181,67 @@ exports.getExpenseDetailsForDashboard = (email, from, to) => {
         return result;
     });
 }
+
+function daysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+}
+
+function getToDate() {
+    var date = new Date();
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        daysInMonth(date.getMonth() + 1, date.getFullYear())
+    ).toLocaleDateString();
+}
+
+function getFromDate() {
+    var date = new Date();
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1
+    ).toLocaleDateString();
+}
+
+exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
+
+    console.log("from model")
+    console.log(category);
+    console.log(fromdate);
+    console.log(todate);
+
+    isWhereAdded = false;
+    let query = 'SELECT * FROM expense';
+    if (category || fromdate || todate)
+        query += " where"
+
+    if (category) {
+        query += " category = '" + category + "'";
+        isWhereAdded = true;
+    }
+
+    if (fromdate != "") {
+        if (isWhereAdded) {
+            query += " and ";
+        }
+        query += " date between = '" + fromdate.toLocaleDateString() + "' and '" + getToDate() + "'";
+        isWhereAdded = true;
+    }
+
+    if (todate != "") {
+        if (isWhereAdded) {
+            query += " and ";
+        }
+        query += " date between = '" + getFromDate() + "' and '" + todate.toLocaleDateString() + "'";
+    }
+
+    query += " order by date asc";
+
+
+    return sequelize.query(query, {
+        type: QueryTypes.SELECT
+    }).then(result => {
+        return result;
+    });
+}

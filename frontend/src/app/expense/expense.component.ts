@@ -103,15 +103,15 @@ export class ExpenseComponent implements OnInit {
       .getAllExpenses(getLoggedInUserEmail())
       .subscribe((data) => {
         if (data.length > 0) {
-          let datas = [];
+          this.gridDatas = [];
           data.forEach((e) => {
             let a = new ExpenseInformation();
-            a.Category = e.Category;
-            a.Date = e.Date;
-            a.Notes = e.Notes;
-            a.Price = e.Price;
-            a.Id = e.Id;
-            datas.push(a);
+            a.category = e.category;
+            a.date = e.date;
+            a.notes = e.notes;
+            a.price = e.price;
+            a.id = e.id;
+            this.gridDatas.push(a);
           });
           this.gridDatas = data;
         }
@@ -158,5 +158,35 @@ export class ExpenseComponent implements OnInit {
     return this.expenseFilterForm.get("category");
   }
 
-  applyFilter(formData) {}
+  applyFilter(formData) {
+    const category = formData.category;
+    const fromDate = formData.fromdate;
+    const toDate = formData.todate;
+
+    this.isLoading = true;
+    this.expenseService
+      .getExpenseDetailsForFilter(category, fromDate, toDate)
+      .subscribe((data) => {
+        if (data.length > 0) {
+          this.gridDatas = [];
+          data.forEach((e) => {
+            let a = new ExpenseInformation();
+            a.category = e.category;
+            a.date = e.date;
+            a.notes = e.notes;
+            a.price = e.price;
+            a.id = e.Id;
+            this.gridDatas.push(a);
+            this.isLoading = false;
+          });
+        } else {
+          this.updateToastMessage(
+            "No data for the filter 😔",
+            Constants.error,
+            "Expense information"
+          );
+          this.isLoading = false;
+        }
+      });
+  }
 }

@@ -165,7 +165,7 @@ export class CustomerComponent implements OnInit {
         Constants.error,
         "Customer Information"
       );
-      this.isLoadingDone = false; 
+      this.isLoadingDone = false;
       return;
     }
     if (formDate.mobilenumber == "") formDate.mobilenumber = 0;
@@ -175,6 +175,7 @@ export class CustomerComponent implements OnInit {
         formDate.mobilenumber
       )
       .subscribe((data) => {
+        this.isLoadingDone = true;
         if (data.length > 0) {
           let datas = [];
           data.forEach((e) => {
@@ -188,8 +189,14 @@ export class CustomerComponent implements OnInit {
             datas.push(a);
           });
           this.gridDatas = data;
+          this.isLoadingDone = false;
+        } else {
+          this.updateToastMessage(
+            "No data for the filter 😔",
+            Constants.error,
+            "Expense information"
+          );
         }
-
         this.isLoadingDone = false;
       }),
       (err) => {

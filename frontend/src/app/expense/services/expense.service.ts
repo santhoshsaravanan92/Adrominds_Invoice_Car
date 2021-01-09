@@ -89,4 +89,29 @@ export class ExpenseService {
         })
       );
   }
+
+  getExpenseDetailsForFilter(
+    category: string,
+    fromdate: string,
+    todate: string
+  ): Observable<any[]> {
+    const content = {
+      category: category,
+      fromdate: fromdate,
+      todate: todate,
+    };
+
+    return this.http
+      .post<any>(UrlMappers.getExpenseDetailsForFiler, content, {
+        headers: getHeaders(),
+      })
+      .pipe(
+        map((a) => {
+          return a;
+        }),
+        catchError((e) => {
+          return e;
+        })
+      );
+  }
 }

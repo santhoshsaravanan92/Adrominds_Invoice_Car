@@ -1,8 +1,8 @@
 export class ExpenseInformation {
-    Date: string;
-    Price: number;
-    Category: string;
-    Notes: string;
-    Email: string;
-    Id:number;
+    date: string;
+    price: number;
+    category: string;
+    notes: string;
+    email: string;
+    id:number;
 }
