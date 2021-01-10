@@ -40,11 +40,11 @@ const Expense = sequelize.define('expense', {
 
 exports.addExpense = (expenseObj) => {
     return Expense.create({
-            date: changeDateFormatyyyymmdd(expenseObj.Date),
-            category: expenseObj.Category,
-            price: expenseObj.Price,
-            notes: expenseObj.Notes,
-            owner_email: expenseObj.Email
+            date: changeDateFormatyyyymmdd(expenseObj.date),
+            category: expenseObj.category,
+            price: expenseObj.price,
+            notes: expenseObj.notes,
+            owner_email: expenseObj.email
         })
         .then((a) => {
             return 'success';
@@ -103,14 +103,14 @@ exports.getexpensebyid = (id) => {
 
 exports.updateExpense = (expenseObj) => {
     return Expense.update({
-            date: changeDateFormatyyyymmdd(expenseObj.Date),
-            category: expenseObj.Category,
-            price: expenseObj.Price,
-            notes: expenseObj.Notes,
+            date: changeDateFormatyyyymmdd(expenseObj.date),
+            category: expenseObj.category,
+            price: expenseObj.price,
+            notes: expenseObj.notes,
         }, {
             where: {
-                id: expenseObj.Id,
-                owner_email: expenseObj.Email
+                id: expenseObj.id,
+                owner_email: expenseObj.email
             },
         })
         .then((a) => {
@@ -182,35 +182,7 @@ exports.getExpenseDetailsForDashboard = (email, from, to) => {
     });
 }
 
-function daysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
-}
-
-function getToDate() {
-    var date = new Date();
-    return new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        daysInMonth(date.getMonth() + 1, date.getFullYear())
-    ).toLocaleDateString();
-}
-
-function getFromDate() {
-    var date = new Date();
-    return new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        1
-    ).toLocaleDateString();
-}
-
 exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
-
-    console.log("from model")
-    console.log(category);
-    console.log(fromdate);
-    console.log(todate);
-
     isWhereAdded = false;
     let query = 'SELECT * FROM expense';
     if (category || fromdate || todate)
@@ -221,23 +193,13 @@ exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
         isWhereAdded = true;
     }
 
-    if (fromdate != "") {
+    if (fromdate != "" && todate != "") {
         if (isWhereAdded) {
             query += " and ";
         }
-        query += " date between '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(getToDate()) + "'";
-        isWhereAdded = true;
+        query += " date between '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(todate) + "'";
     }
-
-    if (todate != "") {
-        if (isWhereAdded) {
-            query += " and ";
-        }
-        query += " date between '" + changeDateFormatyyyymmdd(getFromDate()) + "' and '" + changeDateFormatyyyymmdd(todate) + "'";
-    }
-
     query += " order by date asc";
-
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

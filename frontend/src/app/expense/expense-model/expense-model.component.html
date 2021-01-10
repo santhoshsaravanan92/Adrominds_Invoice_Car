@@ -19,7 +19,7 @@
                 <label for="email" class="label-design">Category</label><br />
                 <select class="ddl-design" formControlName="category" (change)="changeCategory($event)"
                     style="width: 100%;">
-                    <option value="">Select Category Value</option>
+                    <option value="" selected>Select Category Value</option>
                     <option *ngFor="let d of categories" [ngValue]="d">{{d}}</option>
                 </select>
             </div>

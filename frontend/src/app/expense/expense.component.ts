@@ -125,7 +125,7 @@ export class ExpenseComponent implements OnInit {
 
   deleteExpense(id) {
     this.confirmationService.confirm({
-      message: `Are you sure that you want to delete the expense`,
+      message: `Are you sure that you want to delete the expense 🤔`,
       header: "Delete Expense",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
@@ -135,7 +135,7 @@ export class ExpenseComponent implements OnInit {
             if (res.message === "expense deleted") {
               this.getAllExpenses();
               this.updateToastMessage(
-                "Expense Information Deleted Successfully",
+                "Expense Information Deleted Successfully 😃",
                 Constants.success,
                 "Expense Information"
               );
@@ -158,12 +158,34 @@ export class ExpenseComponent implements OnInit {
     return this.expenseFilterForm.get("category");
   }
 
+  private getToDate() {
+    // var date = new Date();
+    // return new Date(
+    //     date.getFullYear(),
+    //     date.getMonth(),
+    //     daysInMonth(date.getMonth() + 1, date.getFullYear())
+    // ).toLocaleDateString();
+    var dateNow = new Date();
+    return new Date(dateNow.getFullYear(), dateNow.getMonth() + 1, 0).toLocaleDateString();
+  }
+
+  private getFromDate() {
+    var dateNow = new Date();
+    return new Date(dateNow.getFullYear(), dateNow.getMonth(), 1).toLocaleDateString();
+  }
+
   applyFilter(formData) {
-    const category = formData.category;
+    const category = formData.category.includes(" ")
+      ? formData.category.split[" "]
+      : formData.category;
     const fromDate =
-      formData.fromdate != "" && formData.fromdate != null ? formData.fromdate.toLocaleDateString() : "";
+      formData.fromdate != "" && formData.fromdate != null
+        ? formData.fromdate.toLocaleDateString()
+        : this.getFromDate();
     const toDate =
-      formData.todate != "" && formData.todate != null ? formData.todate.toLocaleDateString() : "";
+      formData.todate != "" && formData.todate != null
+        ? formData.todate.toLocaleDateString()
+        : this.getToDate();
 
     this.isLoading = true;
     this.expenseService
@@ -183,7 +205,7 @@ export class ExpenseComponent implements OnInit {
           });
         } else {
           this.updateToastMessage(
-            "No data for the filter 😔",
+            "No data for the filter 😔. So loaded all data",
             Constants.error,
             "Expense information"
           );

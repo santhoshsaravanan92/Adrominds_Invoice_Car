@@ -3,7 +3,6 @@
         <div class="grid-container padding-3">
             <div class="form-group width80">
                 <label for="Date" class="label-design">From Date</label> <br>
-                <!-- <input type="date" id="date" formControlName="fromDate" class="form-control textbox"> -->
                 <p-calendar formControlName="fromDate" class="form-control textbox" dateFormat="dd/mm/yy"
                     [readonlyInput]="true" showButtonBar="true" styleClass="padding-0" (onSelect)="dateSelected()"
                     (onClearClick)="calenderClearClick()" (onClickOutside)="calenderClearClick()">
@@ -11,7 +10,6 @@
             </div>
             <div class="form-group width80">
                 <label for="Date" class="label-design">To Date</label> <br>
-                <!-- <input type="date" id="date" formControlName="toDate" class="form-control textbox"> -->
                 <p-calendar formControlName="toDate" class="form-control textbox" dateFormat="dd/mm/yy"
                     (onSelect)="dateSelected()" (onClearClick)="calenderClearClick()"
                     (onClickOutside)="calenderClearClick()" [readonlyInput]="true" showButtonBar="true"
@@ -57,20 +55,12 @@
                     Total Amount
                     <div>{{totalInvoiceAmount}}</div>
                 </div>
-                <!-- <div class="card-details">
-                    others
-                    <div>10000</div>
-                </div> -->
             </div>
         </div>
 
         <div class="card-border-blue shadow">
             <div><i class="pi pi-id-card icon-blue"></i><span class="title title-color-blue">Profit</span></div>
             <div class="grid-container">
-                <!-- <div class="card-details hr">
-                     Spare
-                    <div>10000</div> 
-                </div>-->
                 <div class="card-details center">
                     Total Profit
                     <div>{{profit}}</div>

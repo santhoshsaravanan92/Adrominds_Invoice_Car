@@ -79,11 +79,20 @@ export class DashboardComponent implements OnInit {
       .subscribe((result) => {
         result.map((value) => {
           if (value.category === "Salary") {
-            this.salary = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+            this.salary =
+              this.converToInt(value.price) > 0
+                ? this.converToInt(value.price)
+                : 0;
           } else if (value.category === "Spare") {
-            this.spare = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+            this.spare =
+              this.converToInt(value.price) > 0
+                ? this.converToInt(value.price)
+                : 0;
           } else {
-            this.others = parseInt(value.price) > 0 ? parseInt(value.price) : 0;
+            this.others =
+              this.converToInt(value.price) > 0
+                ? this.converToInt(value.price)
+                : 0;
           }
           this.amt = this.salary + this.spare + this.others;
         });
@@ -109,6 +118,9 @@ export class DashboardComponent implements OnInit {
     const a = this.getFormControls;
     a["fromDate"].setValue("");
     a["toDate"].setValue("");
-    // this.DashboardForm.reset();
+  }
+
+  converToInt(data) {
+    return parseInt(data);
   }
 }

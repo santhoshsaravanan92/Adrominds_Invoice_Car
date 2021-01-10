@@ -177,8 +177,6 @@ exports.getExpenseDetailsForFilter = (req, res) => {
     } = req.body;
 
     getExpenseDetailsForFilter(category, fromdate, todate).then((data) => {
-        console.log(data)
-        console.log("in controller")
         if (data)
             return res.status(200).json(data);
         else

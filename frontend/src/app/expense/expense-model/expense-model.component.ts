@@ -53,7 +53,7 @@ export class ExpenseModelComponent implements OnInit {
   expenseFormCreation() {
     this.expenseForm = this.formBuilder.group({
       date: [new Date(), [Validators.required]],
-      category: ["Select Category", [Validators.required]],
+      category: ["", [Validators.required]],
       price: ["", [Validators.required]],
       notes: ["", [Validators.required]],
       id: [""], // for edit purpose
