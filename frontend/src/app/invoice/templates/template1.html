@@ -2,11 +2,12 @@
 
 <head>
     <style>
-        body{
-            margin:0;
-            padding:0;
+        body {
+            margin: 0;
+            padding: 0;
             min-width: 100%;
         }
+
         md-dialog-actions {
             display: none
         }
@@ -16,7 +17,7 @@
             margin: auto;
             padding: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-            font-size: 16px;
+            font-size: 9px;
         }
 
         .invoice-box table {
@@ -48,8 +49,7 @@
         }
 
         .invoice-box table tr.heading td {
-            background: #eee;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid #eee;
             font-weight: 700
         }
 
@@ -58,7 +58,7 @@
         }
 
         .invoice-box table tr.item td {
-            border-bottom: 1px solid #000
+            border-bottom: 1px solid #eee
         }
 
         .invoice-box table tr.item.last td {
@@ -66,35 +66,47 @@
         }
 
         .invoice-box table tr.total td:nth-child(2) {
-            border-top: 1px solid #000;
+            border-top: 1px solid #eee;
             font-weight: 700
+        }
+
+        th {
+            border-left: 1px solid #eee;
         }
 
         .center {
             text-align: center;
         }
 
+        .padding-btm {
+            padding-bottom: 1em;
+        }
+
         .border-bottom {
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid #eee;
         }
 
         .border-right {
-            border-right: 1px solid #000;
+            border-right: 1px solid #eee;
         }
 
         .font-size {
             font-size: 9px;
+        }
+
+        .all-border {
+            border: 1px solid #eee;
         }
     </style>
 </head>
 
 <body>
     <div class="invoice-box">
-        <div class="center"><strong>Tax Invoice</strong></div>
-        <table cellpadding="0" cellspacing="0" border="1">
+        <div class="center padding-btm"><strong>Tax Invoice</strong></div>
+        <table cellpadding="0" cellspacing="0" class="all-border">
             <tr class="top">
                 <td colspan="3">
-                    <table>
+                    <table class="font-size all-border">
                         <tr>
                             <td>
                                 <strong>{companyname}</strong><br>
@@ -102,7 +114,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; border-top: 1px solid #000">
+                            <td style="text-align: left; border-top: 1px solid #eee">
                                 <strong>{name}</strong><br>
                                 {customeraddress}
                             </td>
@@ -110,109 +122,117 @@
                     </table>
                 </td>
                 <td colspan="3">
-                    <table>
+                    <table class="font-size" border="0">
                         <tr>
                             <td class="border-right border-bottom">
-                                Invoice No<br /> {invoiceid}
+                                Invoice No<br /> <strong>{invoiceid}</strong>
                             </td>
                             <td class="border-bottom">
-                                Dated<br /> {today}
+                                Dated<br /> <strong>{today}</strong>
                             </td>
                         </tr>
                         <tr>
                             <td class="border-right border-bottom">
-                                Other Notes <br />{othernote}
+                                Other Notes <br /><strong>{othernote}</strong>
                             </td>
                             <td class="border-bottom">
-                                Payment Mode <br /> {mode}
+                                Payment Mode <br /> <strong>{mode}</strong>
                             </td>
                         </tr>
                         <tr>
                             <td class="border-right border-bottom">
-                                Buyer Order No. <br />{buyerorder}
+                                Buyer Order No. <br /><strong>{buyerorder}</strong>
                             </td>
                             <td class="border-bottom">
-                                Vehicle Number <br /> {vn}
+                                Vehicle Number <br /> <strong>{vn}</strong>
                             </td>
                         </tr>
                         <tr>
                             <td class="border-right">
-                                Model <br />{model}
+                                Model <br /><strong>{model}</strong>
                             </td>
                             <td>
-                                KM <br /> {km}
+                                KM <br /> <strong>{km}</strong>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            <tr class="heading">
-                <td colspan="4">Delivery Notes</td>
+            <tr class="heading all-border">
+                <td colspan="4" class="font-size">Delivery Notes</td>
             </tr>
             <tr class="details">
                 <td colspan="4">{notes}</td>
             </tr>
-            <tr class="heading">
+            <tr class="heading font-size">
                 <td>Items</td>
                 <td>Each Price</td>
                 <td>Quantity</td>
                 <td>Amount</td>
             </tr>
-            {bodycontent}
+            <table class="font-size all-border">
+                {bodycontent}
+            </table>
         </table>
         <div style="float: right;">
-            <table>
+            <table class="font-size">
                 <tr>
                     <td>State GST</td>
-                    <td>{sgst}</td>
+                    <td><strong>{sgst}</strong></td>
                 </tr>
                 <tr>
                     <td>Central GST</td>
-                    <td>{cgst}</td>
+                    <td><strong>{cgst}</strong></td>
                 </tr>
                 <tr>
                     <td>Amount with out Discount</td>
-                    <td>{amountwithoutdiscount}</td>
+                    <td><strong>{amountwithoutdiscount}</strong></td>
                 </tr>
                 <tr>
                     <td>Discount</td>
-                    <td>{discount}</td>
+                    <td><strong>{discount}</strong></td>
                 </tr>
                 <tr>
                     <td>Amount</td>
-                    <td>{amount}</td>
+                    <td><strong>{amount}</strong></td>
                 </tr>
             </table>
         </div>
         <div>
-            <table cellpadding="0" cellspacing="0" border="1">
+            <table cellpadding="0" cellspacing="0" class="font-size all-border">
                 <tr>
-                    <td>
-                        Company's Bank Details <br>
-                        Bank Name:
-                    </td>
-                    <td>{bankname}</td>
+                    <td></td>
+                    <td></td>
+                    <td>Bank Name:</td>
+                    <td><strong>{bankname}</strong></td>
                 </tr>
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td>A/C No:</td>
-                    <td>{accno}</td>
+                    <td><strong>{accno}</strong></td>
                 </tr>
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td>Branch/IFSC Code</td>
-                    <td>{branch}</td>
+                    <td><strong>{branch}</strong></td>
                 </tr>
                 <tr>
-                    <td colspan="1">
-                        <u>Declaration</u><br>
-                       <span class=" font-size" style="vertical-align: bottom;"> We declare that this invoice shows the actual price of the goods described and that
-                        all
-                        particulars are true and correct
-                    </span>
+                    <td></td>
+                    <td colspan="1" class="all-border">
+                        <u style="float:left">Declaration</u><br>
+                        <span class=" font-size" style="vertical-align: bottom; float:left"> We declare that this
+                            invoice shows the
+                            actual price of the goods described and that
+                            all
+                            particulars are true and correct
+                        </span>
                     </td>
-                    <td>
-                        <table>
+                    <td colspan="2">
+                        <table class="font-size all-border">
                             <tr>
-                                <td colspan="3" class="font-size">for {companyname} Service</td>
+                                <td colspan="3" class="font-size"><strong>for {companyname} Service</strong></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -227,11 +247,12 @@
                 </tr>
             </table>
         </div>
+        <div class="center font-size" style="padding-top: 1em">
+            <strong>SUBJECT TO MADURAI JURISDICTION</strong><br>
+            This is a Compter Generated
+            Invoice</div>
     </div>
-    <div class="center font-size">
-        <strong>SUBJECT TO MADURAI JURISDICTION</strong><br>
-        This is a Compter Generated
-        Invoice</div>
+
 </body>
 
 </html>

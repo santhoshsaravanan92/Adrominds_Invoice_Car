@@ -11,7 +11,7 @@
 <form [formGroup]="expenseFilterForm" class="form-modal-design font-family width-65"
     (ngSubmit)="applyFilter(expenseFilterForm.value)">
     <div class="form-group grid-container-4cols">
-        <div class="pad1em">
+        <div class="padding-1em">
             <label class="label-design">Category</label><br />
             <select class="ddl-design" formControlName="category" (change)="changeCategory($event)"
                 style="width: 100%;">
@@ -19,17 +19,17 @@
                 <option *ngFor="let d of categories" [ngValue]="d">{{d}}</option>
             </select>
         </div>
-        <div class="pad1em">
+        <div class="padding-1em">
             <label for="username" class="label-design">From Date</label> <br>
             <p-calendar formControlName="fromdate" class="form-control textbox text-box-width" dateFormat="dd/mm/yy"
                 showButtonBar="true"></p-calendar>
         </div>
-        <div class="pad1em">
+        <div class="padding-1em">
             <label for="username" class="label-design">To Date</label> <br>
             <p-calendar formControlName="todate" class="form-control textbox text-box-width" dateFormat="dd/mm/yy"
                 showButtonBar="true"></p-calendar>
         </div>
-        <div class="pad1em">
+        <div class="padding-1em">
             <button class="button float-right cursor-pointer margin-left btn-width" type='submit'>
                 Apply Filter
             </button>

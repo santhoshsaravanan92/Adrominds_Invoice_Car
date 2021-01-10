@@ -2,55 +2,54 @@
     <div *ngIf="isloading" class="loading-div">
         <p-progressSpinner class="loading"></p-progressSpinner>
     </div>
-    <p-fieldset legend="Invoice Reports" [toggleable]="true" styleClass="fieldset-title">
-        <form [formGroup]="reportForm" class="form-modal-design">
-            <div class="form-group grid-container">
-                <div class="pad1em">
-                    <label for="customer name" class="label-design">Customer Name</label><br />
-                    <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
-                        [suggestions]="customerNames" field="Name" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
+    <form [formGroup]="reportForm" class="form-modal-design">
+        <div class="form-group grid-container">
+            <div class="pad1em">
+                <label for="customer name" class="label-design">Customer Name</label><br />
+                <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width"
+                    [suggestions]="customerNames" field="Name" (completeMethod)="search($event)" [style]="{'width': '100%','border-bottom': '2px solid deeppink', 'border-top-style':
             'none', 'border-right-style': 'none','border-left-style': 'none','height': '37px'}">
-                    </p-autoComplete>
-                </div>
-                <div class="pad1em">
-                    <label for="from date" class="label-design">From Date</label><br />
-                    <!-- <input type="date" formControlName="fromdate" class="form-control textbox"> -->
-                    <p-calendar formControlName="fromdate" class="form-control textbox" dateFormat="dd/mm/yy" showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
-                </div>
-                <div class="pad1em">
-                    <label for="To Date" class="label-design">To Date</label><br />
-                    <!-- <input type="date" formControlName="todate" class="form-control textbox"> -->
-                    <p-calendar formControlName="todate" class="form-control textbox" dateFormat="dd/mm/yy" showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
-                </div>
-                <div class="pad1em">
-                    <label for="model" class="label-design">Model</label><br />
-                    <input type="text" formControlName="model" class="form-control textbox">
-                </div>
-                <div class="pad1em">
-                    <label for="vehicle number" class="label-design">Vehicle Number</label><br />
-                    <input type="text" formControlName="vehiclenumber" class="form-control textbox">
-                </div>
+                </p-autoComplete>
             </div>
-            <div class="form-group">
-                <button class="button float-right cursor-pointer margin-left" (click)="clearForm()">
-                    Clear filter
-                </button>
-                <button class="button float-right cursor-pointer margin-left" (click)="exportExcel()">
-                    Export Excel
-                </button>
-                <button class="button float-right cursor-pointer margin-left" (click)="applyFilter()">
-                    Apply Filter to Grid
-                </button>
-                <!-- <button class="button float-right cursor-pointer" (click)="exportPDF()">
+            <div class="pad1em">
+                <label for="from date" class="label-design">From Date</label><br />
+                <!-- <input type="date" formControlName="fromdate" class="form-control textbox"> -->
+                <p-calendar formControlName="fromdate" class="form-control textbox" dateFormat="dd/mm/yy"
+                    showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
+            </div>
+            <div class="pad1em">
+                <label for="To Date" class="label-design">To Date</label><br />
+                <!-- <input type="date" formControlName="todate" class="form-control textbox"> -->
+                <p-calendar formControlName="todate" class="form-control textbox" dateFormat="dd/mm/yy"
+                    showButtonBar="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-calendar>
+            </div>
+            <div class="pad1em">
+                <label for="model" class="label-design">Model</label><br />
+                <input type="text" formControlName="model" class="form-control textbox">
+            </div>
+            <div class="pad1em">
+                <label for="vehicle number" class="label-design">Vehicle Number</label><br />
+                <input type="text" formControlName="vehiclenumber" class="form-control textbox">
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="button float-right cursor-pointer margin-left" (click)="clearForm()">
+                Clear filter
+            </button>
+            <button class="button float-right cursor-pointer margin-left" (click)="exportExcel()">
+                Export Excel
+            </button>
+            <button class="button float-right cursor-pointer margin-left" (click)="applyFilter()">
+                Apply Filter to Grid
+            </button>
+            <!-- <button class="button float-right cursor-pointer" (click)="exportPDF()">
                     Export PDF
                 </button> -->
-            </div>
-        </form>
-    </p-fieldset>
-    <p-fieldset legend="Invoice Information" [toggleable]="true" styleClass="fieldset-title">
-        <app-allinvoices [dataForGridOnExport]='dataForGridOnExport'></app-allinvoices>
-        <!-- [_isTabChanged]="_isTabChanged" -->
-    </p-fieldset>
+        </div>
+    </form>
+    <app-allinvoices [dataForGridOnExport]='dataForGridOnExport'></app-allinvoices>
+    <!-- [_isTabChanged]="_isTabChanged" -->
+
 
     <table style="display: none;" id="excel-table">
         <tr>

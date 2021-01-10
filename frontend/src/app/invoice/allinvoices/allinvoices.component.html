@@ -4,9 +4,9 @@
     <app-invoice-modal (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass"></app-invoice-modal>
 </p-sidebar>
 <div class="width-100 padding-btn">
-    <div class="edit-button margin-right cursor-pointer float-right" (click)="clearGrid()">
+    <button class="button float-right cursor-pointer margin-left"(click)="clearGrid()">
         Clear Grid Filters
-    </div>
+    </button>
 </div>
 <div class="shadow">
     <p-table [value]="gridDatas" dataKey="id"

@@ -161,9 +161,9 @@ export class ExpenseComponent implements OnInit {
   applyFilter(formData) {
     const category = formData.category;
     const fromDate =
-      formData.fromdate != "" ? formData.fromdate.toLocaleDateString() : "";
+      formData.fromdate != "" && formData.fromdate != null ? formData.fromdate.toLocaleDateString() : "";
     const toDate =
-      formData.todate != "" ? formData.todate.toLocaleDateString() : "";
+      formData.todate != "" && formData.todate != null ? formData.todate.toLocaleDateString() : "";
 
     this.isLoading = true;
     this.expenseService

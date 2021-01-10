@@ -163,7 +163,6 @@ exports.getInvoiceReportsData = (req, res) => {
     });
 }
 
-
 exports.getExpenseDetailsForFilter = (req, res) => {
     if (!validateHeader(req)) {
         return res.status(401).json({
