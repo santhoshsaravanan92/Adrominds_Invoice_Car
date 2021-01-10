@@ -203,4 +203,9 @@ export class CustomerComponent implements OnInit {
         console.log(err);
       };
   }
+
+  clearform() {
+    this.customerFilterForm.reset();
+    this.getAllCustomers();
+  }
 }

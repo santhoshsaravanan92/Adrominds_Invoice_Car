@@ -20,7 +20,7 @@ export class ExpenseComponent implements OnInit {
   modalDataToPass: any;
   categories: any = ["Spare", "Salary", "Others"];
   expenseFilterForm: FormGroup;
-
+  initialValue;
   constructor(
     public messageService: MessageService,
     private expenseService: ExpenseService,
@@ -39,6 +39,7 @@ export class ExpenseComponent implements OnInit {
       fromdate: [""],
       todate: [""],
     });
+    this.initialValue = this.expenseFilterForm.value;
   }
 
   openDialog() {
@@ -159,19 +160,21 @@ export class ExpenseComponent implements OnInit {
   }
 
   private getToDate() {
-    // var date = new Date();
-    // return new Date(
-    //     date.getFullYear(),
-    //     date.getMonth(),
-    //     daysInMonth(date.getMonth() + 1, date.getFullYear())
-    // ).toLocaleDateString();
     var dateNow = new Date();
-    return new Date(dateNow.getFullYear(), dateNow.getMonth() + 1, 0).toLocaleDateString();
+    return new Date(
+      dateNow.getFullYear(),
+      dateNow.getMonth() + 1,
+      0
+    ).toLocaleDateString();
   }
 
   private getFromDate() {
     var dateNow = new Date();
-    return new Date(dateNow.getFullYear(), dateNow.getMonth(), 1).toLocaleDateString();
+    return new Date(
+      dateNow.getFullYear(),
+      dateNow.getMonth(),
+      1
+    ).toLocaleDateString();
   }
 
   applyFilter(formData) {
@@ -212,5 +215,10 @@ export class ExpenseComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  clearForm() {
+    this.expenseFilterForm.reset(this.initialValue);
+    this.getAllExpenses();
   }
 }

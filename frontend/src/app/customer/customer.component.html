@@ -4,7 +4,7 @@
     </app-customer-modal>
 </p-sidebar>
 <form [formGroup]="customerFilterForm" class="form-modal-design font-family width-50" (ngSubmit)="applyFilter(customerFilterForm.value)">
-    <div class="form-group grid-container">
+    <div class="form-group grid-container-spec">
         <div class="padding-1em">
             <label for="customer name" class="label-design">Customer Name</label><br />
             <p-autoComplete formControlName="customername" styleClass="form-control textbox text-box-width widht-15"
@@ -18,6 +18,9 @@
         </div>
         <button class="button float-right cursor-pointer margin-left btn-width" type='submit'>
             Apply Filter
+        </button>
+        <button class="button float-right cursor-pointer margin-left btn-width" (click)='clearform()'>
+            Clear Filter
         </button>
     </div>
 </form>
