@@ -194,13 +194,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     let content = "";
     this.gridDatas.map((a) => {
       content +=
-        '<tr class="item"><td>' +
+        '<tr class="item"><td class="width">' +
         a.Description +
-        "</td><td>" +
+        '</td><td class="center">' +
         a.Rate +
-        "</td><td>" +
+        '</td><td  class="center">' +
         a.Quantity +
-        "</td><td>" +
+        '</td><td class="center">' +
         a.Price +
         "</td></tr>";
     });
