@@ -11,13 +11,14 @@ const {
 const {
     handleError,
     getTodayDate,
-    changeDateFormatyyyymmdd
+    changeDateFormatyyyymmdd,
+    changeDateFormatmmddyyyy
 } = require('../helpers/helper-methods');
 
 
 const Expense = sequelize.define('expense', {
-    date: {
-        type: Sequelize.STRING(15),
+    dated: {
+        type: Sequelize.DATEONLY,
         allowNull: true,
     },
     category: {
@@ -39,14 +40,19 @@ const Expense = sequelize.define('expense', {
 });
 
 exports.addExpense = (expenseObj) => {
+    console.log('Print the date');
+    console.log(expenseObj.dated);
     return Expense.create({
-            date: changeDateFormatyyyymmdd(expenseObj.date),
+            
+            //dated: changeDateFormatyyyymmdd(expenseObj.dated),
+            dated:expenseObj.dated,
             category: expenseObj.category,
             price: expenseObj.price,
             notes: expenseObj.notes,
             owner_email: expenseObj.email
         })
         .then((a) => {
+            console.log('success');
             return 'success';
         })
         .catch((err) => {
@@ -62,7 +68,7 @@ exports.getallexpense = (email) => {
             isactive: 1,
         },
         order: [
-            ['date', 'ASC']
+            ['dated', 'ASC']
         ],
     }).then((result) => {
         return result;
@@ -102,8 +108,13 @@ exports.getexpensebyid = (id) => {
 };
 
 exports.updateExpense = (expenseObj) => {
+    console.log('Update category');
+    console.log(expenseObj.price);
+    console.log(expenseObj.id);
+    console.log(expenseObj.dated);
     return Expense.update({
-            date: changeDateFormatyyyymmdd(expenseObj.date),
+            dated: changeDateFormatmmddyyyy(expenseObj.dated),
+            //dated:expenseObj.dated,
             category: expenseObj.category,
             price: expenseObj.price,
             notes: expenseObj.notes,
@@ -131,7 +142,7 @@ exports.getInvoiceReportsData = (filterData) => {
         if (filterData.FromDate && filterData.ToDate) {
             const fromDate = changeDateFormatyyyymmdd(filterData.FromDate);
             const toDate = changeDateFormatyyyymmdd(filterData.ToDate);
-            query += `dated between '${fromDate}' and '${toDate}' `;
+            query += `dated between date('${fromDate}') and date('${toDate}') `;
             isConditionAdded = true;
         } else if (filterData.FromDate && !filterData.ToDate) {
             query += `dated = '${changeDateFormatyyyymmdd(filterData.FromDate)}' `;
@@ -142,9 +153,9 @@ exports.getInvoiceReportsData = (filterData) => {
         }
 
         if (filterData.Name && isConditionAdded)
-            query += ` and name = '${filterData.Name.Name}' `
+            query += ` and name = '${filterData.Name}' `
         else if (filterData.Name && !isConditionAdded) {
-            query += ` name = '${filterData.Name.Name}' `;
+            query += ` name = '${filterData.Name}' `;
             isConditionAdded = true;
         }
 
@@ -173,7 +184,7 @@ exports.getInvoiceReportsData = (filterData) => {
 exports.getExpenseDetailsForDashboard = (email, from, to) => {
     const fromDate = changeDateFormatyyyymmdd(from);
     const toDate = changeDateFormatyyyymmdd(to);
-    const query = `SELECT sum(price) price, category FROM expense where owner_email = '${email}' and date BETWEEN '${fromDate}' and '${toDate}' group by category`;
+    const query = `SELECT sum(price) price, category FROM expense where owner_email = '${email}' and dated BETWEEN date('${fromDate}') and date('${toDate}') group by category`;
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT
@@ -184,7 +195,8 @@ exports.getExpenseDetailsForDashboard = (email, from, to) => {
 
 exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
     isWhereAdded = false;
-    let query = 'SELECT * FROM expense';
+    //let query = 'SELECT * FROM expense';
+    let query = 'SELECT id,dated,category,price,notes,owner_email FROM expense';
     if (category || fromdate || todate)
         query += " where"
 
@@ -197,9 +209,9 @@ exports.getExpenseDetailsForFilter = (category, fromdate, todate) => {
         if (isWhereAdded) {
             query += " and ";
         }
-        query += " date between '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(todate) + "'";
+        query += " dated between '" + changeDateFormatyyyymmdd(fromdate) + "' and '" + changeDateFormatyyyymmdd(todate) + "'";
     }
-    query += " order by date asc";
+    query += " order by dated asc";
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

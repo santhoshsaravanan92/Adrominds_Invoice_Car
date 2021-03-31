@@ -51,6 +51,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   editExpense(id: string) {
+    
     this.loadAddEditModal = true;
     this.modalDataToPass = {
       id: id,
@@ -108,7 +109,7 @@ export class ExpenseComponent implements OnInit {
           data.forEach((e) => {
             let a = new ExpenseInformation();
             a.category = e.category;
-            a.date = e.date;
+            a.dated = e.dated;
             a.notes = e.notes;
             a.price = e.price;
             a.id = e.id;
@@ -178,6 +179,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   applyFilter(formData) {
+    
     const category = formData.category.includes(" ")
       ? formData.category.split[" "]
       : formData.category;
@@ -199,10 +201,10 @@ export class ExpenseComponent implements OnInit {
           data.forEach((e) => {
             let a = new ExpenseInformation();
             a.category = e.category;
-            a.date = e.date;
+            a.dated = e.dated;
             a.notes = e.notes;
             a.price = e.price;
-            a.id = e.Id;
+            a.id = e.id;
             this.gridDatas.push(a);
             this.isLoading = false;
           });

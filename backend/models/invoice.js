@@ -10,7 +10,8 @@ const {
 } = require('../helpers/dbhelper');
 const {
     handleError,
-    changeDateFormatyyyymmdd
+    changeDateFormatyyyymmdd,
+    changeDateFormatmmddyyyy
 } = require('../helpers/helper-methods');
 
 
@@ -44,7 +45,7 @@ const Invoice = sequelize.define('invoice', {
         allowNull: false,
     },
     Dated: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.DATEONLY,
         allowNull: false,
     },
     model: {
@@ -111,13 +112,13 @@ const InvoiceProduct = sequelize.define('invoice_product', {
 exports.addInvoice = (invoiceObj) => {
     return Invoice.create({
             InvoiceId: invoiceObj.invoiceid,
-            Name: invoiceObj.name.Name,
+            Name: invoiceObj.name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,
             otherNotes: invoiceObj.otherNotes,
             mode: invoiceObj.mode,
-            Dated: changeDateFormatyyyymmdd(invoiceObj.Dated),
+            Dated: invoiceObj.Dated,
             model: invoiceObj.model,
             km: invoiceObj.km,
             sgst: invoiceObj.sgst,
@@ -228,6 +229,8 @@ exports.getInvoiceProductById = (id) => {
 };
 
 exports.updateInvoice = (invoiceObj) => {
+    console.log('Updated Date');
+    console.log(invoiceObj.Dated);
     return Invoice.update({
             Name: invoiceObj.name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
@@ -235,7 +238,7 @@ exports.updateInvoice = (invoiceObj) => {
             VehicleNumber: invoiceObj.VehicleNumber,
             otherNotes: invoiceObj.otherNotes,
             mode: invoiceObj.mode,
-            Dated: changeDateFormatyyyymmdd(invoiceObj.Dated),
+            Dated: changeDateFormatmmddyyyy(invoiceObj.Dated),
             model: invoiceObj.model,
             km: invoiceObj.km,
             sgst: invoiceObj.sgst,
@@ -262,7 +265,7 @@ exports.updateInvoice = (invoiceObj) => {
 exports.getInvoiceDetailsForDashboard = (email, from, to) => {
     const fromDate = changeDateFormatyyyymmdd(from);
     const toDate = changeDateFormatyyyymmdd(to);
-    const query = `SELECT sum(amountwithdiscount) as price FROM invoice WHERE Email = '${email}' and dated between '${fromDate}' and '${toDate}'`;
+    const query = `SELECT sum(amountwithdiscount) as price FROM invoice WHERE Email = '${email}' and dated between date('${fromDate}') and date('${toDate}')`;
 
     return sequelize.query(query, {
         type: QueryTypes.SELECT

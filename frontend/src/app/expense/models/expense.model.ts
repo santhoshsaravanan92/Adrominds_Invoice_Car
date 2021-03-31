@@ -1,5 +1,5 @@
 export class ExpenseInformation {
-    date: string;
+    dated: string;
     price: number;
     category: string;
     notes: string;

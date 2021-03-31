@@ -102,6 +102,7 @@ export class CustomerComponent implements OnInit {
           let datas = [];
           data.forEach((e) => {
             let a = new CustomerInformation();
+            a.id=e.id;
             a.Address = e.Address;
             a.Comments = e.Comments;
             a.Email = e.Email;
@@ -110,7 +111,7 @@ export class CustomerComponent implements OnInit {
             a.Name = e.Name;
             datas.push(a);
           });
-          this.gridDatas = data;
+          this.gridDatas = datas;
         }
 
         this.isLoadingDone = false;
@@ -152,8 +153,8 @@ export class CustomerComponent implements OnInit {
   }
 
   search(event) {
-    this.invoiceService.getCustomerNames(event.query).subscribe((data) => {
-      this.customerNames = data;
+    this.invoiceService.getCustomerNames(event.query).subscribe((datas) => {
+      this.customerNames = datas;
     });
   }
 
@@ -180,6 +181,7 @@ export class CustomerComponent implements OnInit {
           let datas = [];
           data.forEach((e) => {
             let a = new CustomerInformation();
+            a.id=e.id;
             a.Address = e.Address;
             a.Comments = e.Comments;
             a.Email = e.Email;
@@ -188,7 +190,7 @@ export class CustomerComponent implements OnInit {
             a.Name = e.Name;
             datas.push(a);
           });
-          this.gridDatas = data;
+          this.gridDatas = datas;
           this.isLoadingDone = false;
         } else {
           this.updateToastMessage(
@@ -197,7 +199,7 @@ export class CustomerComponent implements OnInit {
             "Expense information"
           );
         }
-        this.isLoadingDone = false;
+       // this.isLoadingDone = false;
       }),
       (err) => {
         console.log(err);
@@ -205,7 +207,8 @@ export class CustomerComponent implements OnInit {
   }
 
   clearform() {
-    this.customerFilterForm.reset();
+    //this.customerFilterForm.reset();
+  this.customerFilterFormCreation();
     this.getAllCustomers();
   }
 }

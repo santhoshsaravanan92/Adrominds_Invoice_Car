@@ -26,11 +26,12 @@ export class ExpenseModelComponent implements OnInit {
 
   @Input("modalDataToPass")
   set modalDataToPass(value: any) {
+    
     if (value) {
       this._modalDataToPass = value;
       this._id = this._modalDataToPass.id;
       this._isEdit = this._modalDataToPass.isEdit;
-      this.expenseForm.reset();
+      //this.expenseForm.reset();
       this._title = this._modalDataToPass.isEdit
         ? "Edit Expense Information"
         : "Add Expense Information";
@@ -75,12 +76,14 @@ export class ExpenseModelComponent implements OnInit {
   }
 
   getExpenseRecordById(id: string) {
+    
     if (id) {
       this.isLoading = true;
       this.expenseService.getExpensesById(id).subscribe((expenseRecord) => {
         const expenseFromControls = this.getExpenseFormControls;
         expenseFromControls["category"].setValue(expenseRecord.category);
-        this.selectedDateValidationPurpose = getDateddmmyyyyformat(expenseRecord.date);
+        this.selectedDateValidationPurpose = getDateddmmyyyyformat(expenseRecord.dated);
+        //this.selectedDateValidationPurpose = expenseRecord.dated;
         expenseFromControls["date"].setValue(
           this.selectedDateValidationPurpose
         );
@@ -106,6 +109,7 @@ export class ExpenseModelComponent implements OnInit {
   }
 
   saveExpense() {
+    
     this.submitted = true;
     if (this.expenseForm.invalid) return;
     this.isLoading = true;
@@ -113,7 +117,7 @@ export class ExpenseModelComponent implements OnInit {
     const expenseFormControls = this.getExpenseFormControls;
     let category = expenseFormControls["category"].value;
     expense.category = category.split(" ")[1];
-    expense.date = expenseFormControls["date"].value.toLocaleDateString();
+    expense.dated = expenseFormControls["date"].value.toLocaleDateString();
     expense.notes = expenseFormControls["notes"].value;
     expense.price = expenseFormControls["price"].value;
     expense.email = getLoggedInUserEmail();
@@ -132,6 +136,7 @@ export class ExpenseModelComponent implements OnInit {
   }
 
   updateExpenseRecordById() {
+    
     this.submitted = true;
     if (this.expenseForm.invalid) {
       this.emitData.emit("check form data");
@@ -144,7 +149,7 @@ export class ExpenseModelComponent implements OnInit {
 
     let category = expenseFromControls["category"].value;
     expense.category = category.split(" ")[1];
-    expense.date =
+    expense.dated =
       this.selectedDateValidationPurpose === expenseFromControls["date"].value
         ? expenseFromControls["date"].value
         : expenseFromControls["date"].value.toLocaleDateString();

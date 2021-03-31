@@ -76,7 +76,7 @@ export class CustomerServiceService {
       gst: customerInfo.GST,
       mobile: customerInfo.Mobile,
       ownerEmail: customerInfo.OwnerEmail,
-      id: customerInfo.Id,
+      id: customerInfo.id,
     };
 
     return this.http

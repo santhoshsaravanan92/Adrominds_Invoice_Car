@@ -58,6 +58,8 @@ export const print = (printContent, customerName) => {
 
 export const getDateddmmyyyyformat = (d) => {
   //2021-01-06
+  console.log('Date');
+  console.log(d);
   const date = d.toString().split('-')
   return `${date[2]}/${date[1]}/${date[0]}`; //dd/mm/yyyy
 };

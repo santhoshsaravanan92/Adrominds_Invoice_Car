@@ -175,7 +175,7 @@ exports.getCustomerByName = (name) => {
 
 exports.getCustomerDetailsForFilter = (name, mobileno) => {
     isNameAdded = false;
-    let query = 'SELECT * FROM customer';
+    let query = 'SELECT id,Name,Address,Mobile,GST,Email,Comments,owner_email FROM customer';
     if (name || mobileno)
         query += " where"
 

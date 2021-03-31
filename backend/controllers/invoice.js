@@ -16,7 +16,8 @@ const {
 const { getCustomerNames } = require('../models/customer');
 
 exports.addInvoice = (req, res) => {
-
+        console.log('Print Request');
+        console.log(req);
     if (!validateRequest(req)) {
         return res.status(422).json({
             error: errors.array()[0].msg,

@@ -48,32 +48,34 @@
                 <th class="info-tbl-design" style="text-align: center;">GSTIN</th>
                 <th class="info-tbl-design" style="text-align: center;">Email</th>
                 <th class="info-tbl-design" style="text-align: center;">Comments</th>
+               
                 <th class="th-icon-width info-tbl-design" style="width:5%"></th>
                 <th class="th-icon-width info-tbl-design" style="width:5%"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-data>
+        <ng-template pTemplate="body" let-datas>
             <tr class="ui-selectable-row">
-                <td class="info-tbl-row-design" style="width:15%">{{ data.Name }}</td>
+                <td class="info-tbl-row-design" style="width:15%">{{ datas.Name }}</td>
                 <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">
-                    {{ data.Address }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;">{{ data.Mobile }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;">{{ data.GST }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;overflow-wrap: break-word;">{{ data.Email }}
+                    {{ datas.Address }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ datas.Mobile }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;">{{ datas.GST }}</td>
+                <td class="info-tbl-row-design" style="text-align: center;overflow-wrap: break-word;">{{ datas.Email }}
                 </td>
                 <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">
-                    {{ data.Comments }}</td>
+                    {{ datas.Comments }}</td>
+                  
                 <td class="info-tbl-row-design">
                     <!-- <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
                         srcset="" (click)="editCustomer(data.id)" /> -->
                     <i class="pi pi-pencil icon-width cursor-pointer" title="Edit Record"
-                        (click)="editCustomer(data.id)"></i>
+                        (click)="editCustomer(datas.id)"></i>
                 </td>
                 <td class="info-tbl-row-design">
                     <!-- <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer" title="Delete Record"
                         (click)="deleteCustomer(data.id, data.Name)" /> -->
                     <i class="pi pi-trash icon-width cursor-pointer" title="Delete Record"
-                        (click)="deleteCustomer(data.id, data.Name)"></i>
+                        (click)="deleteCustomer(datas.id, datas.Name)"></i>
                 </td>
             </tr>
         </ng-template>

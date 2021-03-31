@@ -322,6 +322,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   prepareEntireInvoiceFormData() {
+    
     this.isLoading = true;
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();

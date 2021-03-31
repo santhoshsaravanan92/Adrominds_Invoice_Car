@@ -80,7 +80,7 @@ CREATE TABLE invoice_product(
 
 CREATE TABLE expense(
 	id int AUTO_INCREMENT primary key,	
-	date date not null, 
+	dated date not null, 
 	category varchar(25) not null, 
 	price decimal not null, 
 	notes varchar(50) not null, 

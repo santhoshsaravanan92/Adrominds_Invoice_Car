@@ -110,6 +110,7 @@ this.isLoading = true;
   }
 
   getCustomerRecordById(id: string) {
+    
     if (id) {
       this.isLoading = true;
       this.customerService.getCustomerById(id).subscribe((customerRecord) => {
@@ -148,7 +149,7 @@ this.isLoading = true;
     customer.Mobile = customerFromControls["mobile"].value;
     customer.Name = customerFromControls["name"].value;
     customer.OwnerEmail = getLoggedInUserEmail();
-    customer.Id = customerFromControls["id"].value;
+    customer.id = customerFromControls["id"].value;
 
     if (
       this.customerName_testpurpose != "" &&

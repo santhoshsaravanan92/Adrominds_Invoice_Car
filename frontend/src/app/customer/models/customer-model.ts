@@ -6,5 +6,5 @@ export class CustomerInformation {
   GST: string;
   Comments: string;
   OwnerEmail: string;
-  Id:string;
+  id:string;
 }

@@ -159,6 +159,7 @@ export class InvoiceFiltersComponent extends BaseComponent implements OnInit {
   }
 
   applyFilter() {
+    
     if (this.invoices.length > 0) this.dataForGridOnExport = this.invoices;
     else {
       this.isloading = true;
