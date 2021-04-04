@@ -1,71 +1,106 @@
-<div style="margin:0 1em 1em 1em !important;" class="font-family shadow">
-    <form [formGroup]="DashboardForm" class="form-modal-design" (ngSubmit)="updateDashBoard(DashboardForm.value)">
-        <div class="grid-container padding-3">
-            <div class="form-group width80">
-                <label for="Date" class="label-design">From Date</label> <br>
-                <p-calendar formControlName="fromDate" class="form-control textbox" dateFormat="dd/mm/yy"
-                    [readonlyInput]="true" showButtonBar="true" styleClass="padding-0" (onSelect)="dateSelected()"
-                    (onClearClick)="calenderClearClick()" (onClickOutside)="calenderClearClick()">
-                </p-calendar>
-            </div>
-            <div class="form-group width80">
-                <label for="Date" class="label-design">To Date</label> <br>
-                <p-calendar formControlName="toDate" class="form-control textbox" dateFormat="dd/mm/yy"
-                    (onSelect)="dateSelected()" (onClearClick)="calenderClearClick()"
-                    (onClickOutside)="calenderClearClick()" [readonlyInput]="true" showButtonBar="true"
-                    styleClass="padding-0"></p-calendar>
-            </div>
-            <div class="form-group width80">
-                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard" type="submit"
-                    [disabled]="isControlDisabled">
-                    Apply Filter
-                </button>
-                <button class="button float-right cursor-pointer margin-left" id="btnUpdateDashboard"
-                    (click)="clearForm()">
-                    Clear filter
-                </button>
-            </div>
-        </div>
-
-    </form>
-
-    <div class="grid-container">
-        <div class="card-border-pink shadow">
-            <div><i class="pi pi-money-bill icon-pink"></i><span class="title">Expense</span></div>
-            <div class="grid-container">
-                <div class="card-details hr">
-                    Spare
-                    <div>{{spare}}</div>
-                </div>
-                <div class="card-details hr">
-                    Salary
-                    <div>{{salary}}</div>
-                </div>
-                <div class="card-details">
-                    others
-                    <div>{{others}}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-border-green shadow">
-            <div><i class="pi pi-th-large icon-green"></i><span class="title title-color-green">Invoice</span></div>
-            <div class="grid-container">
-                <div class="card-details center">
-                    Total Amount
-                    <div>{{totalInvoiceAmount}}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-border-blue shadow">
-            <div><i class="pi pi-id-card icon-blue"></i><span class="title title-color-blue">Profit</span></div>
-            <div class="grid-container">
-                <div class="card-details center">
-                    Total Profit
-                    <div>{{profit}}</div>
-                </div>
-            </div>
-        </div>
+<!-- style="margin: 0 1em 1em 1em !important; border-radius: 0.5em;" -->
+<div  class="font-family shadow dashboard-design">
+  <form
+    [formGroup]="DashboardForm"
+    class="form-modal-design"
+    (ngSubmit)="updateDashBoard(DashboardForm.value)"
+  >
+    <div class="grid-container padding-3">
+      <div class="form-group width80">
+        <label for="Date" class="label-design">From Date</label> <br />
+        <p-calendar
+          formControlName="fromDate"
+          class="form-control textbox"
+          dateFormat="dd/mm/yy"
+          [readonlyInput]="true"
+          showButtonBar="true"
+          styleClass="padding-0"
+          (onSelect)="dateSelected()"
+          (onClearClick)="calenderClearClick()"
+          (onClickOutside)="calenderClearClick()"
+        >
+        </p-calendar>
+      </div>
+      <div class="form-group width80">
+        <label for="Date" class="label-design">To Date</label> <br />
+        <p-calendar
+          formControlName="toDate"
+          class="form-control textbox"
+          dateFormat="dd/mm/yy"
+          (onSelect)="dateSelected()"
+          (onClearClick)="calenderClearClick()"
+          (onClickOutside)="calenderClearClick()"
+          [readonlyInput]="true"
+          showButtonBar="true"
+          styleClass="padding-0"
+        ></p-calendar>
+      </div>
+      <div class="form-group width80">
+        <button
+          class="button float-right cursor-pointer margin-left"
+          id="btnUpdateDashboard"
+          type="submit"
+          [disabled]="isControlDisabled"
+        >
+          Apply Filter
+        </button>
+        <button
+          class="button float-right cursor-pointer margin-left"
+          id="btnUpdateDashboard"
+          (click)="clearForm()"
+        >
+          Clear filter
+        </button>
+      </div>
     </div>
+  </form>
+
+  <div class="grid-container">
+    <div class="card-border-pink shadow">
+      <div>
+        <i class="pi pi-money-bill icon-pink"></i
+        ><span class="title">Expense</span>
+      </div>
+      <div class="grid-container">
+        <div class="card-details hr">
+          Spare
+          <div>{{ spare }}</div>
+        </div>
+        <div class="card-details hr">
+          Salary
+          <div>{{ salary }}</div>
+        </div>
+        <div class="card-details">
+          others
+          <div>{{ others }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-border-green shadow">
+      <div>
+        <i class="pi pi-th-large icon-green"></i
+        ><span class="title title-color-green">Invoice</span>
+      </div>
+      <div class="grid-container">
+        <div class="card-details center">
+          Total Amount
+          <div>{{ totalInvoiceAmount }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-border-blue shadow">
+      <div>
+        <i class="pi pi-id-card icon-blue"></i
+        ><span class="title title-color-blue">Profit</span>
+      </div>
+      <div class="grid-container">
+        <div class="card-details center">
+          Total Profit
+          <div>{{ profit }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
