@@ -18,7 +18,8 @@
 .grid-container 
     @extend .padding14em
     display: grid
-    grid-template-columns: auto auto auto
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+    padding:0.3em
   
 .p-accordion-header-link .ng-tns-c96-4
     @extend .info-tbl-design 
@@ -26,3 +27,6 @@
 
 .width-32
     width:33.5%
+
+.pad-right-05
+    padding-right: 0.5em

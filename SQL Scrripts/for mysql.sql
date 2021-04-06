@@ -68,7 +68,7 @@ CREATE TABLE invoice(
 
 CREATE TABLE invoice_product(
 	ID int AUTO_INCREMENT primary key,
-	Description varchar(50) not null,
+	Description varchar(150) not null,
 	Rate varchar(10) not null,
 	Quantity varchar(3) not NULL,
 	Price varchar(10) not NULL,
