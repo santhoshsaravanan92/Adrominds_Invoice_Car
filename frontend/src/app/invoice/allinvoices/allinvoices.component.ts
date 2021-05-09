@@ -198,14 +198,21 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
                 "{companyaddress}",
                 `${result.data.Name} <br>${result.data.Address}<br>email: ${result.data.Email}<br>phone: ${result.data.Mobile}/${result.data.Landline}<br>GST:${result.data.GST}<br>${result.data.Website}`
               );
-              const bankname = ca.replace("{bankname}", result.data.Bankname);
+              const bankname = ca.replace(
+                "{bankname}",
+                result.data.Bankname != null ? result.data.Bankname : ""
+              );
               const acc = bankname.replace(
                 "{accno}",
-                result.data.AccountNumber
+                result.data.AccountNumber != null
+                  ? result.data.AccountNumber
+                  : ""
               );
               const ifsc = acc.replace(
                 "{branch}",
-                `${result.data.Branchname} & ${result.data.Ifsc}`
+                `${
+                  result.data.Branchname != null ? result.data.Branchname : ""
+                } & ${result.data.Ifsc != null ? result.data.Ifsc : ""}`
               );
               const km = ifsc.replace("{km}", invoiceRecord.km);
 
