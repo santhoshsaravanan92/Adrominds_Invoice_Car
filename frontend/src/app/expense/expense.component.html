@@ -1,90 +1,145 @@
 <div *ngIf="isLoading" class="loading-div">
-    <p-progressSpinner class="loading"></p-progressSpinner>
+  <p-progressSpinner class="loading"></p-progressSpinner>
 </div>
-<p-sidebar [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }" [(visible)]="loadAddEditModal" position="top"
-    [baseZIndex]="10000" [dismissible]="false" [closeOnEscape]="false" [showCloseIcon]="false">
-    <app-expense-model (emitData)="handleEmittedData($event)" [modalDataToPass]="modalDataToPass">
-    </app-expense-model>
+<p-sidebar
+  [style]="{ height: '98%', width: '50%', 'margin-left': '25%' }"
+  [(visible)]="loadAddEditModal"
+  position="top"
+  [baseZIndex]="10000"
+  [dismissible]="false"
+  [closeOnEscape]="false"
+  [showCloseIcon]="false"
+>
+  <app-expense-model
+    (emitData)="handleEmittedData($event)"
+    [modalDataToPass]="modalDataToPass"
+  >
+  </app-expense-model>
 </p-sidebar>
 
-
-<form [formGroup]="expenseFilterForm" class="form-modal-design font-family width-100"
-    (ngSubmit)="applyFilter(expenseFilterForm.value)">
-    <div class="form-group grid-container-4cols">
-        <div class="padding-1em">
-            <label class="label-design">Category</label><br />
-            <select class="ddl-design" formControlName="category" (change)="changeCategory($event)"
-                style="width: 100%;">
-                <option value="">Select Category Value</option>
-                <option *ngFor="let d of categories" [ngValue]="d">{{d}}</option>
-            </select>
-        </div>
-        <div class="padding-1em">
-            <label for="username" class="label-design">From Date</label> <br>
-            <p-calendar formControlName="fromdate" class="form-control textbox text-box-width" dateFormat="dd/mm/yy"
-                showButtonBar="true"></p-calendar>
-        </div>
-        <div class="padding-1em">
-            <label for="username" class="label-design">To Date</label> <br>
-            <p-calendar formControlName="todate" class="form-control textbox text-box-width" dateFormat="dd/mm/yy"
-                showButtonBar="true"></p-calendar>
-        </div>
-        <div class="padding-1em">
-            <button class="button float-right cursor-pointer margin-left btn-width" type='submit'>
-                Apply Filter
-            </button>
-            <button class="button float-right cursor-pointer margin-left btn-width" (click)="clearForm()">
-                Clear Filter
-            </button>
-        </div>
+<form
+  [formGroup]="expenseFilterForm"
+  class="form-modal-design font-family width-100"
+  (ngSubmit)="applyFilter(expenseFilterForm.value)"
+>
+  <div class="form-group grid-container-4cols">
+    <div class="padding-1em">
+      <label class="label-design">Category</label><br />
+      <select
+        class="ddl-design"
+        formControlName="category"
+        (change)="changeCategory($event)"
+        style="width: 100%"
+      >
+        <option value="">Select Category Value</option>
+        <option *ngFor="let d of categories" [ngValue]="d">{{ d }}</option>
+      </select>
     </div>
+    <div class="padding-1em">
+      <label for="username" class="label-design">From Date</label> <br />
+      <p-calendar
+        formControlName="fromdate"
+        class="form-control textbox text-box-width"
+        dateFormat="dd/mm/yy"
+        showButtonBar="true"
+      ></p-calendar>
+    </div>
+    <div class="padding-1em">
+      <label for="username" class="label-design">To Date</label> <br />
+      <p-calendar
+        formControlName="todate"
+        class="form-control textbox text-box-width"
+        dateFormat="dd/mm/yy"
+        showButtonBar="true"
+      ></p-calendar>
+    </div>
+    <div class="padding-1em">
+      <button
+        class="button float-right cursor-pointer margin-left btn-width"
+        type="submit"
+      >
+        Apply Filter
+      </button>
+      <button
+        class="button float-right cursor-pointer margin-left btn-width"
+        (click)="clearForm()"
+      >
+        Clear Filter
+      </button>
+    </div>
+  </div>
 </form>
 
-
 <div class="width-100 padding-btn">
-    <div class="edit-button margin-right cursor-pointer float-right" (click)="openDialog()">
-        Add Expense
-    </div>
+  <div
+    class="edit-button margin-right cursor-pointer float-right"
+    (click)="openDialog()"
+  >
+    Add Expense
+  </div>
 </div>
-<div style="margin:1em !important;" class="shadow">
-    <p-table [value]="gridDatas" dataKey="id"
-        styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo" [rowHover]="true" [rows]="15"
-        [showCurrentPageReport]="true" [rowsPerPageOptions]="[15, 25, 50]" [loading]="isLoadingDone" [paginator]="true"
-        currentPageReportTemplate="" [filterDelay]="0"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-        <ng-template pTemplate="caption">
-            Expense Information
-        </ng-template>
-        <ng-template pTemplate="header" class="table-width">
-            <tr>
-                <th class="info-tbl-design" style="width:10%">Date</th>
-                <th class="info-tbl-design" style="text-align: center;">Category</th>
-                <th class="info-tbl-design" style="text-align: center;">Price</th>
-                <th class="info-tbl-design" style="text-align: center;">Notes</th>
-                <th class="th-icon-width info-tbl-design" style="width:5%"></th>
-                <th class="th-icon-width info-tbl-design" style="width:5%"></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-data>
-            <tr class="ui-selectable-row">
-                <td class="info-tbl-row-design" style="width:10%">{{ data.dated | date:'dd/MM/yyyy'}}</td>
-                <td class="info-tbl-row-design" style="text-align: center;">{{ data.category }}</td>
-                <td class="info-tbl-row-design" style="text-align: center;">{{ data.price }}</td>
-                <td class="info-tbl-row-design" style="text-align: center; overflow-wrap: break-word;">{{ data.notes }}
-                </td>
-                <td class="info-tbl-row-design">
-                    <!-- <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
+<div style="margin: 1em !important" class="shadow">
+  <p-table
+    [value]="gridDatas"
+    dataKey="id"
+    styleClass="ui-table-customers info-tbl-design p-datatable-responsive-demo"
+    [rowHover]="true"
+    [rows]="15"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15, 25, 50]"
+    [loading]="isLoadingDone"
+    [paginator]="true"
+    currentPageReportTemplate=""
+    [filterDelay]="0"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  >
+    <ng-template pTemplate="caption"> Expense Information </ng-template>
+    <ng-template pTemplate="header" class="table-width">
+      <tr>
+        <th class="info-tbl-design" style="width: 10%">Date</th>
+        <th class="info-tbl-design" style="text-align: center">Category</th>
+        <th class="info-tbl-design" style="text-align: center">Price</th>
+        <th class="info-tbl-design" style="text-align: center">Notes</th>
+        <th class="th-icon-width info-tbl-design" style="width: 5%"></th>
+        <th class="th-icon-width info-tbl-design" style="width: 5%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data>
+      <tr class="ui-selectable-row">
+        <td class="info-tbl-row-design" style="width: 10%">
+          {{ data.dated | date: "dd/MM/yyyy" }}
+        </td>
+        <td class="info-tbl-row-design" style="text-align: center">
+          {{ data.category }}
+        </td>
+        <td class="info-tbl-row-design" style="text-align: center">
+          {{ data.price }}
+        </td>
+        <td
+          class="info-tbl-row-design"
+          style="text-align: center; overflow-wrap: break-word"
+        >
+          {{ data.notes }}
+        </td>
+        <td class="info-tbl-row-design">
+          <!-- <img src="./assets/icons/edit_black.png" class="icon-width cursor-pointer" title="Edit Record"
                         srcset="" (click)="editExpense(data.id)" /> -->
-                    <i class="pi pi-pencil icon-width cursor-pointer" title="Edit Record"
-                        (click)="editExpense(data.id)"></i>
-                </td>
-                <td class="info-tbl-row-design">
-                    <!-- <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer" title="Delete Record"
+          <i
+            class="pi pi-pencil icon-width cursor-pointer"
+            title="Edit Record"
+            (click)="editExpense(data.id)"
+          ></i>
+        </td>
+        <td class="info-tbl-row-design">
+          <!-- <img src="./assets/icons/delete_black.png" class="icon-width cursor-pointer" title="Delete Record"
                         (click)="deleteExpense(data.id)" /> -->
-                    <i class="pi pi-trash icon-width cursor-pointer" title="Delete Record"
-                        (click)="deleteExpense(data.id)"></i>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+          <i
+            class="pi pi-trash icon-width cursor-pointer"
+            title="Delete Record"
+            (click)="deleteExpense(data.id)"
+          ></i>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

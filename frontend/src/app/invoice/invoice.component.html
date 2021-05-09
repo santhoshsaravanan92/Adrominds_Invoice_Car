@@ -296,6 +296,10 @@
                 <th class="info-tbl-design">Rate</th>
                 <th class="info-tbl-design">Quantity</th>
                 <th class="info-tbl-design">Amount</th>
+                <th
+                  class="th-icon-width info-tbl-design"
+                  style="width: 4%"
+                ></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-data>
@@ -304,6 +308,13 @@
                 <td class="info-tbl-row-design">{{ data.Rate }}</td>
                 <td class="info-tbl-row-design">{{ data.Quantity }}</td>
                 <td class="info-tbl-row-design">{{ data.Price }}</td>
+                <td>
+                  <i
+                    class="pi pi-trash icon-width cursor-pointer"
+                    title="Delete Record"
+                    (click)="deleteInvoiceProd(data.Description)"
+                  ></i>
+                </td>
               </tr>
             </ng-template>
           </p-table>

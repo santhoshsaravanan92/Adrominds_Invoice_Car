@@ -322,7 +322,6 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   prepareEntireInvoiceFormData() {
-    
     this.isLoading = true;
     const gstFormControls = this.getGSTFormControls;
     let invoiceObj = new InvoiceInformation();
@@ -460,5 +459,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   handleTabChange(e) {
     this.isTabChanged = true;
+  }
+
+  deleteInvoiceProd(prodDesc) {
+    var i = this.gridDatas.findIndex((x) => x.Description === prodDesc);
+    this.gridDatas.splice(i, 1);
   }
 }

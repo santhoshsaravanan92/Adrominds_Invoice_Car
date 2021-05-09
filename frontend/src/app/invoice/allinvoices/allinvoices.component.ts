@@ -33,8 +33,8 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
   }
 
   @Input("_isTabChanged")
-  set _isTabChanged(value:any){
-    if(value){
+  set _isTabChanged(value: any) {
+    if (value) {
       this.getAllInvoices();
     }
   }
@@ -44,7 +44,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
     private confirmationService: ConfirmationService,
     public messageService: MessageService,
     private profileSerive: ProfileService,
-    private customerService:CustomerServiceService
+    private customerService: CustomerServiceService
   ) {
     super(messageService);
   }
@@ -210,11 +210,16 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
               const km = ifsc.replace("{km}", invoiceRecord.km);
 
               // service call to get customer information
-              this.customerService.getCustomerByName(invoiceRecord.Name).subscribe(result => {
-                console.log(result);
-                const printContent = km.replace('{customeraddress}', `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`);
-                print(printContent, invoiceRecord.Name);
-              });
+              this.customerService
+                .getCustomerByName(invoiceRecord.Name)
+                .subscribe((result) => {
+                  console.log(result);
+                  const printContent = km.replace(
+                    "{customeraddress}",
+                    `${result.Address}<br>Phone: ${result.Mobile} <br> Email: ${result.Email}`
+                  );
+                  print(printContent, invoiceRecord.Name);
+                });
             }),
             (err) => {
               console.log(err);
