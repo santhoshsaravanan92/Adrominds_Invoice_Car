@@ -340,4 +340,9 @@ export class InvoiceModalComponent extends BaseComponent implements OnInit {
         console.log(err);
       };
   }
+  
+  deleteInvoiceProd(prodDesc) {
+    var i = this.gridDatas.findIndex((x) => x.Description === prodDesc);
+    this.gridDatas.splice(i, 1);
+  }
 }
