@@ -192,9 +192,12 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   prepareBodyContentForPrint() {
     let content = "";
+    let i = 1;
     this.gridDatas.map((a) => {
       content +=
-        '<tr class="item"><td class="width">' +
+        '<tr style="line-height:1.2;" class="item center"><td>' +
+        i +
+        '</td><td class="width">' +
         a.Description +
         '</td><td class="center">' +
         a.Rate +
@@ -203,6 +206,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         '</td><td class="center">' +
         a.Price +
         "</td></tr>";
+        i++;
     });
     return content;
   }
