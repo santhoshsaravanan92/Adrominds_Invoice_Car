@@ -179,7 +179,6 @@ export class ExpenseComponent implements OnInit {
   }
 
   applyFilter(formData) {
-    
     const category = formData.category.includes(" ")
       ? formData.category.split[" "]
       : formData.category;
@@ -214,6 +213,7 @@ export class ExpenseComponent implements OnInit {
             Constants.error,
             "Expense information"
           );
+          this.getAllExpenses();
           this.isLoading = false;
         }
       });

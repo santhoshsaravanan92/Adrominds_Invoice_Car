@@ -112,7 +112,7 @@ const InvoiceProduct = sequelize.define('invoice_product', {
 exports.addInvoice = (invoiceObj) => {
     return Invoice.create({
             InvoiceId: invoiceObj.invoiceid,
-            Name: invoiceObj.name,
+            Name: invoiceObj.name.Name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,
@@ -229,10 +229,8 @@ exports.getInvoiceProductById = (id) => {
 };
 
 exports.updateInvoice = (invoiceObj) => {
-    console.log('Updated Date');
-    console.log(invoiceObj.Dated);
     return Invoice.update({
-            Name: invoiceObj.name,
+            Name: invoiceObj.name.Name,
             DeliveryNotes: invoiceObj.DeliveryNotes,
             BuyerOrderNumber: invoiceObj.BuyerOrderNumber,
             VehicleNumber: invoiceObj.VehicleNumber,

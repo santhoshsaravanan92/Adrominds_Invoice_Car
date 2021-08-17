@@ -1,185 +1,258 @@
 <html>
 
 <head>
-	<style>
-		md-dialog-actions{display:none}.invoice-box{width:95%;margin:0 auto}.invoice-box table{line-height:inherit;text-align:left;width:100%}.invoice-box table td{vertical-align:top}.invoice-box table tr td:nth-child(2){text-align:right}.invoice-box table tr.top table td{padding-bottom:5px}.invoice-box table tr.top table td.title{font-size:45px;line-height:45px;color:lightgray}.invoice-box table tr.information table td{padding-bottom:40px}.invoice-box table tr.heading td{border-bottom:1px solid rgb(0, 0, 0);font-weight:700}.invoice-box table tr.details td{padding-bottom:20px}.invoice-box table tr.item.last td{border-bottom:none}.invoice-box table tr.total td:nth-child(2){border-top:1px solid lightgray;font-weight:700}th{border-left:1px solid lightgray}.center{text-align:center}.padding-btm{padding-bottom:1em}.border-bottom{border-bottom:1px solid lightgray}.border-right{border-right:1px solid lightgray}.font-size{font-size:9px}.all-border{border:1px solid lightgray}.pad{padding:0.35em}.width{width:300px}.bold{font-weight: 600;}.border-top{border-top:1px solid lightgray}.float-left{float:left;}.float-right{float:right;}.border-left{border-left:1px solid lightgray}
-	</style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-width: 100%;
+        }
+
+        md-dialog-actions {
+            display: none
+        }
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 9px;
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left
+        }
+
+        .invoice-box table td {
+            vertical-align: top
+        }
+
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 5px
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px
+        }
+
+        .invoice-box table tr.heading td {
+            border-bottom: 1px solid #eee;
+            font-weight: 700
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 1px solid #eee;
+            font-weight: 700
+        }
+
+        th {
+            border-left: 1px solid #eee;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .padding-btm {
+            padding-bottom: 1em;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #eee;
+        }
+
+        .border-right {
+            border-right: 1px solid #eee;
+        }
+
+        .font-size {
+            font-size: 9px;
+        }
+
+        .all-border {
+            border: 1px solid #eee;
+        }
+    </style>
 </head>
 
 <body>
-	<div class="invoice-box">
-		<div class="center padding-btm"><strong>Tax Invoice</strong>
-		</div>
-		<table cellpadding="0" cellspacing="0" class="all-border">
-			<tr class="top">
-				<td colspan="3">
-					<table class="font-size">
-						<tr>
-							<td> <strong>{companyname}</strong>
-								<br>{companyaddress}</td>
-						</tr>
-						<tr>
-							<td rowspan="2" style="text-align: left; border-top: 1px solid #eee"> <strong>{name}</strong>
-								<br>{customeraddress}</td>
-						</tr>
-					</table>
-				</td>
-				<td colspan="3">
-					<table class="font-size" style="border-left:1px solid lightgray;" cellpadding="0" cellspacing="0">
-						<tr>
-							<td class="border-right border-bottom pad">Invoice No
-								<br /> <strong>{invoiceid}</strong>
-							</td>
-							<td class="border-bottom pad">Dated
-								<br /> <strong>{today}</strong>
-							</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom pad">Other Notes
-								<br /><strong>{othernote}</strong>
-							</td>
-							<td class="border-bottom pad">Payment Mode
-								<br /> <strong>{mode}</strong>
-							</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom pad">Buyer Order No.
-								<br /><strong>{buyerorder}</strong>
-							</td>
-							<td class="border-bottom pad">Vehicle Number
-								<br /> <strong>{vn}</strong>
-							</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom pad">Model
-								<br /><strong>{model}</strong>
-							</td>
-							<td class="border-bottom pad">KM
-								<br /> <strong>{km}</strong>
-							</td>
-						</tr>
-						<!-- <tr class="heading pad">
-							<td colspan="4" class="font-size pad">Delivery Notes</td>
-						</tr>
-						<tr class="details pad">
-							<td colspan="4" class="pad">{notes}</td>
-						</tr> -->
-					</table>
-				</td>
-			</tr>
-			<tr class="bold pad">
-				<td colspan="4" class="font-size pad border-bottom">Delivery Notes</td>
-			</tr>
-			<tr class="details pad">
-				<td colspan="4" class="pad font-size">{notes}</td>
-			</tr>
-			<td colspan="4">
-				<table class="font-size" cellspacing="0" cellpadding="0">
-					<tr>
-						<td class="center pad border-right border-bottom bold border-top" style="width:15px">S.No</td>
-						<td class="center pad border-right border-bottom bold border-top width">Items</td>
-						<td class="center pad border-right border-bottom bold border-top">Each Price</td>
-						<td class="center pad border-right border-bottom bold border-top">Quantity</td>
-						<td class="center pad border-bottom bold border-top">Amount</td>
-					</tr>
-					<tr class="center pad font-size">{bodycontent}</tr>
-				</table>
-		</table>
-		</td>
-		<table class="all-borders border-right border-left">
-			<tr>
-				<td colspan="4">
-			<table class="font-size" style="width: 40%;padding: 1em 0;
-         line-height: 1.2;float: right;">
-				<tr>
-					<td>State GST</td>
-					<td><strong>{sgst}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td>Central GST</td>
-					<td><strong>{cgst}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td>Amount with out Discount</td>
-					<td><strong>{amountwithoutdiscount}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td>Discount</td>
-					<td><strong>{discount}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td>Amount</td>
-					<td><strong>{amount}</strong>
-					</td>
-				</tr>
-			</table>
-		</td>
-		</tr>
-		</table>
-		<div>
-			<table style="line-height: 1.5;" cellpadding="0" cellspacing="0" class="font-size all-border">
-				<tr>
-					<td></td>
-					<td></td>
-					<td>Bank Name:</td>
-					<td><strong>{bankname}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>A/C No:</td>
-					<td><strong>{accno}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>Branch/IFSC Code</td>
-					<td><strong>{branch}</strong>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="1"> 
-                  <u style="float:left;padding:0em 1em;">Declaration</u>
-						<br> 
-                  <span class=" font-size" style="padding:0em 1em;vertical-align: bottom; float:left; line-height: 2.5;"> We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct </span>
-					</td>
-					<td colspan="2">
-						<table class="font-size" style="border-left: 1px solid lightgray; border-top: 1px solid lightgray;">
-							<tr>
-								<td colspan="3" class="font-size" style="text-align:right"><strong>for {companyname} Service</strong>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-							</tr>
-                     <tr>
-								<td></td>
-							</tr>
-                     <tr>
-								<td></td>
-							</tr>
-                     <tr>
-								<td></td>
-							</tr>
-							<tr>
-								<td>Prepared by</td>
-								<td>Verified by</td>
-								<td style="text-align:right">Authorised Signature</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="center font-size" style="padding-top: 1em"> <strong>SUBJECT TO MADURAI JURISDICTION</strong>
-			<br>This is a Compter Generated Invoice</div>
+    <div class="invoice-box">
+        <div class="center padding-btm"><strong>Tax Invoice</strong></div>
+        <table cellpadding="0" cellspacing="0" class="all-border">
+            <tr class="top">
+                <td colspan="3">
+                    <table class="font-size all-border">
+                        <tr>
+                            <td>
+                                <strong>{companyname}</strong><br>
+                                {companyaddress}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; border-top: 1px solid #eee">
+                                <strong>{name}</strong><br>
+                                {customeraddress}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="3">
+                    <table class="font-size" border="0">
+                        <tr>
+                            <td class="border-right border-bottom">
+                                Invoice No<br /> <strong>{invoiceid}</strong>
+                            </td>
+                            <td class="border-bottom">
+                                Dated<br /> <strong>{today}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-right border-bottom">
+                                Other Notes <br /><strong>{othernote}</strong>
+                            </td>
+                            <td class="border-bottom">
+                                Payment Mode <br /> <strong>{mode}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-right border-bottom">
+                                Buyer Order No. <br /><strong>{buyerorder}</strong>
+                            </td>
+                            <td class="border-bottom">
+                                Vehicle Number <br /> <strong>{vn}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-right">
+                                Model <br /><strong>{model}</strong>
+                            </td>
+                            <td>
+                                KM <br /> <strong>{km}</strong>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="heading all-border">
+                <td colspan="4" class="font-size">Delivery Notes</td>
+            </tr>
+            <tr class="details">
+                <td colspan="4">{notes}</td>
+            </tr>
+            <tr class="heading font-size">
+                <td>Items</td>
+                <td>Each Price</td>
+                <td>Quantity</td>
+                <td>Amount</td>
+            </tr>
+            <table class="font-size all-border">
+                {bodycontent}
+            </table>
+        </table>
+        <div style="float: right;">
+            <table class="font-size">
+                <tr>
+                    <td>State GST</td>
+                    <td><strong>{sgst}</strong></td>
+                </tr>
+                <tr>
+                    <td>Central GST</td>
+                    <td><strong>{cgst}</strong></td>
+                </tr>
+                <tr>
+                    <td>Amount with out Discount</td>
+                    <td><strong>{amountwithoutdiscount}</strong></td>
+                </tr>
+                <tr>
+                    <td>Discount</td>
+                    <td><strong>{discount}</strong></td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td><strong>{amount}</strong></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table cellpadding="0" cellspacing="0" class="font-size all-border">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Bank Name:</td>
+                    <td><strong>{bankname}</strong></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>A/C No:</td>
+                    <td><strong>{accno}</strong></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Branch/IFSC Code</td>
+                    <td><strong>{branch}</strong></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="1" class="all-border">
+                        <u style="float:left">Declaration</u><br>
+                        <span class=" font-size" style="vertical-align: bottom; float:left"> We declare that this
+                            invoice shows the
+                            actual price of the goods described and that
+                            all
+                            particulars are true and correct
+                        </span>
+                    </td>
+                    <td colspan="2">
+                        <table class="font-size all-border">
+                            <tr>
+                                <td colspan="3" class="font-size"><strong>for {companyname} Service</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Prepared by</td>
+                                <td>Verified by</td>
+                                <td>Authorised Signature</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="center font-size" style="padding-top: 1em">
+            <strong>SUBJECT TO MADURAI JURISDICTION</strong><br>
+            This is a Compter Generated
+            Invoice</div>
+    </div>
+
 </body>
 
 </html>

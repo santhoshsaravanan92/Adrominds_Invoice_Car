@@ -198,6 +198,7 @@ export class CustomerComponent implements OnInit {
             Constants.error,
             "Expense information"
           );
+          this.getAllCustomers();
         }
        // this.isLoadingDone = false;
       }),
