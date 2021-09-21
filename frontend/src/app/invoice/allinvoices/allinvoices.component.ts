@@ -173,7 +173,7 @@ export class AllinvoicesComponent extends BaseComponent implements OnInit {
         .subscribe((invoiceProductRecord) => {
           invoiceProductRecord.map((a) => {
             bodyContent +=
-              '<tr class="item"><td>' +
+              '<tr class="all-border"><td>' +
               a.Description +
               "</td><td>" +
               a.Rate +
